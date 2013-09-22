@@ -926,6 +926,9 @@ __''other settings:''__
 2006.02.01 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
+<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201309222349" tags="C#" changecount="2">
+<pre>[[HowTo Use C++ DLL]]</pre>
+</div>
 <div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201309220943" tags="C C++" changecount="2">
 <pre>!Syntax
 
@@ -3596,6 +3599,74 @@ After the browser has done its job, the wiki syntax sequences (including the &qu
 2005.06.26 1.0.0 Initial Release (as code adaptation - pre-dates TiddlyWiki plugin architecture!!)
 &lt;&lt;&lt;</pre>
 </div>
+<div title="HowTo Use C++ DLL" creator="Roger Luo" modifier="Roger Luo" created="201309222349" modified="201309222349" tags="c#" changecount="2">
+<pre>*[[HowTo Use C++ DLL: Quick Start]]
+*[[Marshal Data type between manage code and native code]]</pre>
+</div>
+<div title="HowTo Use C++ DLL: Quick Start" creator="Roger Luo" modifier="Roger Luo" created="201309221353" modified="201309222347" tags="C++ C# HowTo" changecount="11">
+<pre>!!Create C++ DLL
+*Use visual studio create c++ dll project
+*Change the call convention to be //''@@color:#F00;_cdecl@@''//, And change the export lib named as &quot;cppDLL.lib&quot;. 
+*Add cppDLL.h.
+&lt;code c++&gt;
+#ifndef CPPDLL_H_123
+#define CPPDLL_H_123
+
+#if defined _MSC_VER
+#	if defined CPPDLL_EXPORTS
+#		define CPPDLL_API __declspec( dllexport )
+#	else
+#		define CPPDLL_API 
+#	endif
+#endif
+
+#if defined __cplusplus
+extern &quot;C&quot; {
+#endif
+	CPPDLL_API int Add(int lhs, int rhs);
+#if defined __cplusplus
+}
+#endif
+
+#endif
+&lt;/code&gt;
+*Add cppDLL.cpp.
+&lt;code c++&gt;
+#include &quot;stdafx.h&quot;
+#include &quot;cppDLL.h&quot;
+
+int Add(int lhs, int rhs)
+{
+	return lhs + rhs;
+}
+&lt;/code&gt;
+*Compile the project.
+!!Invoking C++ DLL
+*Create console project and in properties/debug/start debuger/start native code debug.
+*change the main method shown below:
+&lt;code c#&gt;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.InteropServices;
+
+namespace tstInvokeDLL
+{
+    class Program
+    {
+        [DllImport(&quot;cppDLL&quot;)]
+        public static extern int Add(int lhs, int rhs);
+        static void Main(string[] args)
+        {
+            Console.WriteLine(&quot;Add(1, 1)={0}&quot;, Add(1, 1));
+        }
+    }
+}
+&lt;/code&gt;
+*Compile and run it
+[img(auto, auto)[pic/Picture_2013-09-23_07_44_58.png]]</pre>
+</div>
 <div title="ImageSizePlugin" modifier="ELSDesignStudios" created="200801180032" modified="201109031106" tags="IconPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201109031106">
 <pre>/***
 |Name|ImageSizePlugin|
@@ -4044,9 +4115,10 @@ loading a script from a source url:
 2005.11.08 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309220946" changecount="4">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309221344" changecount="5">
 <pre>[[GettingStarted]]
 [[C/C++]]
+[[C#]]
 [[Favorite Blog]]</pre>
 </div>
 <div title="MarkupPostBody" creator="Roger Luo" modifier="ELSDesignStudios" created="200710051554" modified="200710051817" tags="CoreTiddlers" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200710051817">
@@ -11224,14 +11296,17 @@ you are installing in your own document.
 <div title="language and region setting" creator="Roger Luo" modifier="Roger Luo" created="201309220944" modified="201309220944" tags="C C++ locale" changecount="2">
 <pre>[[print/cout与wprintf/wcout显示中文]]</pre>
 </div>
-<div title="print/cout与wprintf/wcout显示中文" creator="Roger Luo" modifier="Roger Luo" created="201309220945" modified="201309220945" tags="C C++ locale" changecount="2">
+<div title="print/cout与wprintf/wcout显示中文" creator="Roger Luo" modifier="Roger Luo" created="201309220945" modified="201309221342" tags="C C++ locale" changecount="19">
 <pre>!注意
 *调用cout、wcout的clear成员函数是为了清除错误状态，使后续输出能正常运行。
 *使用“cout&lt;&lt;endl”或“wcout&lt;&lt;endl”时，不仅会使输出文本换行，而且还会执行flush成员函数，提交缓冲区中的数据。使得cout、wcout的输出文本不会发生冲突。
 *printf/cout能输出中文是由于缺省的locale下能支持中文（因为中文是asci编码的）wprintf/wcout在缺省下中文是UCS2 little endian 编码的，所以需要修改相应的locale才能输出，对于wprintf需要使用函数setlocale，对于wcout需要使用wcout.imbue。
 &lt;code c++&gt;
-wcout.imbue(locale(&quot;chs&quot;));
-	setlocale(LC_CTYPE, &quot;chs&quot;);
+	// ASCI: c4 e3 ba c3 20 ca c0 bd e7
+	const char * psz = &quot;你好 世界&quot;;			
+	// UCS2 little endian: 60 4f 7d 59 20 00 16 4e 4c 75
+	const wchar_t * pwsz = L&quot;你好 世界&quot;;	
+
 	wcout&lt;&lt;&quot;[Locale:&quot;&lt;&lt;string2wstring(wcout.getloc().name())&lt;&lt;&quot;]&quot;&lt;&lt;endl;
 	printf(&quot;printf(%%s):%s\n&quot;, psz);
 	printf(&quot;printf(%%ls):%s\n&quot;, pwsz);
@@ -11240,9 +11315,48 @@ wcout.imbue(locale(&quot;chs&quot;));
 	wprintf(L&quot;wprintf(%%s):%s\n&quot;, pwsz);
 	wprintf(L&quot;wprintf(%%ls):%ls\n&quot;, pwsz);
 	wcout&lt;&lt;L&quot;wcout:&quot;&lt;&lt;pwsz&lt;&lt;endl;
+
+	cout.clear(); cout.flush();
+	wcout.clear(); wcout.flush(); // &quot;&lt;&lt;endl&quot; trigger the flush function
+
+	
+	wcout.imbue(locale(&quot;chs&quot;));
+	setlocale(LC_CTYPE, &quot;chs&quot;);
+	wcout&lt;&lt;&quot;[Locale:&quot;&lt;&lt;string2wstring(wcout.getloc().name())&lt;&lt;&quot;]&quot;&lt;&lt;endl;
+
+	printf(&quot;printf(%%s):%s\n&quot;, psz);
+	printf(&quot;printf(%%ls):%s\n&quot;, pwsz);
+	cout&lt;&lt;&quot;cout:&quot;&lt;&lt;psz&lt;&lt;endl;
+
+	wprintf(L&quot;wprintf(%%s):%s\n&quot;, pwsz);
+	wprintf(L&quot;wprintf(%%ls):%ls\n&quot;, pwsz);
+	wcout&lt;&lt;L&quot;wcout:&quot;&lt;&lt;pwsz&lt;&lt;endl;
+
+	cout.clear(); cout.flush();
+	wcout.clear(); wcout.flush(); // &quot;&lt;&lt;endl&quot; trigger the flush function
+	
+	wcout.imbue(locale(&quot;cht&quot;));
+	setlocale(LC_CTYPE, &quot;cht&quot;);
+	wcout&lt;&lt;&quot;[Locale:&quot;&lt;&lt;string2wstring(wcout.getloc().name())&lt;&lt;&quot;]&quot;&lt;&lt;endl;
+
+	printf(&quot;printf(%%s):%s\n&quot;, psz);
+	printf(&quot;printf(%%ls):%s\n&quot;, pwsz);
+	cout&lt;&lt;&quot;cout:&quot;&lt;&lt;psz&lt;&lt;endl;
+
+	wprintf(L&quot;wprintf(%%s):%s\n&quot;, pwsz);
+	wprintf(L&quot;wprintf(%%ls):%ls\n&quot;, pwsz);
+	wcout&lt;&lt;L&quot;wcout:&quot;&lt;&lt;pwsz&lt;&lt;endl;
+	
 	cout.clear(); cout.flush();
 	wcout.clear(); wcout.flush(); // &quot;&lt;&lt;endl&quot; trigger the flush function
 &lt;/code&gt;
+输出结果如下
+[img(75%,+)[pic/Picture_2013-09-22_19_08_39.png]]
+程序说明：
+程序一开始是使用缺省的locale，默认是C，接着可以看到printf(%s)与cout都能正确处理psz变量，因为他正是ASCII编码的，接着wprint(%s)与wpritnf(%ls)都是打印出了？？ ？？是由于缺省的locale不支持UTF8编码，而pwsz正是采用这样的编码，所以输出不了正确的结果。同时printf(%ls)输出乱码原因差不多，而wcout就根本输出不了，假如现在加入对wcout的检查肯定是fail。
+接着将locale修改成简体中文chs，这样printf(%s),cout,wprint(%s),wprintf(%ls)与wcout都显示正确，
+接着将locale修改成繁体中文cht，这样只有wprintf(%s),wprintf(%ls)与wcout正确显示。
+
 !!Reference
 http://www.baidu.com
 [[C/C++]]

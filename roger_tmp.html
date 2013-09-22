@@ -46,7 +46,7 @@ DAMAGE.
 <!--}}}-->
 
 <!--PRE-HEAD-END-->
-<title> Roger Luo's wiki - salvation lies within... </title>
+<title> My TiddlyWiki - a reusable non-linear personal web notebook </title>
 <style id="styleArea" type="text/css">
 #saveTest {display:none;}
 #messageArea {display:none;}
@@ -925,16 +925,6 @@ __''other settings:''__
 2006.02.04 1.1.0 JSLint checked
 2006.02.01 1.0.0 initial release
 &lt;&lt;&lt;</pre>
-</div>
-<div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201309220943" tags="C C++" changecount="2">
-<pre>!Syntax
-
-!STL
-[[language and region setting]]
-
-!The third library
-[[boost]]
-[[WSAPI]]</pre>
 </div>
 <div title="CalendarPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200602212149" modified="201101042140" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201101042140">
 <pre>/***
@@ -3018,9 +3008,6 @@ config.macros.editTiddler={
 	});
 //}}}</pre>
 </div>
-<div title="Favorite Blog" creator="Roger Luo" modifier="Roger Luo" created="201309220946" changecount="1">
-<pre>[[Kenny Kerr|http://msdn.microsoft.com/en-us/magazine/ee532098.aspx?sdmr=kennykerr&amp;sdmi=authors]] MSDN Magazine Authors</pre>
-</div>
 <div title="FavoriteTiddlers" creator="Roger Luo" modifier="Roger Luo" created="201309220842" modified="201309220843" tags="settings" changecount="2">
 <pre>&lt;script label=&quot;last change...&quot; title=&quot;goto the most recently modified tiddler&quot;&gt;
 	var title=store.getTiddlers(&quot;modified&quot;,&quot;excludeLists&quot;).reverse()[0].title;
@@ -4044,10 +4031,10 @@ loading a script from a source url:
 2005.11.08 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309220946" changecount="4">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309210805" changecount="2">
 <pre>[[GettingStarted]]
-[[C/C++]]
-[[Favorite Blog]]</pre>
+[[Sample]]
+[[Media]]</pre>
 </div>
 <div title="MarkupPostBody" creator="Roger Luo" modifier="ELSDesignStudios" created="200710051554" modified="200710051817" tags="CoreTiddlers" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200710051817">
 <pre>&lt;!--{{{--&gt;
@@ -4445,6 +4432,9 @@ bullet-item list (using the TiddlyWiki core {{{&lt;&lt;list filter ...&gt;&gt;}}
 2008.02.29 1.1.0 refactored to define store.matchTags() and extend store.filterTiddlers()
 2008.02.28 1.0.0 initial release
 &lt;&lt;&lt;</pre>
+</div>
+<div title="Media" creator="Roger Luo" modifier="Roger Luo" created="201309210808" modified="201309211202" changecount="18">
+<pre>[img(200px,+)[sven|pic/sven.png]]</pre>
 </div>
 <div title="MoveablePanelPackage" creator="Roger Luo" modifier="ELSDesignStudios" created="200811192223" modified="200901042052" tags="package MoveablePanelPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200901042052">
 <pre>&lt;html&gt;&lt;style&gt;
@@ -7766,6 +7756,19 @@ config.macros.relatedTiddlers={
 }
 //}}}</pre>
 </div>
+<div title="Sample" creator="Roger Luo" modifier="Roger Luo" created="201309210757" modified="201309211434" changecount="9">
+<pre>C# Scripts  
+&lt;code c#&gt;
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            InvokeDLL shell = new InvokeDLL();
+            shell.TestDllImportAttributeUsage();
+        }
+    }
+&lt;/code&gt;</pre>
+</div>
 <div title="SearchOptionsPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510181742" modified="201104081738" tags="DiscoveryPackage NavigationPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104081738">
 <pre>/***
 |Name|SearchOptionsPlugin|
@@ -8851,12 +8854,6 @@ Popup mouseover above label:
 &lt;/script&gt;
 }}}&lt;&lt;closeAll&gt;&gt;
 </pre>
-</div>
-<div title="SiteSubtitle" creator="Roger Luo" modifier="Roger Luo" created="201309220941" changecount="1">
-<pre>salvation lies within...</pre>
-</div>
-<div title="SiteTitle" creator="Roger Luo" modifier="Roger Luo" created="201309220940" changecount="1">
-<pre>Roger Luo's wiki</pre>
 </div>
 <div title="SnapshotPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200804210357" modified="201102141411" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201102141411">
 <pre>/***
@@ -11220,33 +11217,6 @@ you are installing in your own document.
 	&lt;div OFF_macro='moveablePanel name:{{story.findContainingTiddler(place).getAttribute(&quot;tiddler&quot;)}} height:auto'&gt;&lt;/div&gt;
 &lt;/div&gt; &lt;!-- end moveablePanel container --&gt;
 &lt;!--}}}--&gt;</pre>
-</div>
-<div title="language and region setting" creator="Roger Luo" modifier="Roger Luo" created="201309220944" modified="201309220944" tags="C C++ locale" changecount="2">
-<pre>[[print/cout与wprintf/wcout显示中文]]</pre>
-</div>
-<div title="print/cout与wprintf/wcout显示中文" creator="Roger Luo" modifier="Roger Luo" created="201309220945" modified="201309220945" tags="C C++ locale" changecount="2">
-<pre>!注意
-*调用cout、wcout的clear成员函数是为了清除错误状态，使后续输出能正常运行。
-*使用“cout&lt;&lt;endl”或“wcout&lt;&lt;endl”时，不仅会使输出文本换行，而且还会执行flush成员函数，提交缓冲区中的数据。使得cout、wcout的输出文本不会发生冲突。
-*printf/cout能输出中文是由于缺省的locale下能支持中文（因为中文是asci编码的）wprintf/wcout在缺省下中文是UCS2 little endian 编码的，所以需要修改相应的locale才能输出，对于wprintf需要使用函数setlocale，对于wcout需要使用wcout.imbue。
-&lt;code c++&gt;
-wcout.imbue(locale(&quot;chs&quot;));
-	setlocale(LC_CTYPE, &quot;chs&quot;);
-	wcout&lt;&lt;&quot;[Locale:&quot;&lt;&lt;string2wstring(wcout.getloc().name())&lt;&lt;&quot;]&quot;&lt;&lt;endl;
-	printf(&quot;printf(%%s):%s\n&quot;, psz);
-	printf(&quot;printf(%%ls):%s\n&quot;, pwsz);
-	cout&lt;&lt;&quot;cout:&quot;&lt;&lt;psz&lt;&lt;endl;
-
-	wprintf(L&quot;wprintf(%%s):%s\n&quot;, pwsz);
-	wprintf(L&quot;wprintf(%%ls):%ls\n&quot;, pwsz);
-	wcout&lt;&lt;L&quot;wcout:&quot;&lt;&lt;pwsz&lt;&lt;endl;
-	cout.clear(); cout.flush();
-	wcout.clear(); wcout.flush(); // &quot;&lt;&lt;endl&quot; trigger the flush function
-&lt;/code&gt;
-!!Reference
-http://www.baidu.com
-[[C/C++]]
-</pre>
 </div>
 </div>
 <!--POST-STOREAREA-->

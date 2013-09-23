@@ -926,18 +926,19 @@ __''other settings:''__
 2006.02.01 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201309222349" tags="C#" changecount="2">
+<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201309230107" tags="C#" changecount="3">
 <pre>[[HowTo Use C++ DLL]]</pre>
 </div>
-<div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201309220943" tags="C C++" changecount="2">
+<div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201309230554" tags="C C++" changecount="6">
 <pre>!Syntax
-
+[[Overload Operators]]
 !STL
 [[language and region setting]]
+[[Numberics]]
 
 !The third library
 [[boost]]
-[[WSAPI]]</pre>
+[[WWSAPI]]</pre>
 </div>
 <div title="CalendarPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200602212149" modified="201101042140" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201101042140">
 <pre>/***
@@ -3599,7 +3600,7 @@ After the browser has done its job, the wiki syntax sequences (including the &qu
 2005.06.26 1.0.0 Initial Release (as code adaptation - pre-dates TiddlyWiki plugin architecture!!)
 &lt;&lt;&lt;</pre>
 </div>
-<div title="HowTo Use C++ DLL" creator="Roger Luo" modifier="Roger Luo" created="201309222349" modified="201309222349" tags="c#" changecount="2">
+<div title="HowTo Use C++ DLL" creator="Roger Luo" modifier="Roger Luo" created="201309222349" modified="201309230107" tags="C#" changecount="3">
 <pre>*[[HowTo Use C++ DLL: Quick Start]]
 *[[Marshal Data type between manage code and native code]]</pre>
 </div>
@@ -4115,10 +4116,11 @@ loading a script from a source url:
 2005.11.08 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309221344" changecount="5">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309230221" changecount="6">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
+[[Miscellanies]]
 [[Favorite Blog]]</pre>
 </div>
 <div title="MarkupPostBody" creator="Roger Luo" modifier="ELSDesignStudios" created="200710051554" modified="200710051817" tags="CoreTiddlers" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200710051817">
@@ -4517,6 +4519,9 @@ bullet-item list (using the TiddlyWiki core {{{&lt;&lt;list filter ...&gt;&gt;}}
 2008.02.29 1.1.0 refactored to define store.matchTags() and extend store.filterTiddlers()
 2008.02.28 1.0.0 initial release
 &lt;&lt;&lt;</pre>
+</div>
+<div title="Miscellanies" creator="Roger Luo" modifier="Roger Luo" created="201309230221" changecount="1">
+<pre>[[细分发行版本类型]]</pre>
 </div>
 <div title="MoveablePanelPackage" creator="Roger Luo" modifier="ELSDesignStudios" created="200811192223" modified="200901042052" tags="package MoveablePanelPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200901042052">
 <pre>&lt;html&gt;&lt;style&gt;
@@ -6077,6 +6082,15 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 2005.11.03 1.0.0 initial public release
 &lt;&lt;&lt;</pre>
 </div>
+<div title="Numberics" creator="Roger Luo" modifier="Roger Luo" created="201309230335" modified="201309230336" tags="C C++" changecount="2">
+<pre>[[Random Numbers and Distributions]]</pre>
+</div>
+<div title="Overload Operators" creator="Roger Luo" modifier="Roger Luo" created="201309230603" modified="201309230738" tags="C++" changecount="20">
+<pre>!Overloadable Operators
+|*|-|*|/|%|^|&amp;|&quot;&quot;&quot;|&quot;&quot;&quot;|
+!NonOverloadable Operators
+</pre>
+</div>
 <div title="PageTemplate" creator="Roger Luo" modifier="Roger Luo" created="201309211417" modified="201309211438" server.type="file" server.host="http://www.tiddlytools.com" changecount="7">
 <pre>&lt;!--{{{--&gt;
 &lt;div class='header' role='banner' macro='gradient vert [[ColorPalette::PrimaryLight]] [[ColorPalette::PrimaryMid]]'&gt;
@@ -7182,6 +7196,24 @@ onclick=&quot;var p=Popup.create(this); if (!p) return false; p.className+=' sti
 	Popup.show();
 	event.cancelBubble=true;if(event.stopPropagation)event.stopPropagation();return false;&quot;
 &gt;split&lt;/a&gt;&lt;/html&gt;</pre>
+</div>
+<div title="Random Numbers and Distributions" creator="Roger Luo" modifier="Roger Luo" created="201309230336" modified="201309230349" tags="C C++ Random" changecount="3">
+<pre>!First Sample
+&lt;code c++&gt;
+#include &lt;random&gt;
+void PrepareRandomVector(std::vector&lt;int&gt;&amp; v, int min, int max, int len)
+{
+	v.clear(); v.reserve(len);
+
+	std::default_random_engine dre; //mt19937
+	std::uniform_int_distribution&lt;int&gt; di(min, max);
+	
+	for (int i = 0; i &lt; len; ++i) v.push_back(di(dre));
+
+	for (auto elem : v) std::cout &lt;&lt; elem &lt;&lt; &quot; &quot;;
+	std::cout &lt;&lt; std::endl;
+}
+&lt;/code&gt;</pre>
 </div>
 <div title="RearrangeTiddlersPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200607012228" modified="201011301922" tags="systemConfig NavigationPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201011301922">
 <pre>/***
@@ -9769,7 +9801,7 @@ In order to further aide in saving/restoring the list of tiddlers currently bein
 2007.10.05 1.0.0 initial release.   Moved [[SetDefaultTiddlers]] inline script and rewrote as a {{{&lt;&lt;saveStory&gt;&gt;}}} macro.  Moved permaview &quot;mouseover HREF&quot; enhancement from [[CoreTweaks]].
 &lt;&lt;&lt;</pre>
 </div>
-<div title="StyleSheet" modifier="sirx" created="200903111603" modified="201101140514" tags="setup stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="201101140514">
+<div title="StyleSheet" modifier="Roger Luo" created="200903111603" modified="201309230624" tags="setup stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="201101140514" changecount="8">
 <pre>/*{{{*/
 /* SHORTCUTS */
 [[StyleSheetShortcuts]]
@@ -9784,6 +9816,9 @@ In order to further aide in saving/restoring the list of tiddlers currently bein
 .scroll	{ display:block; overflow:auto; width:auto; max-height:8em; padding-bottom:.5em; }
 .scroll ul	{ margin:0; }
 .scroll li	{ white-space:nowrap; }
+.viewer tr.oddRow { background-color: #fff; }
+.viewer tr.evenRow { background-color: #ffc; }
+.viewer td { width: 50px; text-align: left; }
 *[id=&quot;mainMenu&quot;] .scroll li  /* MOZ ONLY */	{ margin-left:-2em; }
 
 /* ADJUSTMENTS TO STANDARD ELEMENTS */
@@ -11224,7 +11259,7 @@ if (store.showUnsaved_setDirty==undefined) {
 }
 //}}}</pre>
 </div>
-<div title="ViewTemplate" creator="Roger Luo" modifier="Roger Luo" created="200607140058" modified="201309220213" tags="CoreTiddlers template" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200904100026" changecount="4">
+<div title="ViewTemplate" creator="Roger Luo" modifier="Roger Luo" created="200607140058" modified="201309230226" tags="CoreTiddlers template" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200904100026" changecount="5">
 <pre>&lt;!--{{{--&gt;
 &lt;!--
 |Name|ViewTemplate|
@@ -11258,6 +11293,7 @@ you are installing in your own document.
 		&lt;span class='floatleft' macro='tiddlerIcons' style='cursor:auto !important;'&gt;&lt;/span&gt;
 		&lt;span macro='view title'&gt;&lt;/span&gt;
 	&lt;/span&gt;
+	&lt;span macro='view modifier link'&gt;&lt;/span&gt;, 
 	&lt;span class='subtitle' style='white-space:nowrap' macro='view modified date &quot;DDD, MMM DDth YYYY&quot;'&gt;&lt;/span&gt;
        (&lt;span macro='message views.wikified.createdPrompt'&gt;&lt;/span&gt; &lt;span macro='view created date &quot;DDD, MMM DDth YYYY&quot;'&gt;&lt;/span&gt;)
 	&lt;div class='tagClear'&gt;&lt;/div&gt;
@@ -11292,6 +11328,48 @@ you are installing in your own document.
 	&lt;div OFF_macro='moveablePanel name:{{story.findContainingTiddler(place).getAttribute(&quot;tiddler&quot;)}} height:auto'&gt;&lt;/div&gt;
 &lt;/div&gt; &lt;!-- end moveablePanel container --&gt;
 &lt;!--}}}--&gt;</pre>
+</div>
+<div title="WWSAPI" creator="Roger Luo" modifier="Roger Luo" created="201309230518" modified="201309230521" tags="C++ WCF" changecount="4">
+<pre>!!Get Started
+
+!!Client
+''Service Proxy Wrapper''
+&lt;code c++&gt;
+class WsServiceProxy
+{
+    WS_SERVICE_PROXY* m_h;
+public:
+    WsServiceProxy() : m_h(0)
+    {}
+    ~WsServiceProxy()
+    {
+        if (0 != m_h)
+        {
+            Close(0, 0); // error
+            WsFreeServiceProxy(m_h);
+        }
+    }
+    HRESULT Open(const WS_ENDPOINT_ADDRESS* address, 
+            const WS_ASYNC_CONTEXT* asyncContext, 
+            WS_ERROR* error)
+    {
+        return WsOpenServiceProxy(m_h, address, asyncContext, error);
+    }
+    HRESULT Close(const WS_ASYNC_CONTEXT* asyncContext, 
+            WS_ERROR* error)
+    {
+        return WsCloseServiceProxy(m_h, asyncContext, error);
+    }
+    WS_SERVICE_PROXY** operator&amp;()
+    {
+        return &amp;m_h;
+    }
+    operator WS_SERVICE_PROXY*() const
+    {
+        return m_h;
+    }
+};
+&lt;/code&gt;</pre>
 </div>
 <div title="language and region setting" creator="Roger Luo" modifier="Roger Luo" created="201309220944" modified="201309220944" tags="C C++ locale" changecount="2">
 <pre>[[print/cout与wprintf/wcout显示中文]]</pre>
@@ -11361,6 +11439,28 @@ you are installing in your own document.
 http://www.baidu.com
 [[C/C++]]
 </pre>
+</div>
+<div title="细分发行版本类型" creator="Roger Luo" modifier="Roger Luo" created="201309230222" modified="201309230223" tags="Miscellanies" changecount="2">
+<pre>!alpha版
+;内部测试版。α是希腊字母的第一个，表示最早的版本，一般用户不要下载这个版本，这个版本一般是作为技术预览的，很可能包含很多BUG，功能也不全，主要是给开发人员和测试人员测试和找BUG用的。
+!pre版
+;这个和alpha都属于预览版，但是这个公众也会很容易拿到，一般分M1，M2等。windows7 我想很多人都从M3开始关注的。
+!beta版
+;公开测试版。β是希腊字母的第二个，顾名思义，这个版本比alpha版发布得晚一些，这个版的软件其实已经很成熟了，大的BUG一般不会出现，面向公众测试，即“公测”，而且这个阶段版本的软件还可能会增加一些新的功能新的应用。
+!rc版
+;Release Candidate（候选版本），Candidate是候选人的意思，用在软件上就是候选版本。Release.Candidate.就是发行候选版本。和Beta版最大的差别在于Beta阶段会一直加入新的功能，但是到了RC版本，几乎就不会加入新的功能了，而主要着重于除错!该版本又较beta版更进一步了。
+!stable版
+;稳定版。这个一般商业软件中没有这个版本，据说是在开源软件中有这个版本。这个就是开源软件的最终发行版，用户可以放心大胆的用了。
+!RTM版
+;全称为Release to Manufacture。工厂版。改版程序已经固定，就差工厂包装、光盘印图案等工作了。
+!OEM版
+;厂商定制版。我们购买品牌机预装的就是oem版，呵呵，我的戴尔本就是装的vista oem版，自动激活。现在论坛里大量充斥着的就是各种各样的oem版了。
+!EVAL版
+;评估版。就是有30或者60天等使用期限的版本。
+!RTL版
+;Retail.(零售版)，这个版本就是真正发售的版本，有漂亮的包装、光盘、说明书等东西和高昂的价格。windows7上市时价钱一定也不会便宜的。
+!MSDN版
+;这个其实不是一个软件开发周期中的版本代号了，它是微软软件独有的，因为msdn的全称是”Microsoft Developer Network“。我们在论坛平常说msdn版更多意义上代表的是“原版””未修改版“的含义。</pre>
 </div>
 </div>
 <!--POST-STOREAREA-->

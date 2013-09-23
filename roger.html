@@ -2207,6 +2207,11 @@ window.invokeMacro = function(place,macro,params,wikifier,tiddler) {
 // // }}}}}}
 // // &lt;&lt;foldHeadings&gt;&gt;</pre>
 </div>
+<div title="Couldn't load this key (unable to open file)打开不了密钥文件" creator="Roger Luo" modifier="Roger Luo" created="201309231236" modified="201309231242" tags="GitHub" changecount="6">
+<pre>如果你在操作github的sync/pull遇到Couldn't load this key (unable to open file)等提示，如下图所示
+[img[pic/github/Picture_2013-09-23_20_34_16.png]]
+用文本编辑器打开@@color:#F00;//github项目///.git/config@@文件，查看puttykeyfile键对应的密钥的路径是否正确</pre>
+</div>
 <div title="DOMTweaksPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200707201333" modified="200707202111" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200707202111">
 <pre>/***
 |Name|DOMTweaksPlugin|
@@ -3174,6 +3179,10 @@ Story.prototype.scrollToSection=function(title,section) {
 You'll also need to enter your username for signing your edits: &lt;&lt;option txtUserName&gt;&gt;
 </pre>
 </div>
+<div title="GitHub" creator="Roger Luo" modifier="Roger Luo" created="201309231227" modified="201309231232" tags="GitHub" changecount="2">
+<pre>[[如何自动让pageant开机加载密钥]]
+[[Couldn't load this key (unable to open file)打开不了密钥文件]]</pre>
+</div>
 <div title="GotoPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200605052341" modified="200905221854" tags="NavigationPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200905221854">
 <pre>/***
 |Name|GotoPlugin|
@@ -4116,10 +4125,11 @@ loading a script from a source url:
 2005.11.08 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309230221" changecount="6">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309231226" changecount="7">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
+[[GitHub]]
 [[Miscellanies]]
 [[Favorite Blog]]</pre>
 </div>
@@ -6085,10 +6095,10 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 <div title="Numberics" creator="Roger Luo" modifier="Roger Luo" created="201309230335" modified="201309230336" tags="C C++" changecount="2">
 <pre>[[Random Numbers and Distributions]]</pre>
 </div>
-<div title="Overload Operators" creator="Roger Luo" modifier="Roger Luo" created="201309230603" modified="201309230738" tags="C++" changecount="20">
+<div title="Overload Operators" creator="Roger Luo" modifier="Roger Luo" created="201309230603" modified="201309231242" tags="C++" changecount="21">
 <pre>!Overloadable Operators
 |*|-|*|/|%|^|&amp;|&quot;&quot;&quot;|&quot;&quot;&quot;|
-!NonOverloadable Operators
+!~NonOverloadable Operators
 </pre>
 </div>
 <div title="PageTemplate" creator="Roger Luo" modifier="Roger Luo" created="201309211417" modified="201309211438" server.type="file" server.host="http://www.tiddlytools.com" changecount="7">
@@ -11439,6 +11449,12 @@ public:
 http://www.baidu.com
 [[C/C++]]
 </pre>
+</div>
+<div title="如何自动让pageant开机加载密钥" creator="Roger Luo" modifier="Roger Luo" created="201309231230" modified="201309231241" tags="GitHub" changecount="5">
+<pre>!windows
+*打开注册表，接着找到~HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\~CurrentVersion\Run
+*右键Run创建String Value键，同时将Key起Pageant，Value设为&quot;C:\open\~GitExtensions\~PuTTY\pageant.exe&quot; &quot;C:\dev\github\private.ppk&quot;
+*重启操作系统就可以看到pageant自动加载了github的密钥</pre>
 </div>
 <div title="细分发行版本类型" creator="Roger Luo" modifier="Roger Luo" created="201309230222" modified="201309230223" tags="Miscellanies" changecount="2">
 <pre>!alpha版

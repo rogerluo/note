@@ -7,6 +7,7 @@ var version = {title: "TiddlyWiki", major: 2, minor: 8, revision: 1, date: new D
 
 //]]>
 </script>
+	
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="copyright" content="
 TiddlyWiki created by Jeremy Ruston, (jeremy [at] osmosoft [dot] com)
@@ -4286,13 +4287,14 @@ loading a script from a source url:
 SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FROM syscolumns, systypes WHERE syscolumns.xusertype = systypes.xusertype AND syscolumns.id = object_id('table')
 &lt;/code&gt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309250137" changecount="12">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309251205" changecount="13">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
 [[MS SQL Server]]
 [[GitHub]]
 [[Visual Studio]]
+[[Windows]]
 [[Protocol]]
 [[Thomson Reuters]]
 [[Miscellanies]]
@@ -11625,15 +11627,24 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
+<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201309251206" tags="windows" changecount="2">
+<pre>[[Windows Command Usage]]</pre>
+</div>
+<div title="Windows Command Usage" creator="Roger Luo" modifier="Roger Luo" created="201309251311" modified="201309251312" tags="dos windows" changecount="4">
+<pre>;Query all installed service
+&lt;code dos&gt;
+sc query state= all
+&lt;/code&gt;</pre>
+</div>
 <div title="language and region setting" creator="Roger Luo" modifier="Roger Luo" created="201309220944" modified="201309220944" tags="C C++ locale" changecount="2">
 <pre>[[print/cout与wprintf/wcout显示中文]]</pre>
 </div>
-<div title="print/cout与wprintf/wcout显示中文" creator="Roger Luo" modifier="Roger Luo" created="201309220945" modified="201309221342" tags="C C++ locale" changecount="19">
+<div title="print/cout与wprintf/wcout显示中文" creator="Roger Luo" modifier="Roger Luo" created="201309220945" modified="201309251259" tags="C C++ locale" changecount="22">
 <pre>!注意
 *调用cout、wcout的clear成员函数是为了清除错误状态，使后续输出能正常运行。
 *使用“cout&lt;&lt;endl”或“wcout&lt;&lt;endl”时，不仅会使输出文本换行，而且还会执行flush成员函数，提交缓冲区中的数据。使得cout、wcout的输出文本不会发生冲突。
 *printf/cout能输出中文是由于缺省的locale下能支持中文（因为中文是asci编码的）wprintf/wcout在缺省下中文是UCS2 little endian 编码的，所以需要修改相应的locale才能输出，对于wprintf需要使用函数setlocale，对于wcout需要使用wcout.imbue。
-&lt;code c++&gt;
+&lt;code cpp&gt;
 	// ASCI: c4 e3 ba c3 20 ca c0 bd e7
 	const char * psz = &quot;你好 世界&quot;;			
 	// UCS2 little endian: 60 4f 7d 59 20 00 16 4e 4c 75

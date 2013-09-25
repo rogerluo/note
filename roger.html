@@ -937,8 +937,9 @@ __''other settings:''__
 !reference
 [[MSDN List|http://technet.microsoft.com/en-us/library/ms187786.aspx]]</pre>
 </div>
-<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201309241448" tags="C#" changecount="4">
+<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201309250147" tags="C#" changecount="6">
 <pre>[[HowTo Use C++ DLL]]
+[[C# The Third Library]]
 [[C# FAQ]]</pre>
 </div>
 <div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201309241452" tags="C#" changecount="3">
@@ -947,6 +948,11 @@ __''other settings:''__
 var prtDir = AppDomain.CurrentDomain.BaseDirectory;
 &lt;/code&gt;
 !How to link to the assembly by relative path? 如何通过</pre>
+</div>
+<div title="C# The Third Library" creator="Roger Luo" modifier="Roger Luo" created="201309250147" modified="201309250200" tags="C#" changecount="3">
+<pre>[[SharpSSH]]
+[[Ionic.Zip]]
+[[Ninject]]</pre>
 </div>
 <div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201309230554" tags="C C++" changecount="6">
 <pre>!Syntax
@@ -3819,6 +3825,9 @@ namespace tstInvokeDLL
 *Compile and run it
 [img(auto, auto)[pic/Picture_2013-09-23_07_44_58.png]]</pre>
 </div>
+<div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" tags="C# SSH OpenSource" changecount="1">
+<pre>Type the text for 'Howto: Send remote command'</pre>
+</div>
 <div title="ImageSizePlugin" modifier="ELSDesignStudios" created="200801180032" modified="201109031106" tags="IconPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201109031106">
 <pre>/***
 |Name|ImageSizePlugin|
@@ -4277,13 +4286,14 @@ loading a script from a source url:
 SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FROM syscolumns, systypes WHERE syscolumns.xusertype = systypes.xusertype AND syscolumns.id = object_id('table')
 &lt;/code&gt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309240651" changecount="11">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201309250137" changecount="12">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
 [[MS SQL Server]]
 [[GitHub]]
 [[Visual Studio]]
+[[Protocol]]
 [[Thomson Reuters]]
 [[Miscellanies]]
 [[Favorite Blog]]</pre>
@@ -6285,6 +6295,9 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 &lt;!--}}}--&gt;
 </pre>
 </div>
+<div title="Protocol" creator="Roger Luo" modifier="Roger Luo" created="201309250137" changecount="1">
+<pre>[[RFC]]</pre>
+</div>
 <div title="QuickEditPackage" creator="Roger Luo" modifier="ELSDesignStudios" created="200801120200" modified="200902211423" tags="package story QuickEditPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200902211423">
 <pre>This package provides a toolbar of interactive 'power tools' that you can use while editing a tiddler to quickly insert TiddlyWiki tiddler links, images, macros, etc. or common formatting sequences directly into tiddler content, as well as perform other functions (such as find/replace, sort, split, convert, etc.) that can be used to modify the current tiddler's source content in a variety of ways.
 
@@ -7361,6 +7374,9 @@ onclick=&quot;var p=Popup.create(this); if (!p) return false; p.className+=' sti
 	Popup.show();
 	event.cancelBubble=true;if(event.stopPropagation)event.stopPropagation();return false;&quot;
 &gt;split&lt;/a&gt;&lt;/html&gt;</pre>
+</div>
+<div title="RFC" creator="Roger Luo" modifier="Roger Luo" created="201309250138" modified="201309250138" tags="rfc" changecount="2">
+<pre>[[RFC2626: Hypertext Transfer Protocol -- HTTP/1.1|protocol/rfc/rfc2616.txt]]</pre>
 </div>
 <div title="Random Numbers and Distributions" creator="Roger Luo" modifier="Roger Luo" created="201309230336" modified="201309230349" tags="C C++ Random" changecount="3">
 <pre>!First Sample
@@ -8915,6 +8931,72 @@ default image style: {{stretch{&lt;&lt;option txtIconsCSS&gt;&gt;}}}
 2008.05.09 1.1.0 added support for external URLs and options for displaying text with images
 2008.05.09 1.0.0 initial release (as inline script)
 &lt;&lt;&lt;</pre>
+</div>
+<div title="SharpSSH" creator="Roger Luo" modifier="Roger Luo" created="201309250148" modified="201309250716" tags="C# SSH OpenSource" changecount="2">
+<pre>[[SharpSSH: Channels]]
+[[Howto: Send remote command]]</pre>
+</div>
+<div title="SharpSSH: Channels" creator="Roger Luo" modifier="Roger Luo" created="201309250718" modified="201309250729" tags="C# SSH OpenSource" changecount="11">
+<pre>;Class Hierarchy
+Channel is opened by @@color:#F00;//''openChannel''//@@, associated with specified session, which is created by jsch instance method @@color:#F00;''//getSession//''@@.
+&lt;code c#&gt;
+                JSch jsch = new JSch();
+                Session ssn = jsch.getSession(_usr, _hip, _hp);
+                System.Collections.Hashtable hashConfig = new Hashtable();
+                hashConfig.Add(&quot;StrictHostKeyChecking&quot;, &quot;No&quot;);
+                ssn.setConfig(hashConfig);
+                jsch.addIdentity(_ppk);
+                ssn.connect();
+                if (ssn.isConnected())
+                {
+                    Console.WriteLine(&quot;Log Successfully.&quot;);
+                    Channel chnnl = ssn.openChannel(&quot;sftp&quot;);
+		    chnnl.connect();
+                    chnnl.disconnect();
+                    ssn.disconnect();
+                }
+&lt;/code&gt;
+;Channel Category
+Here is the implement in SharpSSH.
+&lt;code c#&gt;
+		internal static Channel getChannel(String type)
+		{
+			if(type.Equals(&quot;session&quot;))
+			{
+				return new ChannelSession();
+			}
+			if(type.Equals(&quot;shell&quot;))
+			{
+				return new ChannelShell();
+			}
+			if(type.Equals(&quot;exec&quot;))
+			{
+				return new ChannelExec();
+			}
+			if(type.Equals(&quot;x11&quot;))
+			{
+				return new ChannelX11();
+			}
+			if(type.Equals(&quot;direct-tcpip&quot;))
+			{
+				return new ChannelDirectTCPIP();
+			}
+			if(type.Equals(&quot;forwarded-tcpip&quot;))
+			{
+				return new ChannelForwardedTCPIP();
+			}
+			if(type.Equals(&quot;sftp&quot;))
+			{
+				return new ChannelSftp();
+			}
+			if(type.Equals(&quot;subsystem&quot;))
+			{
+				return new ChannelSubsystem();
+			}
+			return null;
+		}
+&lt;/code&gt;
+</pre>
 </div>
 <div title="ShowAllIcons" creator="Roger Luo" modifier="Roger Luo" created="201309220339" modified="201309220523" tags="IconPackage" changecount="10">
 <pre>/%

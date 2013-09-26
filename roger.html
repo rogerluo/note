@@ -3826,7 +3826,7 @@ namespace tstInvokeDLL
 *Compile and run it
 [img(auto, auto)[pic/Picture_2013-09-23_07_44_58.png]]</pre>
 </div>
-<div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" tags="C# SSH OpenSource" changecount="1">
+<div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" modified="201309260812" tags="C# ssh OpenSource" changecount="2">
 <pre>Type the text for 'Howto: Send remote command'</pre>
 </div>
 <div title="ImageSizePlugin" modifier="ELSDesignStudios" created="200801180032" modified="201109031106" tags="IconPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201109031106">
@@ -6297,8 +6297,11 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 &lt;!--}}}--&gt;
 </pre>
 </div>
-<div title="Protocol" creator="Roger Luo" modifier="Roger Luo" created="201309250137" changecount="1">
-<pre>[[RFC]]</pre>
+<div title="Protocol" creator="Roger Luo" modifier="Roger Luo" created="201309250137" modified="201309260810" tags="protocol" changecount="4">
+<pre>!Command Protocols
+[[SSH]]
+!Reference
+[[RFC]]</pre>
 </div>
 <div title="QuickEditPackage" creator="Roger Luo" modifier="ELSDesignStudios" created="200801120200" modified="200902211423" tags="package story QuickEditPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200902211423">
 <pre>This package provides a toolbar of interactive 'power tools' that you can use while editing a tiddler to quickly insert TiddlyWiki tiddler links, images, macros, etc. or common formatting sequences directly into tiddler content, as well as perform other functions (such as find/replace, sort, split, convert, etc.) that can be used to modify the current tiddler's source content in a variety of ways.
@@ -8052,6 +8055,12 @@ config.macros.relatedTiddlers={
 	}
 }
 //}}}</pre>
+</div>
+<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201309260813" tags="ssh" changecount="4">
+<pre>!Introduction
+!Usage and Tools
+!FAQ
+[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]</pre>
 </div>
 <div title="SearchOptionsPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510181742" modified="201104081738" tags="DiscoveryPackage NavigationPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104081738">
 <pre>/***
@@ -11704,6 +11713,22 @@ sc query state= all
 http://www.baidu.com
 [[C/C++]]
 </pre>
+</div>
+<div title="use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201309260903" tags="ssh putty" changecount="27">
+<pre>;plink supports to use private key to access remote end, use @@color:#F00;//''-i''//@@ option. Here is the detail about this option.
+{{{
+  -i key    private key file for authentication
+}}}
+!convert openssh private key to putty private key
+if the private key is used @@color:#F00;//''openssh ssh-2''//@@, you should use puttygen.exe to convert the private format to putty's own.
+*Open puttygen.exe and import the target key by /File/Load private key/
+[img(25%, +)[pic/misc/Picture_2013-09-26_16_41_49.png]]
+*When open the private key's format is openssh2, the prompt windows from putty will be pop up
+[img(+, +)[pic/misc/Picture_2013-09-26_16_48_09.png]]
+*In &quot;@@color:#F00;''Action''@@&quot; section, click &quot;@@color:#F00;''Save private key''@@&quot; button to store the private key putty's own format.
+[img(+, +)[pic/misc/Picture_2013-09-26_16_51_16.png]]
+*Script Sample
+''@@color:#F00;plink.exe -C -l@@ username @@color:#F00;-pw@@ private key password hostip @@color:#F00;-P@@ hostport @@color:#F00;-i@@ ssh.ppk''</pre>
 </div>
 <div title="如何自动让pageant开机加载密钥" creator="Roger Luo" modifier="Roger Luo" created="201309231230" modified="201309231241" tags="GitHub" changecount="5">
 <pre>!windows

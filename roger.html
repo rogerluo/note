@@ -938,22 +938,126 @@ __''other settings:''__
 !reference
 [[MSDN List|http://technet.microsoft.com/en-us/library/ms187786.aspx]]</pre>
 </div>
-<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201309250147" tags="C#" changecount="6">
+<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201310070934" tags="C#" changecount="7">
 <pre>[[HowTo Use C++ DLL]]
 [[C# The Third Library]]
-[[C# FAQ]]</pre>
+[[C# FAQ]]
+[[C# invoke external binary by Process（c#调用外部程序）]]</pre>
 </div>
-<div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201309241452" tags="C#" changecount="3">
+<div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201309270341" tags="C#" changecount="6">
 <pre>!How to get the directory of current executable program? 如何获取当前执行程序的路径
 &lt;code c#&gt;
 var prtDir = AppDomain.CurrentDomain.BaseDirectory;
 &lt;/code&gt;
-!How to link to the assembly by relative path? 如何通过</pre>
+!How to link to the assembly by relative path? 如何通过
+!StandardOut has not been redirected or the process hasn't started yet.
+;InvalidOperationException
+The StandardOutput stream has not been defined for redirection; ensure ProcessStartInfo..::.RedirectStandardOutput is set to true and ProcessStartInfo..::.UseShellExecute is set to false. 
+Sample Code
+&lt;code csharp&gt;
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = BIN_PATH_PLINK;
+            _bash.StartInfo.Arguments = args;
+            _bash.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            _bash.StartInfo.UseShellExecute = false;
+            _bash.StartInfo.RedirectStandardOutput = true;
+
+            Console.WriteLine(args);
+            _bash.Start();
+
+            StreamReader sr = _bash.StandardOutput;
+            string line = sr.ReadLine();
+            _bash.StartInfo.RedirectStandardOutput = false;
+&lt;/code&gt;</pre>
 </div>
 <div title="C# The Third Library" creator="Roger Luo" modifier="Roger Luo" created="201309250147" modified="201309250200" tags="C#" changecount="3">
 <pre>[[SharpSSH]]
 [[Ionic.Zip]]
 [[Ninject]]</pre>
+</div>
+<div title="C# invoke external binary by Process（c#调用外部程序）" creator="Roger Luo" modifier="Roger Luo" created="201310070935" modified="201310071016" tags="C#" changecount="22">
+<pre>!如何调用外部程序
+调用CMD程序
+&lt;code csharp&gt;
+using System.Diagnostics;
+
+namespace testBashCmd
+{
+    class testCMD
+    {
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;ping&quot;;
+            _bash.StartInfo.Arguments = &quot;127.0.0.1 -n 3&quot;;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+    }
+}
+&lt;/code&gt;
+界面可以看到两个窗口，一个是系统自身的命令行窗口，另一个是调用process产生的。
+!如何显示窗口
+*如果想要子程序在父窗口运行，可以将~InvodeSimpleCMD函数修改如下
+&lt;code csharp&gt;
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;ping&quot;;
+            _bash.StartInfo.Arguments = &quot;127.0.0.1 -n 3&quot;;
+            _bash.StartInfo.UseShellExecute = false;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+&lt;/code&gt;
+在调用前设置~UseShellExecute属性为false，这样就会使用系统自身的窗口而不会产生额外的窗口。
+输出结果如下：
+{{{
+
+Pinging 127.0.0.1 with 32 bytes of data:
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+
+Ping statistics for 127.0.0.1:
+    Packets: Sent = 3, Received = 3, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+Press any key to continue . . .
+}}}
+*如果想要隐藏子窗口运行，可以设置~CreateNoWindow为true。
+&lt;code csharp&gt;
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;ping&quot;;
+            _bash.StartInfo.Arguments = &quot;127.0.0.1 -n 3&quot;;
+            _bash.StartInfo.CreateNoWindow = true;
+            _bash.StartInfo.UseShellExecute = false;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+&lt;/code&gt;
+只有一个父窗口，同时不会打印出子程序的输出信息，相当于隐藏了他。
+输出结果如下：
+{{{
+Press any key to continue . . .
+}}}
+''@@color:#F00;NOTE@@''
+~CreateNoWindow属性只能在~UseShellExecute为false才能有作用，且前者须为true才有作用。
+!如何控制UI界面显示
+*如果第三方程序是UI界面的，属性~WindowStyle可以控制其窗口显示初始状态
+&lt;code csharp&gt;
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;notepad&quot;;
+            _bash.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+&lt;/code&gt;
+这样记事本是最小化的</pre>
 </div>
 <div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201309230554" tags="C C++" changecount="6">
 <pre>!Syntax
@@ -3825,6 +3929,25 @@ namespace tstInvokeDLL
 &lt;/code&gt;
 *Compile and run it
 [img(auto, auto)[pic/Picture_2013-09-23_07_44_58.png]]</pre>
+</div>
+<div title="Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp" creator="Roger Luo" modifier="Roger Luo" created="201309270129" modified="201309270131" tags="ssh putty" changecount="3">
+<pre>!fingerprint
+If you are not using the SSH protocol, you can skip this section. 
+
+If you are using SSH to connect to a server for the first time, you will probably see a message looking something like this: 
+
+The server's host key is not cached in the registry. You
+have no guarantee that the server is the computer you
+think it is.
+The server's rsa2 key fingerprint is:
+ssh-rsa 1024 7b:e5:6f:a7:f4:f9:81:62:5c:e3:1f:bf:8b:57:6c:5a
+If you trust this host, hit Yes to add the key to
+PuTTY's cache and carry on connecting.
+If you want to carry on connecting just once, without
+adding the key to the cache, hit No.
+If you do not trust this host, hit Cancel to abandon the
+connection.
+</pre>
 </div>
 <div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" modified="201309260812" tags="C# ssh OpenSource" changecount="2">
 <pre>Type the text for 'Howto: Send remote command'</pre>
@@ -8056,11 +8179,13 @@ config.macros.relatedTiddlers={
 }
 //}}}</pre>
 </div>
-<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201309260813" tags="ssh" changecount="4">
+<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201309270119" tags="ssh" changecount="7">
 <pre>!Introduction
 !Usage and Tools
+[[Windows上SSH服务器的配置以及客户端的连接|http://www.cnblogs.com/xred/archive/2012/04/21/2461627.html]]
 !FAQ
-[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]</pre>
+[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]
+[[Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp]]</pre>
 </div>
 <div title="SearchOptionsPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510181742" modified="201104081738" tags="DiscoveryPackage NavigationPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104081738">
 <pre>/***

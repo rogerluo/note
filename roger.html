@@ -941,10 +941,16 @@ __''other settings:''__
 !reference
 [[MSDN List|http://technet.microsoft.com/en-us/library/ms187786.aspx]]</pre>
 </div>
-<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201309250147" tags="C#" changecount="6">
+<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201310080337" tags="C#" changecount="10">
 <pre>[[HowTo Use C++ DLL]]
 [[C# The Third Library]]
-[[C# FAQ]]</pre>
+[[C# FAQ]]
+[[C# invoke external binary by Process（c#调用外部程序）]]
+[[C# Build Errors And Exceptions]]</pre>
+</div>
+<div title="C# Build Errors And Exceptions" creator="Roger Luo" modifier="Roger Luo" created="201310080335" modified="201310080337" tags="C#" changecount="3">
+<pre>!Exception: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+检查string.format类似的函数中字符串格式的参数个数是否匹配</pre>
 </div>
 <div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201309241452" tags="C#" changecount="3">
 <pre>!How to get the directory of current executable program? 如何获取当前执行程序的路径
@@ -958,17 +964,116 @@ var prtDir = AppDomain.CurrentDomain.BaseDirectory;
 [[Ionic.Zip]]
 [[Ninject]]</pre>
 </div>
-<div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201310071314" tags="C C++" changecount="8">
+<div title="C# invoke external binary by Process（c#调用外部程序）" creator="Roger Luo" modifier="Roger Luo" created="201310070935" modified="201310080115" tags="C#" server.type="file" server.host="file:///C:/Roger/github/note/roger%20-%20Copy.html" server.page.revision="201310071016" changecount="1">
+<pre>!如何调用外部程序
+调用CMD程序
+&lt;code csharp&gt;
+using System.Diagnostics;
+
+namespace testBashCmd
+{
+    class testCMD
+    {
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;ping&quot;;
+            _bash.StartInfo.Arguments = &quot;127.0.0.1 -n 3&quot;;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+    }
+}
+&lt;/code&gt;
+界面可以看到两个窗口，一个是系统自身的命令行窗口，另一个是调用process产生的。
+!如何显示窗口
+*如果想要子程序在父窗口运行，可以将~InvodeSimpleCMD函数修改如下
+&lt;code csharp&gt;
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;ping&quot;;
+            _bash.StartInfo.Arguments = &quot;127.0.0.1 -n 3&quot;;
+            _bash.StartInfo.UseShellExecute = false;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+&lt;/code&gt;
+在调用前设置~UseShellExecute属性为false，这样就会使用系统自身的窗口而不会产生额外的窗口。
+输出结果如下：
+{{{
+
+Pinging 127.0.0.1 with 32 bytes of data:
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+
+Ping statistics for 127.0.0.1:
+    Packets: Sent = 3, Received = 3, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+Press any key to continue . . .
+}}}
+*如果想要隐藏子窗口运行，可以设置~CreateNoWindow为true。
+&lt;code csharp&gt;
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;ping&quot;;
+            _bash.StartInfo.Arguments = &quot;127.0.0.1 -n 3&quot;;
+            _bash.StartInfo.CreateNoWindow = true;
+            _bash.StartInfo.UseShellExecute = false;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+&lt;/code&gt;
+只有一个父窗口，同时不会打印出子程序的输出信息，相当于隐藏了他。
+输出结果如下：
+{{{
+Press any key to continue . . .
+}}}
+''@@color:#F00;NOTE@@''
+~CreateNoWindow属性只能在~UseShellExecute为false才能有作用，且前者须为true才有作用。
+!如何控制UI界面显示
+*如果第三方程序是UI界面的，属性~WindowStyle可以控制其窗口显示初始状态
+&lt;code csharp&gt;
+        static public void InvodeSimpleCMD()
+        {
+            Process _bash = new Process();
+            _bash.StartInfo.FileName = &quot;notepad&quot;;
+            _bash.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            _bash.Start();
+            _bash.WaitForExit();
+        }
+&lt;/code&gt;
+这样记事本是最小化的</pre>
+</div>
+<div title="C++类结构" creator="Roger Luo" modifier="Roger Luo" created="201310080528" modified="201310080543" tags="C++" changecount="5">
+<pre>!静态数据成员
+类体中的数据成员的声明前加上static关键字，该数据成员就成为了该类的静态数据成员。和其他数据成员一样，静态数据成员也遵守public/protected/private访问规则。同时，静态数据成员还具有以下特点：
+#静态数据成员的定义。 静态数据成员实际上是类域中的全局变量。所以，静态数据成员的定义(初始化)不应该被放在头文件中。 注：不要试图在头文件中定义(初始化)静态数据成员。在大多数的情况下，这样做会引起重复定义这样的错误。即使加上#ifndef #define #endif或者#pragma once也不行。
+#
+!虚函数
+请参考[[虚函数技术]]</pre>
+</div>
+<div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201310080534" tags="C C++" changecount="15">
 <pre>!Syntax
 [[Overload Operators]]
-[[Virtual Function]]
+[[C++类结构]]
+[[多态]]
+[[虚函数技术]]
+
 !STL
 [[language and region setting]]
 [[Numberics]]
 
 !The third library
 [[boost]]
-[[WWSAPI]]</pre>
+[[WWSAPI]]
+
+!常见错误
+[[VisualC++常见错误]]
+[[GNUG++常见错误]]</pre>
 </div>
 <div title="CalendarPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200602212149" modified="201101042140" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201101042140">
 <pre>/***
@@ -3829,6 +3934,25 @@ namespace tstInvokeDLL
 &lt;/code&gt;
 *Compile and run it
 [img(auto, auto)[pic/Picture_2013-09-23_07_44_58.png]]</pre>
+</div>
+<div title="Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp" creator="Roger Luo" modifier="Roger Luo" created="201309270129" modified="201309270131" tags="ssh putty" server.type="file" server.host="file:///C:/Roger/github/note/roger%20-%20Copy.html" server.page.revision="201309270131">
+<pre>!fingerprint
+If you are not using the SSH protocol, you can skip this section. 
+
+If you are using SSH to connect to a server for the first time, you will probably see a message looking something like this: 
+
+The server's host key is not cached in the registry. You
+have no guarantee that the server is the computer you
+think it is.
+The server's rsa2 key fingerprint is:
+ssh-rsa 1024 7b:e5:6f:a7:f4:f9:81:62:5c:e3:1f:bf:8b:57:6c:5a
+If you trust this host, hit Yes to add the key to
+PuTTY's cache and carry on connecting.
+If you want to carry on connecting just once, without
+adding the key to the cache, hit No.
+If you do not trust this host, hit Cancel to abandon the
+connection.
+</pre>
 </div>
 <div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" modified="201309260812" tags="C# ssh OpenSource" changecount="2">
 <pre>Type the text for 'Howto: Send remote command'</pre>
@@ -11689,9 +11813,6 @@ you are installing in your own document.
 &lt;/div&gt; &lt;!-- end moveablePanel container --&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
-<div title="Virtual Function" creator="Roger Luo" modifier="Roger Luo" created="201310071314" modified="201310071317" tags="C++" changecount="2">
-<pre>[[虚函数的实现机制]]</pre>
-</div>
 <div title="Visual Studio" creator="Roger Luo" modifier="Roger Luo" created="201309240144" tags="VS" changecount="1">
 <pre>[[Code Coverage For C/C++]]
 [[Code Coverage For C#]]</pre>
@@ -11881,6 +12002,9 @@ if the private key is used @@color:#F00;//''openssh ssh-2''//@@, you should use 
 高房价的话题咱们不谈了，留给那些XX代表吧。谈一谈房子设施出现损坏后，为什么维修事宜这么纠结的问题。其实维修的问题，本质就是一个钱的问题——维修费谁出？假如说你借了别人一支铅笔，结果还回去的时候铅笔断掉了，那么这个问题想必大家都不会有什么异议，你该赔对方一支铅笔。但是租房的事情，相比之下就复杂得多了。借 铅笔一来一回不过一小会儿最多也就几天时间，铅笔断了自然是你赔而不是铅笔的自然磨损。但是房屋的租期很长，一般起码是一年，这么长时间之内，任何东西都 有可能出现正常的损坏，那么这个损坏该由谁来承担维修/赔偿责任，则是一个见仁见智的问题了。抛开中介从中作祟的因素，假如你租了一套房子，租了半年之后 电视机坏了，电视机毕竟不是新的(已经用了好几年了)，你也没有对电视机进行过任何人为损坏，只是正常使用，那么你觉得这个维修的钱该不该你出呢？但是， 换一个角度来讲，假如你是房东，你又觉得这钱该谁出呢？我房子租给你的时候电视机好好的，你住了半年就坏了，不是你修该谁修？矛盾就在这里，对于这种不太说得清楚的“自然损坏/老化”和“人为损坏”，并不是很好鉴别，大家各自站在自己的立场，有些道理也很难讲通。各执一词的结果就是扯皮，就是纠结。这时候如果再加上一个中介在中间添乱、搅和，那事情必定更加纠结。其实如果双方都是人品好的人，这种问题大家商量一下，互相让点步也就解决了，但是林子大了什么鸟都有，万一遇上任何一方人品欠佳，那么这个问题就有够扯了。另 外，还有一种情况会导致这个问题更加无法调和。比如这个房子房东租给某中介，租了5年。其间住过很多拨人，可能中介还把这套房子互相串来串去过好几次。你 是最后一拨住进去的，你进去的时候房子已经和4年前差别很大了，坏了很多东西，这些损坏的东西中介可能找原来的人赔了钱，可能没有，但这都没有区别，因为 这些钱是不会回到房东手里的。蛋疼的地方来了，等你老老实实住了1年，什么玩艺也没有弄坏，交房了，房东一看房子，我靠这TM是我的房子 吗？XXXXXXXXXXXX都坏了。于是要你赔钱。那你肯定不干啊，东西又不是你弄坏的。那房东肯定也不干啊，那么多东西坏了，没人赔哪成啊。你们去找 中介评理？中介绝对两手一摊：不好意思这房子之前不是我们在出租，是别的中介，房子的问题业主和租客你们自己协商解决吧，我们只是中介啊。合同不合同的，完全可以无视，全中国搞法律的人都知道，合同就是扯淡的玩意。由 于这个矛盾这样难以调和，中介公司一般会专门成立一个负责维修事务的部门，一般会有个维修经理/专员一类的。他们的业务模式是，租房给你、跟你办房屋交割 的人，是销售人员；你办退房的时候，接待你的又是维修专员，所以跟本不是同一个人，出了问题维修人员把责任一推“当时你租房时房子什么样我不知道，单子上 就是这么写的”。并且销售人员流动很频繁的，很多时候你租满一年，之前租房给你那个人早就辞职走了，想扯皮都根本找不到人。 
 就写到这里吧。总的来说，租房的确是一件蛋疼的事情。但是房子还是要租的，日子还是要过的~</pre>
 </div>
+<div title="多态" creator="Roger Luo" modifier="Roger Luo" created="201310080457" modified="201310080503" tags="C++" changecount="4">
+<pre>多态，简而言之就是用父类型别的指针指向其子类的实例，然后通过父类的指针调用实际子类的成员函数。这种技术可以让父类的指针有“多种形态”，这是一种泛型技术。所谓泛型技术，说白了就是试图使用不变的代码来实现可变的算法。比如：模板技术，RTTI技术，[[虚函数技术]]，要么是试图做到在编译时决议，要么试图做到运行时决议。</pre>
+</div>
 <div title="如何自动让pageant开机加载密钥" creator="Roger Luo" modifier="Roger Luo" created="201309231230" modified="201309231241" tags="GitHub" changecount="5">
 <pre>!windows
 *打开注册表，接着找到~HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\~CurrentVersion\Run
@@ -11920,7 +12044,10 @@ if the private key is used @@color:#F00;//''openssh ssh-2''//@@, you should use 
 !MSDN版
 ;这个其实不是一个软件开发周期中的版本代号了，它是微软软件独有的，因为msdn的全称是”Microsoft Developer Network“。我们在论坛平常说msdn版更多意义上代表的是“原版””未修改版“的含义。</pre>
 </div>
-<div title="虚函数的实现机制" creator="Roger Luo" modifier="Roger Luo" created="201310071317" modified="201310071542" tags="C++" changecount="2">
+<div title="虚函数技术" creator="Roger Luo" modifier="Roger Luo" created="201310071314" modified="201310080503" tags="C++" changecount="3">
+<pre>[[虚函数的实现机制]]</pre>
+</div>
+<div title="虚函数的实现机制" creator="Roger Luo" modifier="Roger Luo" created="201310071317" modified="201310080502" tags="C++" changecount="3">
 <pre></pre>
 </div>
 <div title="金秋北京之旅 20130927-20131003" creator="Roger Luo" modifier="Roger Luo" created="201310051121" modified="201310051212" changecount="4">

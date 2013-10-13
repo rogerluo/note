@@ -11888,8 +11888,66 @@ sc query state= all
 <pre>!Useful Link
 [[runnable|http://runnable.com/]]</pre>
 </div>
-<div title="javascript" creator="Roger Luo" modifier="Roger Luo" created="201310100957" tags="javascript" changecount="1">
-<pre>[[jQuery]]</pre>
+<div title="javascript" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201310120823" tags="javascript" changecount="3">
+<pre>[[javascript Learning]]
+[[jQuery]]</pre>
+</div>
+<div title="javascript Learning" creator="Roger Luo" modifier="Roger Luo" created="201310120239" modified="201310120930" tags="javascript" changecount="9">
+<pre>JavaScript is untyped.
+A variable should be declared before to use it.
+If a variable defined without initial value, its value is @@color:#F00;undefined@@.
+allow repeated declaration for variables, even the declaration with initial value.
+If you attempt to read the value of an undeclared variable, JavaScript generates an error. If you
+assign a value to a variable that you have not declared with var, JavaScript implicitly declares
+that variable for you. Note, however, that implicitly declared variablesare always created as
+global variables,  even if they are used within the body of a function. To prevent the creation of a
+global variable (or the use of an existing global variable) when you meant to create a local
+variable to use within a single function, you must always use the varstatement within function
+bodies. It's best to use varfor all variables, whether global or local. 
+
+Numbers, boolean values, and the nulland
+undefinedtypes are primitive. Objects, arrays, and functions are reference types.
+
+Variables hold the actual values of primitive types, but they hold only references
+to the values of reference types.
+
+strings are immutable : there is no way to change the contents of a string
+value. 
+
+strings, objects, and arrays do not have a fixed size, storage for them must be allocated
+dynamically. The JavaScript interpreter can detect when an object will never again be used by the program.
+
+Variables in JavaScript are fundamentally the same as object properties.
+
+In @@color:#F00;top-level@@ code (i.e., JavaScript code that is not part of a function), you can use the JavaScript keyword @@color:#00F;this @@to refer to the global object. 
+
+global variables are properties of a global objectand that local variables are properties of a special call object.
+
+the comma operator can combine a number of expressions into a single expression. 
+JavaScript also has a way to combine a number of statements into a single statement, or statement block. 
+
+statement block does notend with a semicolon. 
+
+@@color:#00F;if@@ statement: null, undefined, 0, &quot;&quot;, or NaN, seems as false.
+
+The rule in JavaScript (as in most programming languages) is that by default an //@@color:#F00;else@@// clause is
+part of the nearest //@@color:#F00;if@@// statement.
+
+switch statement
+&lt;code javascript&gt;
+function convert(x) {
+    switch (typeof x) {
+        case 'number': // Convert the number to a hexadecimal integer
+            return x.toString(16);
+        case 'string': // Return the string enclosed in quotes
+            return '&quot;' + x + '&quot;';
+        case 'boolean': // Convert to TRUE or FALSE, in uppercase
+            return x.toString().toUpperCase();
+        default: // Convert any other type in the usual way
+            return x.toString()
+    }
+}
+&lt;/code&gt;</pre>
 </div>
 <div title="language and region setting" creator="Roger Luo" modifier="Roger Luo" created="201309220944" modified="201309220944" tags="C C++ locale" changecount="2">
 <pre>[[print/cout与wprintf/wcout显示中文]]</pre>

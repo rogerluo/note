@@ -4017,11 +4017,11 @@ NAT模式是最简单的实现虚拟机上网的方式，你可以这样理解�
 !!Reference
 [[VMware支持三种类型的网络：NAT，Bridged，Host-only]]</pre>
 </div>
-<div title="Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp" creator="Roger Luo" modifier="Roger Luo" created="201309270129" modified="201309270131" tags="ssh putty" server.type="file" server.host="file:///C:/Roger/github/note/roger%20-%20Copy.html" server.page.revision="201309270131">
+<div title="Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp" creator="Roger Luo" modifier="Roger Luo" created="201309270129" modified="201310211037" tags="ssh putty" server.type="file" server.host="file:///C:/Roger/github/note/roger%20-%20Copy.html" server.page.revision="201309270131" changecount="8">
 <pre>!fingerprint
 If you are not using the SSH protocol, you can skip this section. 
 
-If you are using SSH to connect to a server for the first time, you will probably see a message looking something like this: 
+If you are using SSH to connect to a server for the @@color:#F00;''first ''@@time, you will probably see a message looking something like this: 
 
 The server's host key is not cached in the registry. You
 have no guarantee that the server is the computer you
@@ -4029,12 +4029,18 @@ think it is.
 The server's rsa2 key fingerprint is:
 ssh-rsa 1024 7b:e5:6f:a7:f4:f9:81:62:5c:e3:1f:bf:8b:57:6c:5a
 If you trust this host, hit Yes to add the key to
-PuTTY's cache and carry on connecting.
+~PuTTY's cache and carry on connecting.
 If you want to carry on connecting just once, without
 adding the key to the cache, hit No.
 If you do not trust this host, hit Cancel to abandon the
 connection.
-</pre>
+
+!host key
+*For Linux system, the host key will be stored under ~/.ssh/known_host
+*For Windows system, the host key will be stored under the regedit: &lt;br&gt;~HKEY_CURRENT_USER\Software\~SimonTatham\~PuTTY\~SshHostKeys
+
+!Resolution
+*For Windows, use command line script to automatically input 'Y' when firstly access the server:&lt;br&gt;{{{echo Y | plink -l username -pw password 192.168.1.100 pwd}}}</pre>
 </div>
 <div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" modified="201309260812" tags="C# ssh OpenSource" changecount="2">
 <pre>Type the text for 'Howto: Send remote command'</pre>
@@ -8367,9 +8373,10 @@ config.macros.relatedTiddlers={
 }
 //}}}</pre>
 </div>
-<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201309260813" tags="ssh" changecount="4">
+<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201310211015" tags="ssh" changecount="5">
 <pre>!Introduction
 !Usage and Tools
+[[putty]]
 !FAQ
 [[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]</pre>
 </div>
@@ -12151,7 +12158,11 @@ http://www.baidu.com
 [[C/C++]]
 </pre>
 </div>
-<div title="use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201309260903" tags="ssh putty" changecount="27">
+<div title="putty" creator="Roger Luo" modifier="Roger Luo" created="201310211015" modified="201310211016" changecount="2">
+<pre>[[Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp]]
+[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]</pre>
+</div>
+<div title="use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201310211037" tags="ssh putty" changecount="28">
 <pre>;plink supports to use private key to access remote end, use @@color:#F00;//''-i''//@@ option. Here is the detail about this option.
 {{{
   -i key    private key file for authentication

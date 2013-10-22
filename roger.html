@@ -522,9 +522,30 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201309240701" tags="ThomsonReuters" changecount="3">
-<pre>[[DB Design]]
+<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201310220731" tags="ThomsonReuters" changecount="4">
+<pre>[[Admin DB FAQ]]
 [[EVAI-3663:Restore VAH Archieve files]]</pre>
+</div>
+<div title="Admin DB FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309240753" modified="201310220824" tags="ThomsonReuters" changecount="15">
+<pre>!install admin db
+*requires installer file: ''~EVAADBInstaller9946.msi'', ''~EVAADBInstaller11875.msi'', and the ''~EVAADBInstaller.msi'',&lt;br&gt;the former two packages is historical files, required; the later one could be downloaded under jenkin website.
+*If you do not have installed any db script for admin, please create the batch and then copy these scripts into the batch file.
+&lt;code bash&gt;
+msiexec.exe /i &quot;C:\EVAADBInstaller9946.msi&quot; EVAIDBNAME=EVAI EVAIPRODDBNAME=EVAIProd INSTALLLEVEL=2
+msiexec.exe /i &quot;C:\EVAADBInstaller9946.msi&quot; EVAIDBNAME=EVAI EVAIPRODDBNAME=EVAIProd INSTALLLEVEL=2
+msiexec.exe /x &quot;C:\EVAADBInstaller9946.msi&quot;
+msiexec.exe /i &quot;C:\EVAADBInstaller11875.msi&quot; EVAIDBNAME=EVAI EVAIPRODDBNAME=EVAIProd INSTALLLEVEL=2
+msiexec.exe /x &quot;C:\EVAADBInstaller11875.msi&quot;
+msiexec.exe /i &quot;C:\EVAADBInstaller.msi&quot; EVAIDBNAME=EVAI EVAIPRODDBNAME=EVAIProd INSTALLLEVEL=2
+msiexec.exe /x &quot;C:\EVAADBInstaller.msi&quot;
+&lt;/code&gt;
+*If you already has installed some previous version of admin's DB, please find the branch on sami server to install different branch &lt;br&gt;{{{EVAA_Branch_1.x\MasterBuild\EVAAInstaller\EVAADBInstaller\SQLUpgradeScripts\Upgrade.sql}}}&lt;br&gt;For example, if you installed 1.1 already, go to find the 1.2, 1.5 and 1.6 branch, under the same directory to install upgrade.sql
+!logon on db
+*On the local machine, use windows authentication logon
+*On remote machine, use sql account, evaiuser/Tin.netSA
+!If you want to insert a new sub menuitem into ADMIN's main menu
+*For existence product(means VAA type), you should execute insert sql into EVAI.MENU table
+</pre>
 </div>
 <div title="Algorithm" creator="Roger Luo" modifier="Roger Luo" created="201309291408" tags="algorithm" changecount="1">
 <pre>[[QuickSort]]</pre>
@@ -2453,10 +2474,6 @@ window.invokeMacro = function(place,macro,params,wikifier,tiddler) {
 <pre>如果你在操作github的sync/pull遇到Couldn't load this key (unable to open file)等提示，如下图所示
 [img[pic/github/Picture_2013-09-23_20_34_16.png]]
 用文本编辑器打开@@color:#F00;//github项目///.git/config@@文件，查看puttykeyfile键对应的密钥的路径是否正确。</pre>
-</div>
-<div title="DB Design" creator="Roger Luo" modifier="Roger Luo" created="201309240753" tags="ThomsonReuters" changecount="1">
-<pre>!If you want to insert a new sub menuitem into ADMIN's main menu
-*For existence product(means VAA type), you should execute insert sql into EVAI.MENU table</pre>
 </div>
 <div title="DOMTweaksPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200707201333" modified="200707202111" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200707202111">
 <pre>/***

@@ -1806,6 +1806,26 @@ config.macros.foldFirst = {
 &lt;div class='tagClear'&gt;&lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
+<div title="Config apt get source on Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221058" modified="201310221107" tags="ubuntu linux apt-get" changecount="2">
+<pre>!Common commands
+!Config source list
+sudo vim /etc/apt/sources.list
+*BJTU  北京交通大学开源
+{{{
+deb http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION main multiverse restricted universe
+deb http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-backports main multiverse restricted universe
+deb http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-proposed main multiverse restricted universe
+deb http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-security main multiverse restricted universe
+deb http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-updates main multiverse restricted universe
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION main multiverse restricted universe
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-backports main multiverse restricted universe
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-proposed main multiverse restricted universe
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-security main multiverse restricted universe
+deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-updates main multiverse restricted universe
+}}}
+replace UBUNTU_VERSION to be exactly your ubuntu version.
+</pre>
+</div>
 <div title="CoreTweaks" modifier="ELSDesignStudios" created="200608201502" modified="201112270158" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201112270158">
 <pre>/***
 |Name|CoreTweaks|
@@ -3340,6 +3360,16 @@ SiteTitle
 ----
 &lt;&lt;editTiddler FavoriteTiddlers &quot;edit favorites...&quot;&gt;&gt;</pre>
 </div>
+<div title="Find your Ubuntu or Kernerl Version" creator="Roger Luo" modifier="Roger Luo" created="201310221107" modified="201310221109" tags="ubuntu linux" changecount="10">
+<pre>* GUI Method:&lt;br&gt;{{{System &gt; About Ubuntu}}}
+* Command Line Method:&lt;br&gt;
+{{{cat /etc/issue}}}
+cat /etc/lsb-release
+    uname -a : print all information
+    uname -r : print the kernel release
+    uname -v : print the kernel version
+    uname -o : print the operating system</pre>
+</div>
 <div title="FoldHeadingsPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200712011624" modified="200912010134" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200912010134">
 <pre>/***
 |Name|FoldHeadingsPlugin|
@@ -4523,7 +4553,7 @@ loading a script from a source url:
 SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FROM syscolumns, systypes WHERE syscolumns.xusertype = systypes.xusertype AND syscolumns.id = object_id('table')
 &lt;/code&gt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201310201323" changecount="22">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201310221054" changecount="23">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
@@ -4535,6 +4565,7 @@ SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FRO
 [[GitHub]]
 [[Visual Studio]]
 [[Windows]]
+[[Ubuntu]]
 [[Protocol]]
 [[Physics]]
 [[Chemistry]]
@@ -11437,6 +11468,11 @@ onclick=&quot;
 </div>
 <div title="Travel" creator="Roger Luo" modifier="Roger Luo" created="201310051121" tags="travel" changecount="1">
 <pre>[[金秋北京之旅 20130927-20131003]]</pre>
+</div>
+<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201310221105" tags="ubuntu linux" changecount="2">
+<pre>!FAQ
+[[Config apt get source on Ubuntu]]
+[[Find your Ubuntu or Kernerl Version]]</pre>
 </div>
 <div title="UndoPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="201105172013" modified="201109112316" tags="systemConfig" server.title="UndoPlugin" server.page.revision="201109112316" server.etag="&quot;pasteup_public/UndoPlugin/703;4f5c36462e4c510a736472173b353b8deb14cc8f&quot;" server.workspace="bags/pasteup_public" server.type="file" server.host="http://www.tiddlytools.com" server.recipe="pasteup_private" server.bag="pasteup_public" server.permissions="read, write, create, delete" server.content-type="" _hash="f7d20cf61c8426f5626a0f6b806e93471d512c55">
 <pre>/***

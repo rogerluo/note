@@ -1080,12 +1080,13 @@ Press any key to continue . . .
 !虚函数
 请参考[[虚函数技术]]</pre>
 </div>
-<div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201310100624" tags="C C++" changecount="16">
+<div title="C/C++" creator="Roger Luo" modifier="Roger Luo" created="201309220943" modified="201310280903" tags="C C++" changecount="19">
 <pre>!Syntax
 [[Overload Operators]]
 [[C++类结构]]
 [[多态]]
 [[虚函数技术]]
+[[函数指针]]
 
 !STL
 [[language and region setting]]
@@ -1094,6 +1095,8 @@ Press any key to continue . . .
 !The third library
 [[boost]]
 [[WWSAPI]]
+
+[[HowTo: C++]]
 
 !常见错误
 [[VisualC++常见错误]]
@@ -4002,6 +4005,10 @@ namespace tstInvokeDLL
 &lt;/code&gt;
 *Compile and run it
 [img(auto, auto)[pic/Picture_2013-09-23_07_44_58.png]]</pre>
+</div>
+<div title="HowTo: C++" creator="Roger Luo" modifier="Roger Luo" created="201310280905" modified="201310280905" tags="C++" changecount="2">
+<pre>;函数指针指向了基类虚函数，能否调用其派生类实现的虚函数？
+:可以的，跟使用基类指针一样。具体详见[[函数指针]]</pre>
 </div>
 <div title="HowTo: Config network on VirtualBox" creator="Roger Luo" modifier="Roger Luo" created="201310201315" modified="201310201332" tags="virtualbox" changecount="10">
 <pre>VirtualBox中有4中网络连接方式：
@@ -12194,10 +12201,13 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
-<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201310201337" tags="windows" changecount="5">
+<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201310280342" tags="windows" changecount="7">
 <pre>[[Windows Command Usage]]
 [[windows8与windows8.1技巧]]
-[[Windows Debug]]</pre>
+[[Windows Debug]]
+!HowTo: Enhance Security Configuration disable on win2003 and win2008
+*For 2003, control panel&gt;Add or remove programs&gt;Add/Remove windows components&gt;uncheck the &quot;Intenet Explorer Enhanced Security Configuration&quot;.
+*For 2008, run&gt;servermanager.msc&gt;Security Information&gt;Configure IE ESC</pre>
 </div>
 <div title="Windows Command Usage" creator="Roger Luo" modifier="Roger Luo" created="201309251311" modified="201309251312" tags="dos windows" changecount="4">
 <pre>;Query all installed service
@@ -12205,7 +12215,7 @@ public:
 sc query state= all
 &lt;/code&gt;</pre>
 </div>
-<div title="Windows Debug" creator="Roger Luo" modifier="Roger Luo" created="201310201337" modified="201310201507" tags="windows debug windbg" changecount="14">
+<div title="Windows Debug" creator="Roger Luo" modifier="Roger Luo" created="201310201337" modified="201310280402" tags="windows debug windbg" changecount="31">
 <pre>!!内核调试的配置及分析工具介绍
 *Windbg
 *Symbol
@@ -12231,6 +12241,59 @@ Note:有很多信息在public symbol中是看不到的，但是这些信息只�
 
 ;Symbol Path
 The debugger's symbol path is a string that consists of multiple directory paths, separated by semicolons. 
+
+;HowTo Set SymbolPath
+*open windbg.exe &gt; press &quot;ctrl+s&quot; &gt; paste &lt;br&gt;{{{SRV*c:\symbols*http://msdl.microsoft.com/download/symbols}}}
+*Set the _NT_SYMBOL_PATH environment variable 
+*Use the -y command line option.
+*Use the .sympath (Set Symbol Path) debugger meta-command
+
+!!~LiveKD
+;background
+:~LiveKD工具是一个用来实时调试内核的工具，与 Windbg一起使用。使用时需要网络连接，以下载相应的SYMBOL文件。
+;installation
+:~LiveKD v5.0 http://technet.microsoft.com/en-us/sysinternals/bb897415.aspx
+;usage
+:copy the livekd.exe under windbg's installation directory and then use administrator's cmd to run such script:&lt;br&gt;{{{livekd -w}}}&lt;br&gt;after that, you could debug the kernel directly.
+&lt;code bash&gt;
+Microsoft (R) Windows Debugger Version 6.10.0003.233 X86
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+
+Loading Dump File [C:\WINDOWS\livekd.dmp]
+Kernel Complete Dump File: Full address space is available
+
+Comment: 'LiveKD live system view'
+Symbol search path is: SRV*c:\symbols*http://msdl.microsoft.com/download/symbols
+;srv*c:\Symbols*http://msdl.microsoft.com/download/symbols
+Executable search path is: 
+Windows Server 2003 Kernel Version 3790 (Service Pack 2) MP (4 procs) Free x86 compatible
+Product: Server, suite: TerminalServer SingleUserTS
+Built by: 3790.srv03_sp2_qfe.090319-1204
+Machine Name:
+Kernel base = 0x80800000 PsLoadedModuleList = 0x808a8ec8
+Debug session time: Mon Oct 28 03:44:17.967 2013 (GMT+0)
+System Uptime: 28 days 19:06:25.046
+WARNING: Process directory table base 007D1000 doesn't match CR3 BFFCF440
+WARNING: Process directory table base 007D1000 doesn't match CR3 BFFCF440
+Loading Kernel Symbols
+...............................................................
+.................................................
+Loading User Symbols
+
+Loading unloaded module list
+...
+*** ERROR: Module load completed but symbols could not be loaded for LiveKdD.SYS
+&lt;/code&gt;
+Note: you should not pay attention to the message &quot;*** ERROR: Module load completed but symbols could not be loaded for LiveKdD.SYS&quot; as you lose the symbol for this driver.
+;LiveKD – 实时收集DUMP文件
+:当使用LiveKD时，直接调用的WINDBG是可以实时调试内核的。但一般情况下，我们会把当前内核的内容保存下来，做事后分析。
+:在windbg中，使用下面的命令可以保存实时的DUMP文件：
+:{{{.dump /f c:\memory.dmp}}}
+:*这个DUMP是个实时的DUMP，所以内部有些数据可能不连续。这个DUMP不能完全替代系统蓝屏时的DUMP文件。
+:*LiveKD的DUMP是完全内存转储文件，大小与内存大小一致。
+:*需要有网络连接下载Symbol.
+:*当使用.dump /f 命令时，可以看到写dump的进度。
 </pre>
 </div>
 <div title="jQuery" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201310240204" tags="javascript jquery" changecount="4">
@@ -12519,6 +12582,98 @@ if the private key is used @@color:#F00;//''openssh ssh-2''//@@, you should use 
 |	116	|	Lv	|	鉝[2]	|	立	|		|		|		|		|	livermorium[3]	|		|		|
 </pre>
 </div>
+<div title="函数指针" creator="Roger Luo" modifier="Roger Luo" created="201310280858" modified="201310280905" tags="C++" changecount="3">
+<pre>以下代码解析了如何指向全局函数，类静态成员函数，类成员函数以及虚函数以及相应如何调用。
+&lt;code cpp&gt;
+#include &lt;iostream&gt;
+using namespace std;
+void gFunc(int num);
+
+class FunctionPoint
+{
+public:
+	FunctionPoint(void);
+	~FunctionPoint(void);
+	static void sFunc(int num);
+	void Func(int num);
+	virtual void vFunc(int num);
+};
+
+class FunctionPointD : public FunctionPoint
+{
+public:
+	virtual void vFunc(int num);
+};
+FunctionPoint::FunctionPoint(void)
+{
+}
+
+
+FunctionPoint::~FunctionPoint(void)
+{
+}
+
+
+void gFunc(int num)
+{
+	cout &lt;&lt; &quot;gFunc: &quot; &lt;&lt; num &lt;&lt; endl;
+}
+
+
+void FunctionPoint::sFunc(int num)
+{
+	cout &lt;&lt; &quot;sFunc: &quot; &lt;&lt; num &lt;&lt; endl;
+}
+
+void FunctionPoint::Func(int num)
+{
+	cout &lt;&lt; &quot;Func: &quot; &lt;&lt; num &lt;&lt; endl;
+}
+
+
+void FunctionPoint::vFunc(int num)
+{
+	cout &lt;&lt; &quot;vFunc: &quot; &lt;&lt; num &lt;&lt; endl;
+}
+
+
+void FunctionPointD::vFunc(int num)
+{
+	cout &lt;&lt; &quot;vFuncD: &quot; &lt;&lt; num &lt;&lt; endl;
+}
+
+
+void RunFunctionPoint()
+{
+	typedef void (*pFun) (int);
+	pFun p1 = gFunc;
+	p1(1);
+
+	p1 = FunctionPoint::sFunc;
+	p1(2);
+
+	typedef void (FunctionPoint::*pFunMem) (int);
+	pFunMem p2 = &amp;FunctionPoint::Func;
+
+	FunctionPoint inst1;
+	(inst1.*p2)(3);
+
+	FunctionPoint * pinst2 = new FunctionPoint;
+	(pinst2-&gt;*p2)(4);
+	delete pinst2;
+
+	p2 = &amp;FunctionPoint::vFunc;
+	pinst2 = new FunctionPointD;
+	(pinst2-&gt;*p2)(5);
+	delete pinst2;
+}
+int main()
+{
+	RunFunctionPoint();
+	return 0;
+}
+&lt;/code&gt;</pre>
+</div>
 <div title="北京租房须知" creator="Roger Luo" modifier="Roger Luo" created="201310060429" modified="201310060431" changecount="4">
 <pre>一、关于租房的总体注意事项： 1. 合租是一件非常令人蛋疼的事情——无论合租者的性别、年龄、性取向。对此，不解释。2. 租房的话，尽量不要找中介。租房3年以来我学会一个道理：永远不要低估中介的无耻程度，找中介租房，就是你蛋疼生活的开始。3. 租房最好的途径是直接找房东，不过这一点可能需要耐心，原因有两点，一是房东并没有那么多，在网上发布租房信息的90%以上都是中介，二是房东一旦发布房源信息，马上会被无数的中介缠上，要求代租其房子。4. 推荐几个找房源的网站：搜房网，赶集网，房老大， 一般来讲家具家电越少的房子越便宜，越齐全的房子越贵。对于这一点，要会算账。你要知道房租每便宜100元就相当于一年省1200元。所以假如一个房子没 有空调租金1500/月，另一个房子有空调租金1800/月，你租哪个？你可能说没有空调夏天根本没法过，事实是租第一个房子一年下来要省3600元，用 这个钱买一个柜式空调，租完一年这个空调还是你的。6. 验房要仔细，房子有任何小毛病都要写进交房单， 特别是从中介租房的时候，不然退房的时候就要扯皮。如果是从中介租房，那么交房时发现房屋出现如下情况请一定必须写进房屋交割单：墙面上有任何污损、涂 鸦、裂痕、墙皮脱落；家具、灶台、其他设施上的任何裂痕、损坏、污损；地板上的任何污损、损坏、裂痕、包括木地板的翘损等等；任何地方掉了一块瓷砖、或者 瓷砖上有裂痕、污渍；其他诸如桌子腿不牢靠、衣柜门不好使、电器失灵等等。记得是任何毛病！任何毛病！详情请参见后附的案例。7. 租房是一件很烦人、很纠结的事情，也是你接触这个繁琐的社会的第一步，你必须战胜它，因为你走上社会后会发现，自己在社会上独立生活需要面对的烦事远比租房纠结的多。8. 租房有时候会花你很长时间，所以一般不要等到房子没几天就到期了才跑出去找房子，等到你房子到期无家可归就杯具了。一般最好提前2周左右开始找房。 
 二、关于中介的无耻：1. 永远不要相信中介的任何承诺， 诸如你看上了一套房子，但是你嫌家电不齐、或部分家具有损坏，这时候100%的中介会跟你说“你签了合同之后我们马上派人给你修，你需要什么家电，我们给 你补齐”。等你签了合同，100%你等不到任何一项承诺。至于中介承诺租房期间房屋的设施损坏维修会由他们承担费用，你可以直接把这句话当狗屁。 
@@ -12644,10 +12799,229 @@ For more details, refer to [[FireFox]]</pre>
 <div title="虚函数技术" creator="Roger Luo" modifier="Roger Luo" created="201310071314" modified="201310080503" tags="C++" changecount="3">
 <pre>[[虚函数的实现机制]]</pre>
 </div>
-<div title="虚函数的实现机制" creator="Roger Luo" modifier="Roger Luo" created="201310071317" modified="201310081309" tags="C++" changecount="5">
+<div title="虚函数的实现机制" creator="Roger Luo" modifier="Roger Luo" created="201310071317" modified="201310281106" tags="C++" changecount="15">
 <pre>对C++ 了解的人都应该知道虚函数（Virtual Function）是通过一张虚函数表（Virtual Table）来实现的。简称为V-Table。 在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数。这样，在有虚函数的类的实例中这个表被分配在了 这个实例的内存中，所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数。
 
-这里我们着重看一下这张虚函数表。@@color:#F00;在C++的标准规格说明书中说到，编译器必需要保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证正确取到虚函数的偏移量）。@@ 这意味着我们通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。</pre>
+这里我们着重看一下这张虚函数表。@@color:#F00;在C++的标准规格说明书中说到，编译器必需要保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证正确取到虚函数的偏移量）。@@ 这意味着我们通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。
+
+如下代码：
+&lt;code cpp&gt;
+#include &lt;iostream&gt;
+using namespace std;
+class B1
+{
+public:
+	B1(int i):x(i){}
+	//~B1(){ cout &lt;&lt; __FUNCTION__ &lt;&lt;endl; }
+    int x;
+	virtual void g1(){ cout &lt;&lt; &quot;B1::g1&quot; &lt;&lt; endl; }
+	virtual void g2(){ cout &lt;&lt; &quot;B1::g2&quot; &lt;&lt; endl; }
+	virtual void g3(){ cout &lt;&lt; &quot;B1::g3&quot; &lt;&lt; endl; }
+    virtual void v1(){ cout &lt;&lt; &quot;B1::v1 with &quot; &lt;&lt; x &lt;&lt; endl; }
+	virtual void v2(){ cout &lt;&lt; &quot;B1::v2 with &quot; &lt;&lt; x &lt;&lt; endl; }
+	virtual void v3(){ cout &lt;&lt; &quot;B1::v3 with &quot; &lt;&lt; x &lt;&lt; endl; }
+    //void f1(){cout &lt;&lt; &quot;B1::f1 with &quot; &lt;&lt; x &lt;&lt; endl; }
+};
+
+class D1 : public B1
+{
+public:
+	D1(int i):B1(i){}
+    int x;
+	virtual void g1(){ cout &lt;&lt; &quot;D1::g1&quot; &lt;&lt; endl; }
+    virtual void v1(){ cout &lt;&lt; &quot;D1::v1 with &quot; &lt;&lt; x &lt;&lt; endl; }
+	virtual void v2(){ cout &lt;&lt; &quot;D1::v2 with &quot; &lt;&lt; x &lt;&lt; endl; }
+	virtual void v3(){ cout &lt;&lt; &quot;D1::v3 with &quot; &lt;&lt; x &lt;&lt; endl; }
+};
+class B2
+{
+public:
+    int y;
+    virtual void v2(){ cout &lt;&lt; &quot;B2::v2&quot; &lt;&lt; endl; }
+    void f2(){ cout &lt;&lt; &quot;B2::f2&quot; &lt;&lt; endl; }
+};
+
+class B3
+{
+public:
+    int z;
+    virtual void v3(){ cout &lt;&lt; &quot;B3::v3&quot; &lt;&lt; endl; }
+    void f3(){ cout &lt;&lt; &quot;B3::f3&quot; &lt;&lt; endl; }
+};
+
+class D : public B1, public B2, public B3
+{
+public:
+    int a;
+    void v3(){ cout &lt;&lt; &quot;D::v3&quot; &lt;&lt; endl; }
+    virtual void vD(){ cout &lt;&lt; &quot;D::vD&quot; &lt;&lt; endl; }
+};
+
+void PrintVirutalFucAddr()
+{
+	B1 b1(1), b2(2); D1 d1(3), d2(4);
+	B1 * pd1 = &amp;d1, * pd2 = &amp;d2;
+	cout &lt;&lt; &quot;b1对象地址：&quot; &lt;&lt; &amp;b1 &lt;&lt; endl;
+	cout &lt;&lt; &quot;b2对象地址：&quot; &lt;&lt; &amp;b2 &lt;&lt; endl;
+	cout &lt;&lt; &quot;d1对象地址：&quot; &lt;&lt; &amp;d1 &lt;&lt; endl;
+	cout &lt;&lt; &quot;d2对象地址：&quot; &lt;&lt; &amp;d2 &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd1对象地址：&quot; &lt;&lt; pd1 &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd2对象地址：&quot; &lt;&lt; pd2 &lt;&lt; endl;
+	cout &lt;&lt; &quot;b1虚函数表地址：&quot; &lt;&lt; (int*)*(int*)(&amp;b1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;b2虚函数表地址：&quot; &lt;&lt; (int*)*(int*)(&amp;b2) &lt;&lt; endl;
+	cout &lt;&lt; &quot;d1虚函数表地址：&quot; &lt;&lt; (int*)*(int*)(&amp;d1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;d2虚函数表地址：&quot; &lt;&lt; (int*)*(int*)(&amp;d2) &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd1虚函数表地址：&quot; &lt;&lt; (int*)*(int*)(pd1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd2虚函数表地址：&quot; &lt;&lt; (int*)*(int*)(pd2) &lt;&lt; endl;
+	cout &lt;&lt; &quot;b1虚函数表  — 第一个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;b1) + 0) &lt;&lt; endl;
+	cout &lt;&lt; &quot;b2虚函数表  — 第一个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;b2) + 0) &lt;&lt; endl;
+	cout &lt;&lt; &quot;d1虚函数表  — 第一个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;d1) + 0) &lt;&lt; endl;
+	cout &lt;&lt; &quot;d2虚函数表  — 第一个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;d2) + 0) &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd1虚函数表 — 第一个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(pd1) + 0) &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd2虚函数表 — 第一个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(pd2) + 0) &lt;&lt; endl;
+	cout &lt;&lt; &quot;b1虚函数表  — 第二个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;b1) + 1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;b2虚函数表  — 第二个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;b2) + 1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;d1虚函数表  — 第二个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;d1) + 1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;d2虚函数表  — 第二个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(&amp;d2) + 1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd1虚函数表 — 第二个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(pd1) + 1) &lt;&lt; endl;
+	cout &lt;&lt; &quot;pd2虚函数表 — 第二个函数地址：&quot; &lt;&lt; (int*)*((int*)*(int*)(pd2) + 1) &lt;&lt; endl;
+
+	
+	typedef void (*VFUN)(void);
+
+	cout &lt;&lt; &quot;b1 与 d1 执行第一个函数地址&quot; &lt;&lt; endl;
+	VFUN pv1 = (VFUN)*((int*)*(int*)(&amp;b1));
+	VFUN pv2 = (VFUN)*((int*)*(int*)(&amp;d1));
+	pv1();
+	pv2();
+	cout &lt;&lt; &quot;b1 与 d1 执行第二个函数地址&quot; &lt;&lt; endl;
+	pv1 = (VFUN)*((int*)*(int*)(&amp;b1) + 1);
+	pv2 = (VFUN)*((int*)*(int*)(&amp;d1) + 1);
+	pv1();
+	pv2();
+	cout &lt;&lt; &quot;b1 与 d1 执行第四个函数地址&quot; &lt;&lt; endl;
+	pv1 = (VFUN)*((int*)*(int*)(&amp;b1) + 3);
+	pv2 = (VFUN)*((int*)*(int*)(&amp;d1) + 3);
+	//pv1(); error
+	//pv2(); error
+	typedef void (*VFUN2)(B1*);
+	VFUN2 pv3 = (VFUN2)*((int*)*(int*)(&amp;b1) + 3);
+	VFUN2 pv4 = (VFUN2)*((int*)*(int*)(&amp;d1) + 3);
+	pv3(&amp;b1);
+	pv4(&amp;d1);
+	
+	
+	cout &lt;&lt; &quot;sizeof(int*): &quot; &lt;&lt; sizeof(int*) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(double): &quot; &lt;&lt; sizeof(double) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(float): &quot; &lt;&lt; sizeof(float) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(unsigned long): &quot; &lt;&lt; sizeof(unsigned long) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(long): &quot; &lt;&lt; sizeof(long) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(unsigned int): &quot; &lt;&lt; sizeof(unsigned int) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(int): &quot; &lt;&lt; sizeof(int) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(unsigned short): &quot; &lt;&lt; sizeof(unsigned short) &lt;&lt; endl;
+	cout &lt;&lt; &quot;sizeof(short): &quot; &lt;&lt; sizeof(short) &lt;&lt; endl;
+}
+
+int main() {
+	PrintVirutalFucAddr();
+	return 0;
+}
+&lt;/code&gt;
+使用msvc编译器开关d1reportSingleClassLayoutXXX打印对应类的结构
+{{{cl /d1reportSingleClassLayoutB1 test.cpp /c}}}
+对应B1的结构如下
+{{{
+class B1	size(16):
+	+---
+ 0	| {vfptr}
+ 8	| x
+  	| &lt;alignment member&gt; (size=4)
+	+---
+
+B1::$vftable@:
+	| &amp;B1_meta
+	|  0
+ 0	| &amp;B1::g1
+ 1	| &amp;B1::g2
+ 2	| &amp;B1::g3
+ 3	| &amp;B1::v1
+ 4	| &amp;B1::v2
+ 5	| &amp;B1::v3
+}}}
+对应D1的结构如下
+{{{
+class D1	size(24):
+	+---
+	| +--- (base class B1)
+ 0	| | {vfptr}
+ 8	| | x
+  	| | &lt;alignment member&gt; (size=4)
+	| +---
+16	| x
+  	| &lt;alignment member&gt; (size=4)
+	+---
+
+D1::$vftable@:
+	| &amp;D1_meta
+	|  0
+ 0	| &amp;D1::g1
+ 1	| &amp;B1::g2
+ 2	| &amp;B1::g3
+ 3	| &amp;D1::v1
+ 4	| &amp;D1::v2
+ 5	| &amp;D1::v3
+}}}
+运行结果如下：
+{{{
+b1对象地址：0xbf8a3460
+b2对象地址：0xbf8a3468
+d1对象地址：0xbf8a3470
+d2对象地址：0xbf8a3478
+pd1对象地址：0xbf8a3470
+pd2对象地址：0xbf8a3478
+b1虚函数表地址：0x804a688
+b2虚函数表地址：0x804a688
+d1虚函数表地址：0x804a6a8
+d2虚函数表地址：0x804a6a8
+pd1虚函数表地址：0x804a6a8
+pd2虚函数表地址：0x804a6a8
+b1虚函数表  — 第一个函数地址：0x8049e30
+b2虚函数表  — 第一个函数地址：0x8049e30
+d1虚函数表  — 第一个函数地址：0x8049db0
+d2虚函数表  — 第一个函数地址：0x8049db0
+pd1虚函数表 — 第一个函数地址：0x8049db0
+pd2虚函数表 — 第一个函数地址：0x8049db0
+b1虚函数表  — 第二个函数地址：0x8049d30
+b2虚函数表  — 第二个函数地址：0x8049d30
+d1虚函数表  — 第二个函数地址：0x8049d30
+d2虚函数表  — 第二个函数地址：0x8049d30
+pd1虚函数表 — 第二个函数地址：0x8049d30
+pd2虚函数表 — 第二个函数地址：0x8049d30
+b1 与 d1 执行第一个函数地址
+B1::g1
+D1::g1
+b1 与 d1 执行第二个函数地址
+B1::g2
+B1::g2
+b1 与 d1 执行第四个函数地址
+B1::v1 with 1
+D1::v1 with 3
+sizeof(int*): 4
+sizeof(double): 8
+sizeof(float): 4
+sizeof(unsigned long): 4
+sizeof(long): 4
+sizeof(unsigned int): 4
+sizeof(int): 4
+sizeof(unsigned short): 2
+sizeof(short): 2
+}}}
+；虚函数表位置
+：从上面可以知道虚函数表的地址应该是(int*)*(int*)(&amp;b1)，而不是书上所说的(int*)(&amp;b1)。
+
+!Reference
+[[C++虚函数的实现机制|http://blog.csdn.net/neiloid/article/details/6934135]]
+[[虚函数与函数指针|http://blog.csdn.net/heavendai/article/details/7008066]]</pre>
 </div>
 <div title="金秋北京之旅 20130927-20131003" creator="Roger Luo" modifier="Roger Luo" created="201310051121" modified="201310051212" changecount="4">
 <pre>妈妈与二姐过来北京自助旅行，本人亲自带团

@@ -976,12 +976,14 @@ __''other settings:''__
 <pre>!Exception: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
 检查string.format类似的函数中字符串格式的参数个数是否匹配</pre>
 </div>
-<div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201309241452" tags="C#" changecount="3">
+<div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201311010321" tags="C#" changecount="4">
 <pre>!How to get the directory of current executable program? 如何获取当前执行程序的路径
 &lt;code c#&gt;
 var prtDir = AppDomain.CurrentDomain.BaseDirectory;
 &lt;/code&gt;
-!How to link to the assembly by relative path? 如何通过</pre>
+!How to link to the assembly by relative path? 如何通过
+!How to access xml document
+[[C# operate XML document]]</pre>
 </div>
 <div title="C# The Third Library" creator="Roger Luo" modifier="Roger Luo" created="201309250147" modified="201309250200" tags="C#" changecount="3">
 <pre>[[SharpSSH]]
@@ -1071,6 +1073,33 @@ Press any key to continue . . .
         }
 &lt;/code&gt;
 这样记事本是最小化的</pre>
+</div>
+<div title="C# operate XML document" creator="Roger Luo" modifier="Roger Luo" created="201311010336" modified="201311010337" tags="C#" changecount="5">
+<pre>!Access xml document
+!Access xml string
+Key: use @@color:#F00;~LoadXml@@ method.
+&lt;code csharp&gt;
+        static string func(string key, string xmlstr)
+        {
+            if (string.IsNullOrEmpty(key))
+                return null;
+            string value = string.Empty;
+            try
+            {
+                XmlDocument xml = new XmlDocument();
+                xml.LoadXml(xmlstr);
+                XmlElement root = xml.DocumentElement;
+                if (root.Attributes[key] != null)
+                    value = root.Attributes[key].Value;
+            }
+            catch (Exception anyex)
+            {
+                Console.WriteLine(&quot;Faild to parse xmlstr: {0}&quot;, anyex.Message);
+            }
+            return value;
+        }
+&lt;/code&gt;
+</pre>
 </div>
 <div title="C++类结构" creator="Roger Luo" modifier="Roger Luo" created="201310080528" modified="201310080543" tags="C++" changecount="5">
 <pre>!静态数据成员
@@ -3376,14 +3405,15 @@ cat /etc/lsb-release
     uname -v : print the kernel version
     uname -o : print the operating system</pre>
 </div>
-<div title="FireFox" creator="Roger Luo" modifier="Roger Luo" created="201310250842" modified="201310251031" tags="firefox" changecount="15">
-<pre>!Recommended AddOne
+<div title="FireFox" creator="Roger Luo" modifier="Roger Luo" created="201310250842" modified="201311010258" tags="firefox" changecount="16">
+<pre>!Recommended ~AddOne
 |!Name|!Usage|
 |Adblock Plus|Install filters&lt;br&gt;''~EasyList''&lt;br&gt;''~ChinaList+~EasyList''|
 |Firebug|Web develop|
 |Greasemonkey|width(100%):[[YoukuAntiADs|http://userscripts.org/scripts/show/119622]]|
 !Reference
-[[Add-Ones|https://addons.mozilla.org/en-US/firefox/]]</pre>
+[[Add-Ones|https://addons.mozilla.org/en-US/firefox/]]
+[[快捷键|http://support.mozilla.org/zh-CN/kb/键盘快捷键]]</pre>
 </div>
 <div title="FoldHeadingsPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200712011624" modified="200912010134" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200912010134">
 <pre>/***
@@ -12155,9 +12185,12 @@ Replace sharename (use lowercase) with the share name specified with VBoxManage 
 
 </pre>
 </div>
-<div title="Visual Studio" creator="Roger Luo" modifier="Roger Luo" created="201309240144" tags="VS" changecount="1">
+<div title="Visual Studio" creator="Roger Luo" modifier="Roger Luo" created="201309240144" modified="201311011043" tags="VS" changecount="2">
 <pre>[[Code Coverage For C/C++]]
-[[Code Coverage For C#]]</pre>
+[[Code Coverage For C#]]
+!Reference
+[[Sample Code|http://code.msdn.microsoft.com/]]
+[[Sample Browser|http://visualstudiogallery.msdn.microsoft.com/4934b087-e6cc-44dd-b992-a71f00a2a6df]]</pre>
 </div>
 <div title="WWSAPI" creator="Roger Luo" modifier="Roger Luo" created="201309230518" modified="201309230521" tags="C++ WCF" changecount="4">
 <pre>!!Get Started
@@ -12201,13 +12234,23 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
-<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201310280342" tags="windows" changecount="7">
+<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311011020" tags="windows" changecount="8">
 <pre>[[Windows Command Usage]]
 [[windows8与windows8.1技巧]]
 [[Windows Debug]]
 !HowTo: Enhance Security Configuration disable on win2003 and win2008
 *For 2003, control panel&gt;Add or remove programs&gt;Add/Remove windows components&gt;uncheck the &quot;Intenet Explorer Enhanced Security Configuration&quot;.
-*For 2008, run&gt;servermanager.msc&gt;Security Information&gt;Configure IE ESC</pre>
+*For 2008, run&gt;servermanager.msc&gt;Security Information&gt;Configure IE ESC
+!HowTo: Running windows batch file commands synchronously/asynchronously
+For synchronously,
+{{{
+call 2.bat
+start /wait 2.bat
+}}}
+For asynchronously,
+{{{
+start 2.bat
+}}}</pre>
 </div>
 <div title="Windows Command Usage" creator="Roger Luo" modifier="Roger Luo" created="201309251311" modified="201309251312" tags="dos windows" changecount="4">
 <pre>;Query all installed service

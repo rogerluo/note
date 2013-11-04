@@ -525,9 +525,10 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 <div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" tags="c# asp.net web" changecount="1">
 <pre></pre>
 </div>
-<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201310220731" tags="ThomsonReuters" changecount="4">
+<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201311040303" tags="ThomsonReuters" changecount="5">
 <pre>[[Admin DB FAQ]]
-[[EVAI-3663:Restore VAH Archieve files]]</pre>
+[[EVAI-3663:Restore VAH Archieve files]]
+[[UUI2.0]]</pre>
 </div>
 <div title="Admin DB FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309240753" modified="201310220824" tags="ThomsonReuters" changecount="15">
 <pre>!install admin db
@@ -1133,6 +1134,220 @@ Key: use @@color:#F00;~LoadXml@@ method.
 
 !找工作
 [[微软、Google等面试题|http://zhedahht.blog.163.com/]]</pre>
+</div>
+<div title="CSS" creator="Roger Luo" modifier="Roger Luo" created="201311040917" modified="201311041137" tags="css" changecount="18">
+<pre>!css入门例子
+&lt;code html&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.textred {
+	color: red;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;span class=&quot;textred&quot;&gt;Hello World&lt;/span&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/code&gt;
+''Note:'' css描述定义在 &lt;style type=&quot;text/css&quot;&gt;里面，使用的时候，元素使用对应的名字（不带‘.’）。
+!基础语法
+CSS 规则由两个主要的部分构成：选择器，以及一条或多条声明。
+{{{
+selector {declaration1; declaration2; ... declarationN }
+}}}
+每条声明由一个属性和一个值组成。属性（property）是您希望设置的样式属性（style attribute）。每个属性有一个值。属性和值被冒号分开。
+{{{
+selector {property: value}
+}}}
+提示：如果要定义不止一个声明，则需要用分号将每个声明分开。下面的例子展示出如何定义一个红色文字的居中段落。最后一条规则是不需要加分号的，因为分号在英语中是一个分隔符号，不是结束符号。
+CSS 对大小写不敏感。不过存在一个例外：如果涉及到与 HTML 文档一起工作的话，class 和 id 名称对大小写是敏感的。
+!Netscape 4不支持继承
+使用我们称为 &quot;Be Kind to Netscape 4&quot; 的冗余法则来处理旧式浏览器无法理解继承的问题。
+{{{
+body  {
+     font-family: Verdana, sans-serif;
+     }
+
+p, td, ul, ol, li, dl, dt, dd  {
+     font-family: Verdana, sans-serif;
+     }
+}}}
+!选择器
+选择器可以分成id选择器， 类选择器，属性选择器与派生选择器
+!!!id选择器
+id选择器为标有特定 id 的 HTML 元素指定特定的样式，以&quot;#&quot;来定义
+&lt;code html&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+#id {
+	color: pink;
+}
+div#id {
+	color: black;
+}
+div#id span {
+	color: blue;
+}
+div#id p {
+	color: red;
+}
+.green {
+	color: green;
+	font-style: italic;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div id=&quot;id&quot;&gt;
+	black&lt;br&gt;
+	&lt;span&gt;blue&lt;/span&gt;
+	&lt;p&gt;red&lt;/p&gt;
+	&lt;p class=&quot;green&quot;&gt;not green, but red, italic&lt;/p&gt;
+&lt;/div&gt;
+&lt;p class=&quot;green&quot;&gt;green, italic&lt;/p&gt;
+&lt;p id=&quot;id&quot;&gt;pink&lt;/p&gt;
+&lt;div&gt;black&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/code&gt;
+从上面的代码可以看出id选择器的特点：
+#id 属性只能在每个 HTML 文档中出现一次
+#id 选择器常常用于建立派生选择器， 与属性选择器结合，例如@@color:#00F;div#id@@或者@@color:#00F;#id p@@，前者表示必须是div元素同时定义了id属性；后者表示使用#id属性元素内嵌的p元素
+#如何id 选择器的属性与类选择器的属性发生冲突，以类选择器属性优先，上述例子中@@color:#00F;not green, but red, italic@@
+!!!类选择器
+类选择器为标有特定类名 的 HTML 元素指定特定的样式，以&quot;.&quot;来定义
+&lt;code html&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.class {
+	color: red;
+}
+.class p {
+	color: blue;
+}
+span.class {
+	color: yellow;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;div class=&quot;class&quot;&gt;red&lt;/div&gt;
+&lt;div class=&quot;class&quot;&gt;&lt;p&gt;blue&lt;/p&gt;&lt;/div&gt;
+&lt;div class=&quot;class&quot;&gt;
+	&lt;span class=&quot;class&quot;&gt;yellow&lt;/span&gt;
+	&lt;br&gt;
+	&lt;span&gt;red&lt;/span&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/code&gt;
+从上面的代码可以看出id选择器的特点：
+#类选择器跟id选择器一样可以与元素组成前后个不同的派生选择器
+!!!属性选择器
+@@color:#00F;CSS 2@@引入了属性选择器, 属性选择器可以根据元素的属性及属性值来选择元素。
+语法：
+{{{
+*[attr1=&quot;value&quot;][attr2~=&quot;value&quot;][attr3|=&quot;value&quot;]...{
+declaration1; declaration2; ... declarationN;
+};
+}}}
+&lt;code html&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+[attr] {
+	color: red;
+}
+input[type=&quot;text&quot;] {
+	color: green;
+}
+input[type=&quot;button&quot;] {
+	color: blue;
+}
+input[type=&quot;text&quot;][name~=&quot;test&quot;] {
+	color: pink;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div&gt;black&lt;/div&gt;
+&lt;div attr=&quot;nothing&quot;&gt;red&lt;/div&gt;
+&lt;input type=&quot;text&quot; placeholder=&quot;green&quot;/&gt;&lt;br&gt;
+&lt;input type=&quot;button&quot; value=&quot;blue&quot; /&gt;&lt;br&gt;
+&lt;input type=&quot;text&quot; name=&quot;test work&quot; placeholder=&quot;pink&quot;/&gt;&lt;br&gt;
+&lt;input type=&quot;text&quot; name=&quot;testnotwork&quot; placeholder=&quot;green&quot;/&gt;&lt;br&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/code&gt;
+|width:30%;!选择器|width:70%;!描述|
+|[attribute]	|	用于选取带有指定属性的元素。	|
+|	[attribute=value]	|	用于选取带有指定属性和值的元素。	|
+|	[attribute~=value]	|	用于选取属性值中包含指定词汇的元素。	|
+|	&quot;&quot;&quot;[attribute|=value]&quot;&quot;&quot;	|	用于选取带有以指定值开头的属性值的元素，该值必须是整个单词。	|
+|	[attribute^=value]	|	匹配属性值以指定值开头的每个元素。	|
+|	[attribute$=value]	|	匹配属性值以指定值结尾的每个元素。	|
+|	[attribute*=value]	|	匹配属性值中包含指定值的每个元素。	|
+!插入样式表
+1. 外部样式表
+{{{
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;my.css&quot; /&gt;
+}}}
+''注意：'' 
+#必须具备@@color:#00F;rel@@属性
+#不要在属性值与单位之间留有空格， 例如不能使用 “margin-left: 20 px” 而应使用 “margin-left: 20px”
+2. 内部样式表
+{{{
+&lt;style type=&quot;text/css&quot;&gt;
+  hr {color: sienna;}
+  p {margin-left: 20px;}
+  body {background-image: url(&quot;images/back40.gif&quot;);}
+&lt;/style&gt;
+}}}
+3. 内联样式
+{{{
+&lt;p style=&quot;color: sienna; margin-left: 20px&quot;&gt;
+This is a paragraph
+&lt;/p&gt;
+}}}
+*外部样式表
+&lt;code css&gt;
+.class {
+	font-size: 100px;
+	color: red;
+	font-style: normal;
+}
+&lt;/code&gt;
+*HTML文件
+&lt;code html&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;my.css&quot; /&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.class {
+	color: blue;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;p class=&quot;class&quot; style=&quot;font-style: italic;&quot;&gt;100px, blue, italic&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/code&gt;
+''@@color:#F00;如果属性冲突了，则按照最接近原则，内联样式&gt;内部样式&gt;外部样式@@''</pre>
 </div>
 <div title="CalendarPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200602212149" modified="201101042140" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201101042140">
 <pre>/***
@@ -1841,7 +2056,7 @@ config.macros.foldFirst = {
 &lt;div class='tagClear'&gt;&lt;/div&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
-<div title="Config apt get source on Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221058" modified="201310221107" tags="ubuntu linux apt-get" changecount="2">
+<div title="Config apt get source on Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221058" modified="201311040548" tags="ubuntu linux apt-get" changecount="3">
 <pre>!Common commands
 !Config source list
 sudo vim /etc/apt/sources.list
@@ -1858,8 +2073,7 @@ deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-proposed main multivers
 deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-security main multiverse restricted universe
 deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-updates main multiverse restricted universe
 }}}
-replace UBUNTU_VERSION to be exactly your ubuntu version.
-</pre>
+replace UBUNTU_VERSION to be exactly your ubuntu version.</pre>
 </div>
 <div title="CoreTweaks" modifier="ELSDesignStudios" created="200608201502" modified="201112270158" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201112270158">
 <pre>/***
@@ -4597,17 +4811,18 @@ loading a script from a source url:
 <pre>[[Built-In Function]]
 [[MSSQL FAQ]]</pre>
 </div>
-<div title="MSSQL FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201309240757" tags="MSSQL" changecount="6">
-<pre>!Get table's structure
+<div title="MSSQL FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201311040324" tags="MSSQL" changecount="7">
+<pre>!Get table's structure 显示数据表结构
 &lt;code sql&gt;
 SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FROM syscolumns, systypes WHERE syscolumns.xusertype = systypes.xusertype AND syscolumns.id = object_id('table')
 &lt;/code&gt;</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201310250908" changecount="29">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311040915" changecount="30">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
 [[HTML5]]
+[[CSS]]
 [[ASP.NET]]
 [[javascript]]
 [[Algorithm]]
@@ -5026,9 +5241,9 @@ bullet-item list (using the TiddlyWiki core {{{&lt;&lt;list filter ...&gt;&gt;}}
 2008.02.28 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="Miscellanies" creator="Roger Luo" modifier="Roger Luo" created="201309230221" modified="201311011226" changecount="3">
+<div title="Miscellanies" creator="Roger Luo" modifier="Roger Luo" created="201309230221" modified="201310251015" changecount="2">
 <pre>[[细分发行版本类型]]
-[[如何去掉优酷、土豆广告]]</pre>
+[[如何去掉优酷广告]]</pre>
 </div>
 <div title="MoveablePanelPackage" creator="Roger Luo" modifier="ELSDesignStudios" created="200811192223" modified="200901042052" tags="package MoveablePanelPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200901042052">
 <pre>&lt;html&gt;&lt;style&gt;
@@ -11640,10 +11855,34 @@ onclick=&quot;
 <div title="Travel" creator="Roger Luo" modifier="Roger Luo" created="201310051121" tags="travel" changecount="1">
 <pre>[[金秋北京之旅 20130927-20131003]]</pre>
 </div>
-<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201310221105" tags="ubuntu linux" changecount="2">
-<pre>!FAQ
+<div title="UUI2.0" creator="Roger Luo" modifier="Roger Luo" created="201311040915" tags="ThomsonReuters" changecount="1">
+<pre>Type the text for 'UUI2.0'</pre>
+</div>
+<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201311040602" tags="ubuntu linux" changecount="19">
+<pre>!Tool
+[[vi]]
+!FAQ
 [[Config apt get source on Ubuntu]]
-[[Find your Ubuntu or Kernerl Version]]</pre>
+[[Find your Ubuntu or Kernerl Version]]
+!~HowTo: Set proxy for apt-get
+1.这是一种临时的手段，如果您仅仅是暂时需要通过http代理使用apt-get，您可以使用这种方式。在使用apt-get之前，在终端中输入以下命令（根据您的实际情况替换yourproxyaddress和proxyport）。
+{{{
+export http_proxy=http://yourproxyaddress:proxyport
+}}}
+2.这种方法要用到/etc/apt/文件夹下的apt.conf文件。如果您希望apt-get（而不是其他应用程序）一直使用http代理，您可以使用这种方式。注意： 某些情况下，系统安装过程中没有建立apt配置文件。下面的操作将视情况修改现有的配置文件或者新建配置文件。
+{{{sudo vi /etc/apt/apt.conf}}}
+在您的apt.conf文件中加入下面这行（根据你的实际情况替换yourproxyaddress和proxyport）。
+{{{
+Acquire::http::Proxy &quot;http://yourproxyaddress:proxyport&quot;;
+}}}
+3.这种方法会在您的主目录下的.bashrc文件中添加两行。如果您希望apt-get和其他应用程序如wget等都使用http代理，您可以使用这种方式。
+{{{gedit ~/.bashrc}}}
+在您的.bashrc文件末尾添加如下内容（根据你的实际情况替换yourproxyaddress和proxyport）。
+{{{
+http_proxy=http://yourproxyaddress:proxyport
+export http_proxy
+}}}
+保存文件。关闭当前终端，然後打开另一个终端。</pre>
 </div>
 <div title="UndoPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="201105172013" modified="201109112316" tags="systemConfig" server.title="UndoPlugin" server.page.revision="201109112316" server.etag="&quot;pasteup_public/UndoPlugin/703;4f5c36462e4c510a736472173b353b8deb14cc8f&quot;" server.workspace="bags/pasteup_public" server.type="file" server.host="http://www.tiddlytools.com" server.recipe="pasteup_private" server.bag="pasteup_public" server.permissions="read, write, create, delete" server.content-type="" _hash="f7d20cf61c8426f5626a0f6b806e93471d512c55">
 <pre>/***
@@ -12498,6 +12737,113 @@ if the private key is used @@color:#F00;//''openssh ssh-2''//@@, you should use 
 *Script Sample
 ''@@color:#F00;plink.exe -C -l@@ username @@color:#F00;-pw@@ private key password hostip @@color:#F00;-P@@ hostport @@color:#F00;-i@@ ssh.ppk''</pre>
 </div>
+<div title="vi" creator="Roger Luo" modifier="Roger Luo" created="201311040602" modified="201311040704" tags="vi" changecount="3">
+<pre>!进入vi的命令
+vi filename :打开或新建文件，并将光标置于第一行首
+vi +n filename ：打开文件，并将光标置于第n行首
+vi + filename ：打开文件，并将光标置于最后一行首
+vi +/pattern filename：打开文件，并将光标置于第一个与pattern匹配的串处
+vi -r filename ：在上次正用vi编辑时发生系统崩溃，恢复filename
+vi filename….filename ：打开多个文件，依次进行编辑
+
+!移动光标类命令
+h ：光标左移一个字符
+l ：光标右移一个字符
+space：光标右移一个字符
+Backspace：光标左移一个字符
+k或Ctrl+p：光标上移一行
+j或Ctrl+n ：光标下移一行
+Enter ：光标下移一行
+w或W ：光标右移一个字至字首
+b或B ：光标左移一个字至字首
+e或E ：光标右移一个字至字尾
+) ：光标移至句尾
+( ：光标移至句首
+}：光标移至段落开头
+{：光标移至段落结尾
+nG：光标移至第n行首
+n+：光标下移n行
+n-：光标上移n行
+n$：光标移至第n行尾
+H ：光标移至屏幕顶行
+M ：光标移至屏幕中间行
+L ：光标移至屏幕最后行
+0：（注意是数字零）光标移至当前行首
+$：光标移至当前行尾
+
+!屏幕翻滚类命令
+Ctrl+u：向文件首翻半屏
+Ctrl+d：向文件尾翻半屏
+Ctrl+f：向文件尾翻一屏
+Ctrl＋b；向文件首翻一屏
+nz：将第n行滚至屏幕顶部，不指定n时将当前行滚至屏幕顶部。
+
+!插入文本类命令
+i ：在光标前
+I ：在当前行首
+a：光标后
+A：在当前行尾
+o：在当前行之下新开一行
+O：在当前行之上新开一行
+r：替换当前字符
+R：替换当前字符及其后的字符，直至按ESC键
+s：从当前光标位置处开始，以输入的文本替代指定数目的字符
+S：删除指定数目的行，并以所输入文本代替之
+ncw或nCW：修改指定数目的字
+nCC：修改指定数目的行
+
+!删除命令
+ndw或ndW：删除光标处开始及其后的n-1个字
+do：删至行首
+d$：删至行尾
+ndd：删除当前行及其后n-1行
+x或X：删除一个字符，x删除光标后的，而X删除光标前的
+Ctrl+u：删除输入方式下所输入的文本
+
+!搜索及替换命令
+/pattern：从光标开始处向文件尾搜索pattern
+?pattern：从光标开始处向文件首搜索pattern
+n：在同一方向重复上一次搜索命令
+N：在反方向上重复上一次搜索命令
+：s/p1/p2/g：将当前行中所有p1均用p2替代
+：n1,n2s/p1/p2/g：将第n1至n2行中所有p1均用p2替代
+：g/p1/s//p2/g：将文件中所有p1均用p2替换
+
+!选项设置
+all：列出所有选项设置情况
+term：设置终端类型
+ignorance：在搜索中忽略大小写
+list：显示制表位(Ctrl+I)和行尾标志（$)
+number：显示行号
+report：显示由面向行的命令修改过的数目
+terse：显示简短的警告信息
+warn：在转到别的文件时若没保存当前文件则显示NO write信息
+nomagic：允许在搜索模式中，使用前面不带“\”的特殊字符
+nowrapscan：禁止vi在搜索到达文件两端时，又从另一端开始
+mesg：允许vi显示其他用户用write写到自己终端上的信息
+
+!最后行方式命令
+：n1,n2 co n3：将n1行到n2行之间的内容拷贝到第n3行下
+：n1,n2 m n3：将n1行到n2行之间的内容移至到第n3行下
+：n1,n2 d ：将n1行到n2行之间的内容删除
+：w ：保存当前文件
+：e filename：打开文件filename进行编辑
+：x：保存当前文件并退出
+：q：退出vi
+：q!：不保存文件并退出vi
+：!command：执行shell命令command
+：n1,n2 w!command：将文件中n1行至n2行的内容作为command的输入并执行之，若不指定n1，n2，则表示将整个文件内容作为command的输入
+：r!command：将命令command的输出结果放到当前行
+
+!寄存器操作
+“?nyy：将当前行及其下n行的内容保存到寄存器？中，其中?为一个字母，n为一个数字
+“?nyw：将当前行及其下n个字保存到寄存器？中，其中?为一个字母，n为一个数字
+“?nyl：将当前行及其下n个字符保存到寄存器？中，其中?为一个字母，n为一个数字
+“?p：取出寄存器？中的内容并将其放到光标位置处。这里？可以是一个字母，也可以是一个数字
+ndd：将当前行及其下共n行文本删除，并将所删内容放到1号删除寄存器中。
+
+[img[short key|pic/misc/vi-vim-cheat-sheet.png]]</pre>
+</div>
 <div title="windows8与windows8.1技巧" creator="Roger Luo" modifier="Roger Luo" created="201310071544" modified="201310071547" tags="windows" changecount="3">
 <pre>!添加程序开始菜单
 由于windows8以及8.1（即使说是有开始菜单，也是以前那样）的发展，我们需要手动添加回菜单栏
@@ -12776,15 +13122,11 @@ int main()
 !Reference
 [[如何自动让pageant开机加载密钥]]</pre>
 </div>
-<div title="如何去掉优酷、土豆广告" creator="Roger Luo" modifier="Roger Luo" created="201310251017" modified="201311011226" changecount="3">
-<pre>!去掉优酷广告
-#Install firefox
+<div title="如何去掉优酷广告" creator="Roger Luo" modifier="Roger Luo" created="201310251017" modified="201310251031" changecount="2">
+<pre>#Install firefox
 #Install firefox's addone:Adblock, make sure using the last filter: ChinaList+EasyList
 #Install firefox's addone:GreaseMonkey, make sure using the script: [[YoukuAntiADs|http://userscripts.org/scripts/show/119622]]
-For more details, refer to [[FireFox]]
-!去掉土豆广告
-#Follow the step 1, 2, 3 similar to Youku
-#Disable GreaseMonkey to run the script</pre>
+For more details, refer to [[FireFox]]</pre>
 </div>
 <div title="如何自动让pageant开机加载密钥" creator="Roger Luo" modifier="Roger Luo" created="201309231230" modified="201309231241" tags="GitHub" changecount="5">
 <pre>!windows
@@ -12846,7 +13188,7 @@ For more details, refer to [[FireFox]]
 <div title="虚函数技术" creator="Roger Luo" modifier="Roger Luo" created="201310071314" modified="201310080503" tags="C++" changecount="3">
 <pre>[[虚函数的实现机制]]</pre>
 </div>
-<div title="虚函数的实现机制" creator="Roger Luo" modifier="Roger Luo" created="201310071317" modified="201311011227" tags="C++" changecount="16">
+<div title="虚函数的实现机制" creator="Roger Luo" modifier="Roger Luo" created="201310071317" modified="201310281106" tags="C++" changecount="15">
 <pre>对C++ 了解的人都应该知道虚函数（Virtual Function）是通过一张虚函数表（Virtual Table）来实现的。简称为V-Table。 在这个表中，主是要一个类的虚函数的地址表，这张表解决了继承、覆盖的问题，保证其容真实反应实际的函数。这样，在有虚函数的类的实例中这个表被分配在了 这个实例的内存中，所以，当我们用父类的指针来操作一个子类的时候，这张虚函数表就显得由为重要了，它就像一个地图一样，指明了实际所应该调用的函数。
 
 这里我们着重看一下这张虚函数表。@@color:#F00;在C++的标准规格说明书中说到，编译器必需要保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证正确取到虚函数的偏移量）。@@ 这意味着我们通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。
@@ -13063,10 +13405,9 @@ sizeof(int): 4
 sizeof(unsigned short): 2
 sizeof(short): 2
 }}}
-;虚函数表位置
-:从上面可以知道虚函数表的地址应该是(int*)*(int*)(&amp;b1)，而不是书上所说的(int*)(&amp;b1)。
-;虚函数表
-:VTables are not part of the C++ standard. In fact, a compiler doesn't even have to use VTables to implement virtual function dispatching, it :is free to use any other method. 
+；虚函数表位置
+：从上面可以知道虚函数表的地址应该是(int*)*(int*)(&amp;b1)，而不是书上所说的(int*)(&amp;b1)。
+
 !Reference
 [[C++虚函数的实现机制|http://blog.csdn.net/neiloid/article/details/6934135]]
 [[虚函数与函数指针|http://blog.csdn.net/heavendai/article/details/7008066]]</pre>

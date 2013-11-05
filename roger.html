@@ -284,7 +284,6 @@ h2,h3 {border-bottom:1px solid [[ColorPalette::TertiaryLight]];}
 .viewer table, table.twtable {border:2px solid [[ColorPalette::TertiaryDark]];}
 .viewer th, .viewer thead td, .twtable th, .twtable thead td {background:[[ColorPalette::SecondaryMid]]; border:1px solid [[ColorPalette::TertiaryDark]]; color:[[ColorPalette::Background]];}
 .viewer td, .viewer tr, .twtable td, .twtable tr {border:1px solid [[ColorPalette::TertiaryDark]];}
-
 .viewer pre {border:1px solid [[ColorPalette::SecondaryLight]]; background:[[ColorPalette::SecondaryPale]];}
 .viewer code {color:[[ColorPalette::SecondaryDark]];}
 .viewer hr {border:0; border-top:dashed 1px [[ColorPalette::TertiaryDark]]; color:[[ColorPalette::TertiaryDark]];}
@@ -966,7 +965,7 @@ __''other settings:''__
 !reference
 [[MSDN List|http://technet.microsoft.com/en-us/library/ms187786.aspx]]</pre>
 </div>
-<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201310080337" tags="C#" changecount="10">
+<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201311041539" tags="C#" changecount="11">
 <pre>[[HowTo Use C++ DLL]]
 [[C# The Third Library]]
 [[C# FAQ]]
@@ -977,19 +976,36 @@ __''other settings:''__
 <pre>!Exception: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
 检查string.format类似的函数中字符串格式的参数个数是否匹配</pre>
 </div>
-<div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201311010321" tags="C#" changecount="4">
+<div title="C# FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309241450" modified="201311041544" tags="C#" changecount="6">
 <pre>!How to get the directory of current executable program? 如何获取当前执行程序的路径
 &lt;code c#&gt;
 var prtDir = AppDomain.CurrentDomain.BaseDirectory;
 &lt;/code&gt;
 !How to link to the assembly by relative path? 如何通过
-!How to access xml document
-[[C# operate XML document]]</pre>
+[[C# operate XML document]]
+[[C# file operation]]
+[[C# string operation]]</pre>
 </div>
 <div title="C# The Third Library" creator="Roger Luo" modifier="Roger Luo" created="201309250147" modified="201309250200" tags="C#" changecount="3">
 <pre>[[SharpSSH]]
 [[Ionic.Zip]]
 [[Ninject]]</pre>
+</div>
+<div title="C# file operation" creator="Roger Luo" modifier="Roger Luo" created="201311041542" modified="201311041542" tags="C#" changecount="3">
+<pre>#Method 1
+&lt;code csharp&gt;
+        private static String readFile(string path)
+        {
+            String fileContents;
+            if (File.Exists(path))
+                using (StreamReader reader = File.OpenText(path))
+                    fileContents = reader.ReadToEnd();
+            else
+                fileContents = &quot;&quot;;
+            
+            return fileContents;
+        }
+&lt;/code&gt;</pre>
 </div>
 <div title="C# invoke external binary by Process（c#调用外部程序）" creator="Roger Luo" modifier="Roger Luo" created="201310070935" modified="201310080115" tags="C#" server.type="file" server.host="file:///C:/Roger/github/note/roger%20-%20Copy.html" server.page.revision="201310071016" changecount="1">
 <pre>!如何调用外部程序
@@ -1101,6 +1117,9 @@ Key: use @@color:#F00;~LoadXml@@ method.
         }
 &lt;/code&gt;
 </pre>
+</div>
+<div title="C# string operation" creator="Roger Luo" modifier="Roger Luo" created="201311041640" tags="C#" changecount="1">
+<pre></pre>
 </div>
 <div title="C++类结构" creator="Roger Luo" modifier="Roger Luo" created="201310080528" modified="201310080543" tags="C++" changecount="5">
 <pre>!静态数据成员
@@ -3619,7 +3638,7 @@ cat /etc/lsb-release
     uname -v : print the kernel version
     uname -o : print the operating system</pre>
 </div>
-<div title="FireFox" creator="Roger Luo" modifier="Roger Luo" created="201310250842" modified="201311010258" tags="firefox" changecount="16">
+<div title="FireFox" creator="Roger Luo" modifier="Roger Luo" created="201310250842" modified="201311041618" tags="firefox" changecount="17">
 <pre>!Recommended ~AddOne
 |!Name|!Usage|
 |Adblock Plus|Install filters&lt;br&gt;''~EasyList''&lt;br&gt;''~ChinaList+~EasyList''|
@@ -4182,7 +4201,7 @@ After the browser has done its job, the wiki syntax sequences (including the &qu
 2005.06.26 1.0.0 Initial Release (as code adaptation - pre-dates TiddlyWiki plugin architecture!!)
 &lt;&lt;&lt;</pre>
 </div>
-<div title="HowTo Use C++ DLL" creator="Roger Luo" modifier="Roger Luo" created="201309222349" modified="201309230107" tags="C#" changecount="3">
+<div title="HowTo Use C++ DLL" creator="Roger Luo" modifier="Roger Luo" created="201309222349" modified="201311041634" tags="C#" changecount="4">
 <pre>*[[HowTo Use C++ DLL: Quick Start]]
 *[[Marshal Data type between manage code and native code]]</pre>
 </div>
@@ -7443,7 +7462,7 @@ onclick=&quot;var p=Popup.create(this); if (!p) return false; p.className+=' sti
 	return config.quickEdit.processed(event);&quot;
 &gt;custom&lt;/a&gt;&lt;/html&gt;</pre>
 </div>
-<div title="QuickEdit_customList" creator="Roger Luo" modifier="ELSDesignStudios" created="200902191601" modified="200906092154" tags="settings QuickEditPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200906092154">
+<div title="QuickEdit_customList" creator="Roger Luo" modifier="Roger Luo" created="200902191601" modified="201311041748" tags="settings QuickEditPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200906092154" changecount="3">
 <pre>timestamp
 $[[enter a date|{{new Date().formatString('DDD, MMM DDth, YYYY hh12:0mm:0ssam')}}]]
 ----
@@ -7455,8 +7474,7 @@ nested slider
 ----
 big red
 @@font-size:36pt;color:red;$1@@
-----
-</pre>
+----</pre>
 </div>
 <div title="QuickEdit_font" creator="Roger Luo" modifier="ELSDesignStudios" created="200803221859" modified="200906112024" tags="QuickEditPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200906112024">
 <pre>/%
@@ -10695,7 +10713,7 @@ In order to further aide in saving/restoring the list of tiddlers currently bein
 2007.10.05 1.0.0 initial release.   Moved [[SetDefaultTiddlers]] inline script and rewrote as a {{{&lt;&lt;saveStory&gt;&gt;}}} macro.  Moved permaview &quot;mouseover HREF&quot; enhancement from [[CoreTweaks]].
 &lt;&lt;&lt;</pre>
 </div>
-<div title="StyleSheet" modifier="Roger Luo" created="200903111603" modified="201309230624" tags="setup stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="201101140514" changecount="8">
+<div title="StyleSheet" modifier="Roger Luo" created="200903111603" modified="201311050020" tags="setup stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="201101140514" changecount="12">
 <pre>/*{{{*/
 /* SHORTCUTS */
 [[StyleSheetShortcuts]]
@@ -10713,6 +10731,20 @@ In order to further aide in saving/restoring the list of tiddlers currently bein
 .viewer tr.oddRow { background-color: #fff; }
 .viewer tr.evenRow { background-color: #ffc; }
 .viewer td { width: 50px; text-align: left; }
+.viewer td[id=&quot;key&quot;]{ 	font-family: monospace;
+    padding: 1px 6px;
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: -moz-linear-gradient(center top , #F0F0F0, #FCFCFC) repeat scroll 0 0 padding-box rgba(0, 0, 0, 0);
+    border-color: #E0E0E0;
+    border-image: none;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px 1px 2px;
+    color: #303030;
+    white-space: nowrap;}
 *[id=&quot;mainMenu&quot;] .scroll li  /* MOZ ONLY */	{ margin-left:-2em; }
 
 /* ADJUSTMENTS TO STANDARD ELEMENTS */
@@ -10725,10 +10757,28 @@ In order to further aide in saving/restoring the list of tiddlers currently bein
 .siteNav .button:hover	{ color:#009 }
 .siteNav input[type=&quot;checkbox&quot;]	{ margin:0; }
 
+/* My Custom Style */
+.key {
+	font-size: 12px;
+	font-family: monospace;
+    padding: 1px 6px;
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: -moz-linear-gradient(center top , #F0F0F0, #FCFCFC) repeat scroll 0 0 padding-box rgba(0, 0, 0, 0);
+    border-color: #E0E0E0;
+    border-image: none;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px 1px 2px;
+    color: #303030;
+    white-space: nowrap;
+}
 /*}}}*/
 [[StyleSheetSyntaxHighlighter]]</pre>
 </div>
-<div title="StyleSheetAdjustments" modifier="ELSDesignStudios" created="200903230056" modified="200903252024" tags="BasicsPackage stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="200903252024">
+<div title="StyleSheetAdjustments" modifier="Roger Luo" created="200903230056" modified="201311041728" tags="BasicsPackage stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="200903252024" changecount="2">
 <pre>/*{{{*/
 /* ADJUSTMENTS TO STANDARD ELEMENTS */
 .headerShadow, .headerForeground
@@ -11417,15 +11467,16 @@ merge(config.macros.tiddlerIcons.map, {
 });
 //}}}</pre>
 </div>
-<div title="Tiddlywiki" creator="Roger Luo" modifier="Roger Luo" created="201310250917" tags="tiddlywiki" changecount="1">
+<div title="Tiddlywiki" creator="Roger Luo" modifier="Roger Luo" created="201310250917" modified="201311050021" tags="tiddlywiki" changecount="3">
 <pre>!Format
 [[Tiddlywiki: Edit Table]]
+[[Tiddlywiki: Use Custom Style]]
 
 !Reference
 [[TiddlyWikiTutorial|http://www.blogjones.com/TiddlyWikiTutorial.htm]]
 [[TiddlyTools|http://www.tiddlytools.com]]</pre>
 </div>
-<div title="Tiddlywiki: Edit Table" creator="Roger Luo" modifier="Roger Luo" created="201310250908" modified="201310250917" tags="tiddlywiki" changecount="10">
+<div title="Tiddlywiki: Edit Table" creator="Roger Luo" modifier="Roger Luo" created="201310250908" modified="201311050021" tags="Tiddlywiki" changecount="11">
 <pre>!Simple Tables
 {{{
 |North West|North|North East|
@@ -11532,6 +11583,14 @@ TiddlyWiki automatically assigns the classes {{{oddRow}}} and {{{evenRow}}} to t
 .viewer tr.evenRow { background-color: #ffc; }
 }}}
 </pre>
+</div>
+<div title="Tiddlywiki: Use Custom Style" creator="Roger Luo" modifier="Roger Luo" created="201311050022" modified="201311050024" tags="Tiddlywiki" changecount="3">
+<pre>#Open the tiddly named &quot;StyleSheet&quot;
+#Append your custom style css code at the end
+#Use the style by this grammar
+{{{
+{{yourcustomstyle{content}}}
+}}}</pre>
 </div>
 <div title="ToggleLeftSidebar" creator="Roger Luo" modifier="ELSDesignStudios" created="200607182327" modified="200909262132" tags="transclusion bookmarklet" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200909262132">
 <pre>/%
@@ -12304,6 +12363,18 @@ if (store.showUnsaved_setDirty==undefined) {
 }
 //}}}</pre>
 </div>
+<div title="Useful ShortKey/HotKey" creator="Roger Luo" modifier="Roger Luo" created="201311041633" modified="201311050058" tags="[[Visual Studio]]" changecount="51">
+<pre>|width:120px;!Usage|width:240px; !Key |
+|设置断点|{{key{F9}}}|
+|折叠所有代码|{{key{~Ctrl-M}}}+{{key{~Ctrl-O}}}|
+|展开所有代码|{{key{~Ctrl-M}}}+{{key{~Ctrl-P}}}|
+|注释代码|{{key{~Ctrl-K}}}+{{key{~Ctrl-C}}}|
+|取消注释代码|{{key{~Ctrl-K}}}+{{key{~Ctrl-U}}}|
+|附加调试器的进程|{{key{Ctrl}}}+{{key{Alt}}}+{{key{P}}}|
+!Reference
+[[Visual ShortKey|http://developer.51cto.com/art/200904/122073.htm]]
+</pre>
+</div>
 <div title="VMWare" creator="Roger Luo" modifier="Roger Luo" created="201310201324" modified="201310201329" tags="vmware" changecount="2">
 <pre>[[VMware支持三种类型的网络：NAT，Bridged，Host-only]]</pre>
 </div>
@@ -12424,9 +12495,10 @@ Replace sharename (use lowercase) with the share name specified with VBoxManage 
 
 </pre>
 </div>
-<div title="Visual Studio" creator="Roger Luo" modifier="Roger Luo" created="201309240144" modified="201311011043" tags="VS" changecount="2">
+<div title="Visual Studio" creator="Roger Luo" modifier="Roger Luo" created="201309240144" modified="201311041746" tags="VS" changecount="7">
 <pre>[[Code Coverage For C/C++]]
 [[Code Coverage For C#]]
+[[Useful ShortKey/HotKey]]
 !Reference
 [[Sample Code|http://code.msdn.microsoft.com/]]
 [[Sample Browser|http://visualstudiogallery.msdn.microsoft.com/4934b087-e6cc-44dd-b992-a71f00a2a6df]]</pre>

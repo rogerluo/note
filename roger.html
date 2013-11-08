@@ -521,12 +521,45 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311050839" tags="c# asp.net web iis" changecount="6">
+<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311080601" tags="c# asp.net web iis" changecount="7">
 <pre>[[Remove IIS Server Cache IIS清除缓存]]
-[[ASP.NET MVC Learning]]</pre>
+[[ASP.NET MVC Learning]]
+[[ASP.NET FAQ]]</pre>
 </div>
-<div title="ASP.NET MVC Learning" creator="Roger Luo" modifier="Roger Luo" created="201311050840" modified="201311051107" tags="c# asp.net mvc" changecount="7">
-<pre>!Note
+<div title="ASP.NET FAQ" creator="Roger Luo" modifier="Roger Luo" created="201311080614" modified="201311081018" tags="C# ASP.NET MVC" changecount="4">
+<pre>!Entity Framework: How can I tell what version I am using?
+[[EF Version History|http://msdn.microsoft.com/en-us/data/jj574253]]
+
+!如何在MVC项目中修改缺省浏览器
+MVC项目中看不到浏览器选择或者右击选择“Browse with...”菜单，这是由于：
+In Visual Studio 2010, the Browse With option is available. However, it is not available for MVC Views!
+Simply add a Web Form or HTML Page to your project, and Browse With is readily available in it's context menu. 
+Here you can set the Default Browser, and that setting will be used for all subsequent debugging.
+No need for complicated code in an Default.aspx page, or changing the Windows defaults.（摘自of）
+所以右键项目添加New Item&gt;Visual C#&gt;Web&gt;MVC3&gt;MVC3 View Page(ASPX)&gt;右键选择刚创建的ASPX文件&gt;“Browse with...”&gt;Choose the default browser as your like&gt;Delete it&gt;Done.
+
+!Unable to access T-SQL components &amp; An incompatible DacFx version is installed
+SQL Server Data Tools (SSDT) is a distinct toolset from SQL Server Data Tools - Business Intelligence for Visual Studio 2012 (SSDT-BI).
+
+</pre>
+</div>
+<div title="ASP.NET MVC Learning" creator="Roger Luo" modifier="Roger Luo" created="201311050840" modified="201311080930" tags="c# asp.net mvc" changecount="33">
+<pre>!Official Learning &amp;&amp; Resourses
+[[MVC|http://www.asp.net/mvc]]
+[[MVC PluralSight|http://www.asp.net/mvc/pluralsight]]
+[[ASP.NET Tutorials|http://www.asp.net/mvc/tutorials]]
+[[Scott Allen|http://pluralsight.com/training/Authors/Details?handle=scott-allen]]
+!Entity Framework
+!!!Introduction
+
+!!!Install
+[[Get Entity Framework|http://msdn.microsoft.com/en-us/data/ee712906#tooling]]
+!!!useful link
+[[Official Website|http://msdn.microsoft.com/en-us/data/ef.aspx]]
+
+
+
+!Note
 Each public method in a controller is known as an action method, meaning you can invoke it from the Web via some URL to perform an action. 
 
 The @@color:#00F;''.cshtml''@@ file extension denotes a C# view that will be processed by @@color:#00F;''Razor ''@@engine. Previous versions of MVC relied on the @@color:#00F;''ASPX view''@@ engine, for which view files have the @@color:#00F;''.aspx''@@ extension. 
@@ -543,14 +576,15 @@ The view 'Index' or its master was not found or no view engine supports the sear
 ~/Views/Shared/Index.cshtml
 ~/Views/Shared/Index.vbhtml
 }}}
-!FAQ
-;如何在MVC项目中修改缺省浏览器
-MVC项目中看不到浏览器选择或者右击选择“Browse with...”菜单，这是由于：
-In Visual Studio 2010, the Browse With option is available. However, it is not available for MVC Views!
-Simply add a Web Form or HTML Page to your project, and Browse With is readily available in it's context menu. 
-Here you can set the Default Browser, and that setting will be used for all subsequent debugging.
-No need for complicated code in an Default.aspx page, or changing the Windows defaults.（摘自of）
-所以右键项目添加New Item&gt;Visual C#&gt;Web&gt;MVC3&gt;MVC3 View Page(ASPX)&gt;右键选择刚创建的ASPX文件&gt;“Browse with...”&gt;Choose the default browser as your like&gt;Delete it&gt;Done.</pre>
+EF4.1有三种方式来进行数据操作及持久化。分别是Database-First,Model-First,Code-first，前面都已经简单介绍过了.下面简单小结一下：
+1.Database First是基于已存在的数据库，利用某些工具（如Vs提供的EF设计器）创建实体类，数据库对象与实体类的匹配关系等，你也可以手动修改这些自动生成的代码及匹配文件。
+2.Model First 这种方式是先利用某些工具（如VS的EF设计器）设计出实体数据模型及他们之间的关系，然后再根据这些实体、关系去生成数据库对象及相关代码文件。
+3.Code First 这种方式需要先写一些代码，如实体对象，数据关系等，然后根据已有的代码描述，自动创建数据对象，这种方式在前一篇文章已经简单说过了。但其实这种方法与Model First是非常类似的。我们自己写的代码，其实就是用代码表示实体模型，而Model First是用可视化的方式描述了实体模型。
+
+code First方法默认情况下是以命名空间.DBcontext类名来作为自动创建的数据库名称
+
+[[linqpad|http://www.linqpad.net/]]
+[[automapper|http://automapper.org/]]</pre>
 </div>
 <div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201311040303" tags="ThomsonReuters" changecount="5">
 <pre>[[Admin DB FAQ]]
@@ -3926,10 +3960,11 @@ Story.prototype.scrollToSection=function(title,section) {
 You'll also need to enter your username for signing your edits: &lt;&lt;option txtUserName&gt;&gt;
 </pre>
 </div>
-<div title="GitHub" creator="Roger Luo" modifier="Roger Luo" created="201309231227" modified="201310231456" tags="github" changecount="5">
+<div title="GitHub" creator="Roger Luo" modifier="Roger Luo" created="201309231227" modified="201311060314" tags="github" changecount="6">
 <pre>[[如何使用TortoiseGit]]
 [[如何自动让pageant开机加载密钥]]
-[[Couldn't load this key (unable to open file)打开不了密钥文件]]</pre>
+[[Couldn't load this key (unable to open file)打开不了密钥文件]]
+[[Generating SSH Keys|https://help.github.com/articles/generating-ssh-keys]]</pre>
 </div>
 <div title="GotoPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200605052341" modified="200905221854" tags="NavigationPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200905221854">
 <pre>/***
@@ -4982,15 +5017,21 @@ loading a script from a source url:
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
 </div>
-<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201309240754" tags="SQL MSSQL" changecount="5">
+<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311080946" tags="SQL MSSQL" changecount="6">
 <pre>[[Built-In Function]]
 [[MSSQL FAQ]]</pre>
 </div>
-<div title="MSSQL FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201311040324" tags="MSSQL" changecount="7">
+<div title="MSSQL FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201311081039" tags="MSSQL" changecount="9">
 <pre>!Get table's structure 显示数据表结构
 &lt;code sql&gt;
 SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FROM syscolumns, systypes WHERE syscolumns.xusertype = systypes.xusertype AND syscolumns.id = object_id('table')
-&lt;/code&gt;</pre>
+&lt;/code&gt;
+
+!SSDT SQL Server Data Tools
+[[Official Website|http://msdn.microsoft.com/en-us/data/tools.aspx]]
+[[Download|http://msdn.microsoft.com/en-us/data/hh297027]]
+[[FAQ|http://msdn.microsoft.com/en-us/data/hh322942]]
+</pre>
 </div>
 <div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311040915" changecount="30">
 <pre>[[GettingStarted]]
@@ -10885,7 +10926,7 @@ In order to further aide in saving/restoring the list of tiddlers currently bein
 2007.10.05 1.0.0 initial release.   Moved [[SetDefaultTiddlers]] inline script and rewrote as a {{{&lt;&lt;saveStory&gt;&gt;}}} macro.  Moved permaview &quot;mouseover HREF&quot; enhancement from [[CoreTweaks]].
 &lt;&lt;&lt;</pre>
 </div>
-<div title="StyleSheet" modifier="Roger Luo" created="200903111603" modified="201311050020" tags="setup stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="201101140514" changecount="12">
+<div title="StyleSheet" modifier="Roger Luo" created="200903111603" modified="201311080716" tags="setup stylesheet" server.type="file" server.host="file:///C:/open/tiddlywiki/myNoteBook.html" server.page.revision="201101140514" changecount="15">
 <pre>/*{{{*/
 /* SHORTCUTS */
 [[StyleSheetShortcuts]]
@@ -10946,6 +10987,15 @@ In order to further aide in saving/restoring the list of tiddlers currently bein
     border-width: 1px 1px 2px;
     color: #303030;
     white-space: nowrap;
+}
+.shell {
+	width:550px;
+	background-color:black;
+	color:white;
+	border:4px solid gray;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:15px;
 }
 /*}}}*/
 [[StyleSheetSyntaxHighlighter]]</pre>

@@ -521,12 +521,13 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311080601" tags="c# asp.net web iis" changecount="7">
+<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311110237" tags="c# asp.net web iis" changecount="8">
 <pre>[[Remove IIS Server Cache IIS清除缓存]]
 [[ASP.NET MVC Learning]]
+[[Entity Framework]]
 [[ASP.NET FAQ]]</pre>
 </div>
-<div title="ASP.NET FAQ" creator="Roger Luo" modifier="Roger Luo" created="201311080614" modified="201311081018" tags="C# ASP.NET MVC" changecount="4">
+<div title="ASP.NET FAQ" creator="Roger Luo" modifier="Roger Luo" created="201311080614" modified="201311110243" tags="C# ASP.NET MVC" changecount="7">
 <pre>!Entity Framework: How can I tell what version I am using?
 [[EF Version History|http://msdn.microsoft.com/en-us/data/jj574253]]
 
@@ -3788,6 +3789,90 @@ public class Queen {
 &lt;/code&gt;
 </pre>
 </div>
+<div title="Entity Framework" creator="Roger Luo" modifier="Roger Luo" created="201311110242" modified="201311111139" tags="asp.net c# mvc" changecount="37">
+<pre>!Introduction
+Entity Framework is Microsoft’s recommended data access technology for new applications
+!EF Mapping
+The layers that need to be defined are as follows:
+*➤  Logical— This layer defines the relational data.  &lt;br&gt;The logical layer is defined by the Store Schema Definition Language (''SSDL'') and describes the structure of the database tables and their relations.
+*➤  Conceptual— This layer defines the .NET classes. &lt;br&gt;The conceptual layer defi nes .NET classes. This layer is created with the Conceptual Schema Defi nition Language (''CSDL'').
+*➤  Mapping— This layer defines the mapping from .NET classes to relational tables and associations. &lt;br&gt;The mapping layer maps the entity type definition from the CSDL to the SSDL by using the Mapping Specification Language (''MSL'').
+!Connection String
+In ADO.NET, using provider System.Data.SqlClient (DbConnection, DbCommand, DbParameter, and DbDataReader). T-SQL to EDM. Low-level API
+{{{
+&lt; configuration &gt; 
+  ...
+  &lt; connectionStrings &gt;
+    &lt; add name=&quot;Northwind&quot;
+      providerName=&quot;System.Data.SqlClient&quot;
+      connectionString=&quot;server=(local);integrated security=SSPI;database=Northwind&quot; / &gt;
+  &lt; /connectionStrings &gt;
+&lt; /configuration &gt; 
+}}}
+In EF, using provider System.Data.EntityClient. Entity SQL to EDM. High-level API.
+{{{
+&lt; configuration &gt; 
+  ...
+  &lt; connectionStrings &gt;
+    &lt; add name=&quot;CourseInfoContext&quot; connectionString=&quot;metadata=res://*/CourseModel.csdl|res://*/CourseModel.ssdl|
+res://*/CourseModel.msl;provider=System.Data.SqlClient;provider connection string=&amp;quot;data source=U0143995-TPL-A;initial catalog=CourseInfo;
+integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&amp;quot;&quot; providerName=&quot;System.Data.EntityClient&quot; /&gt;&lt;/connectionStrings &gt;
+  &lt; /connectionStrings &gt;
+&lt; /configuration &gt; 
+}}}
+The differences between Entity SQL's connection string and ADO.NET's connection string is that the former needs the mapping information.
+CSDL, SSDL and MSL, which are defined at //metadata //attribute.
+!!!''@@metadata@@'' attribute
+#a delimited list of mapping files
+#@@Provider@@ for the invariant provider name to access the data source, 
+#@@Provider connection string@@ to assign the provider - dependent connection string. 
+!!!EDM file
+An .edmx file is an XML file that defines a model that can be used with Entity Framework. The model is made up of a conceptual model, a storage model, and the mapping between these models. An .edmx file also contains information that is used by the EF Designer to render a model ''graphically''.
+|!EDMX Version	|!Visual Studio Version  |!Schema File	|!XML Namespace |
+|EDMX v1	|Visual Studio 2008	|Microsoft.Data.Entity.Design.Edmx_1.xsd	|http://schemas.microsoft.com/ado/2007/06/edmx|
+|EDMX v2	|Visual Studio 2010	|Microsoft.Data.Entity.Design.Edmx_2.xsd	|http://schemas.microsoft.com/ado/2008/10/edmx|
+|EDMX v3	|Visual Studio 2012	|Microsoft.Data.Entity.Design.Edmx_3.xsd	|http://schemas.microsoft.com/ado/2009/11/edmx|
+Note: [[official website|http://msdn.microsoft.com/en-US/data/jj650889]]
+!!!EDMGEN
+;Introduction
+EdmGen.exe is a command-line tool used for working with Entity Framework model and mapping files.
+Position: C:\Windows\Microsoft.NET\Framework\v4.0.30319
+!!!!Usage
+;Generate the Model and Mapping Files
+For CSharp 
+{{{
+&quot;%windir%\Microsoft.NET\Framework\v4.0.30319\edmgen.exe&quot; /mode:FullGeneration  
+/c:&quot;Data Source=myserver; Initial Catalog=mydb; user id=myuser;password=mypassword&quot;; 
+/project:course /entitycontainer:courseentity /namespace:coursemodel/language:CSharp
+}}}
+For VB
+{{{
+&quot;%windir%\Microsoft.NET\Framework\v4.0.30319\edmgen.exe&quot; /mode:FullGeneration  
+/c:&quot;Data Source=myserver; Initial Catalog=mydb; user id=myuser;password=mypassword&quot;; 
+/project:course /entitycontainer:courseentity /namespace:coursemodel/language:VB
+}}}
+;Validate Model and Mapping Files
+{{{
+“%windir%\Microsoft.NET\Framework\v4.0.30319\edmgen.exe&quot; /mode:ValidateArtifacts 
+/inssdl:.\course.ssdl /inmsl:.\course.msl /incsdl:.\course.csdl
+}}}
+!!!!Error
+;error 7001: The provider did not return a ProviderManifestToken string.Login failed. The login is from an untrusted domain and cannot be used with Windows authentication.
+:Error authentication
+;error 7004: The argument 'outssdl' is missing.  The mode 'FullGeneration' requires either the 'project' argument or the arguments 'outssdl, outcsdl, outmsl, outobjectlayer, outviews, Namespace, EntityContainer'.
+
+;Reference
+;[[MSDN|http://msdn.microsoft.com/en-us/library/bb387165%28v=vs.110%29.aspx]]
+!!!Code-First
+
+[[Announcing Entity Framework Code-First (CTP5 release) |http://weblogs.asp.net/scottgu/archive/2010/12/08/announcing-entity-framework-code-first-ctp5-release.aspx]]
+[[ADO.NET Entity Framework Overview|http://msdn.microsoft.com/en-us/magazine/cc163399.aspx]]
+[[Multiple database support with Entity Framework |http://mosesofegypt.net/post/Multiple-database-support-with-Entity-Framework.aspx]]
+
+!Key Terms
+;EDM
+:Entity Data Model</pre>
+</div>
 <div title="Favorite Blog" creator="Roger Luo" modifier="Roger Luo" created="201309220946" changecount="1">
 <pre>[[Kenny Kerr|http://msdn.microsoft.com/en-us/magazine/ee532098.aspx?sdmr=kennykerr&amp;sdmi=authors]] MSDN Magazine Authors</pre>
 </div>
@@ -5017,7 +5102,7 @@ loading a script from a source url:
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
 </div>
-<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311080946" tags="SQL MSSQL" changecount="6">
+<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311110649" tags="SQL MSSQL" changecount="7">
 <pre>[[Built-In Function]]
 [[MSSQL FAQ]]</pre>
 </div>
@@ -12605,8 +12690,8 @@ if (store.showUnsaved_setDirty==undefined) {
 }
 //}}}</pre>
 </div>
-<div title="Useful ShortKey/HotKey" creator="Roger Luo" modifier="Roger Luo" created="201311041633" modified="201311050609" tags="[[Visual Studio]]" changecount="54">
-<pre>|width:120px;!Usage|width:240px; !Key |
+<div title="Useful ShortKey/HotKey" creator="Roger Luo" modifier="Roger Luo" created="201311041633" modified="201311110307" tags="[[Visual Studio]]" changecount="57">
+<pre>|width:50%;!Usage|width:240px; !Key |
 |设置断点|{{key{F9}}}|
 |折叠所有代码|{{key{~Ctrl-M}}}+{{key{~Ctrl-O}}}|
 |展开所有代码|{{key{~Ctrl-M}}}+{{key{~Ctrl-P}}}|

@@ -544,21 +544,12 @@ SQL Server Data Tools (SSDT) is a distinct toolset from SQL Server Data Tools - 
 
 </pre>
 </div>
-<div title="ASP.NET MVC Learning" creator="Roger Luo" modifier="Roger Luo" created="201311050840" modified="201311080930" tags="c# asp.net mvc" changecount="33">
+<div title="ASP.NET MVC Learning" creator="Roger Luo" modifier="Roger Luo" created="201311050840" modified="201311120802" tags="c# asp.net mvc" changecount="35">
 <pre>!Official Learning &amp;&amp; Resourses
 [[MVC|http://www.asp.net/mvc]]
 [[MVC PluralSight|http://www.asp.net/mvc/pluralsight]]
 [[ASP.NET Tutorials|http://www.asp.net/mvc/tutorials]]
 [[Scott Allen|http://pluralsight.com/training/Authors/Details?handle=scott-allen]]
-!Entity Framework
-!!!Introduction
-
-!!!Install
-[[Get Entity Framework|http://msdn.microsoft.com/en-us/data/ee712906#tooling]]
-!!!useful link
-[[Official Website|http://msdn.microsoft.com/en-us/data/ef.aspx]]
-
-
 
 !Note
 Each public method in a controller is known as an action method, meaning you can invoke it from the Web via some URL to perform an action. 
@@ -3017,6 +3008,10 @@ config.macros.DOMViewer = {
 }
 //}}}</pre>
 </div>
+<div title="Database" creator="Roger Luo" modifier="Roger Luo" created="201311120411" modified="201311120411" changecount="2">
+<pre>[[MySQL]]
+[[MS SQL Server]]</pre>
+</div>
 <div title="DatePlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510301759" modified="201104231814" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104231814">
 <pre>/***
 |Name|[[DatePlugin]]|
@@ -3801,9 +3796,13 @@ public class Queen {
 &lt;/code&gt;
 </pre>
 </div>
-<div title="Entity Framework" creator="Roger Luo" modifier="Roger Luo" created="201311110242" modified="201311111139" tags="asp.net c# mvc" changecount="37">
+<div title="Entity Framework" creator="Roger Luo" modifier="Roger Luo" created="201311110242" modified="201311120848" tags="asp.net c# mvc" changecount="43">
 <pre>!Introduction
 Entity Framework is Microsoft’s recommended data access technology for new applications
+!Install
+[[Get Entity Framework|http://msdn.microsoft.com/en-us/data/ee712906#tooling]]
+!useful link
+[[Official Website|http://msdn.microsoft.com/en-us/data/ef.aspx]]
 !EF Mapping
 The layers that need to be defined are as follows:
 *➤  Logical— This layer defines the relational data.  &lt;br&gt;The logical layer is defined by the Store Schema Definition Language (''SSDL'') and describes the structure of the database tables and their relations.
@@ -3872,6 +3871,15 @@ For VB
 ;error 7001: The provider did not return a ProviderManifestToken string.Login failed. The login is from an untrusted domain and cannot be used with Windows authentication.
 :Error authentication
 ;error 7004: The argument 'outssdl' is missing.  The mode 'FullGeneration' requires either the 'project' argument or the arguments 'outssdl, outcsdl, outmsl, outobjectlayer, outviews, Namespace, EntityContainer'.
+----
+!Connect to exist database on MySQL
+[[Entity Framework connect to exist database on MySQL]]
+----
+!Connect to exist database on [[MS SQL Server]]
+[[Entity Framework connect to exist database on MS SQL Server]]
+
+
+
 
 ;Reference
 ;[[MSDN|http://msdn.microsoft.com/en-us/library/bb387165%28v=vs.110%29.aspx]]
@@ -3884,6 +3892,151 @@ For VB
 !Key Terms
 ;EDM
 :Entity Data Model</pre>
+</div>
+<div title="Entity Framework connect to exist database on MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201311120928" modified="201311121005" tags="ef mssql" changecount="7">
+<pre>!1. Install MSSQL Express through WebPI
+[[Microsoft Web Platform Installer 4.6|http://www.microsoft.com/web/downloads/platform.aspx]]
+按照你的情况安装，添加如下项
+*Visual studio express(如果已装了Visual Studio可以跳过)
+*IIS Express（如果已装了Visual Studio可以跳过）
+*SQL Server Express（如果已装了MSSQL可以跳过）
+*ASP.NET MVC
+!2. 创建数据库course
+&lt;code sql&gt;
+create database course;
+&lt;/code&gt;
+&lt;code sql&gt;
+use Course;
+GO
+
+IF OBJECT_ID('dbo.CourseReview', N'U') IS NOT NULL
+DROP TABLE Dbo.CourseReview;
+GO
+
+if OBJECT_ID('dbo.Course', N'U')  is not null
+drop table dbo.Course;
+GO
+
+CREATE TABLE DBO.Course
+(
+ID INT IDENTITY(1,1) NOT NULL,
+NAME NVARCHAR(16) NOT NULL,
+TEACHER NVARCHAR(16) NOT NULL,
+CONSTRAINT PK_COURSE_ID
+PRIMARY KEY (ID),
+CONSTRAINT UK_COURSE_NAME
+UNIQUE (NAME)
+)
+GO
+
+CREATE TABLE DBO.COURSEREVIEW (
+ID INT IDENTITY(1,1) NOT NULL,
+COURSEID INT NOT NULL,
+RATING INT NOT NULL,
+COMMNET NVARCHAR(256) NULL,
+CONSTRAINT PK_COURSE_REVIEW_ID
+PRIMARY KEY (ID),
+CONSTRAINT FK_COURSE_ID
+FOREIGN KEY (COURSEID)
+REFERENCES DBO.COURSE(ID)
+ON DELETE CASCADE
+ON UPDATE NO ACTION
+)
+GO
+insert into Course (NAME, TEACHER) values (N'mssql', N'roger');
+&lt;/code&gt;
+!3. 使用vs创建一个c# console application
+!4. 添加一个文件Visual c# items/Data/Ado.NET entity data model(EDM),命名为courseMSSQLModel.edmx
+!5. 选择Generate from database/New Connection/,在server name上选择
+*本地LocalDB，则填写Localdb/v11.0
+*远端服务器则使用IP地址或者机器名，填写相应的用户名与密码
+[img[pic/db/vs_new_connection_mssql.png]]
+!6. 选择“yes, include the sensitive data in the connection string.”,同时将底下一栏修改成courseMySQLEntities,这个将会出现在app.config中connectionStrings节中
+[img[pic/db/vs_new_connection_mssql_1.png]]
+!7. 接着选择需要哪些表，视图或者存储过程，同时修改一下命名空间为courseMySQLModel
+[img[pic/db/vs_new_connection_mssql_2.png]]
+!8. 在Porgram.cs中main函数里添加如下代码
+&lt;code csharp&gt;
+            using (var db = new DB.MySQL.courseMSSQLEntities())
+            {
+                foreach (var i in db.courses)
+                {
+                    Console.WriteLine(i.NAME);
+                }
+            }
+&lt;/code&gt;
+!8. 编译并运行，输出结果为mysql
+{{{
+mssql
+Press any key to continue . . .
+}}}</pre>
+</div>
+<div title="Entity Framework connect to exist database on MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120855" modified="201311120925" tags="mysql ef" changecount="13">
+<pre>!1. Install MySQL and relate connector
+[[MySQL Community Server|http://dev.mysql.com/downloads/mysql/]]
+[[MySQL Connector/Net|http://dev.mysql.com/downloads/connector/net/]]
+If mysql run on windows, please install [[mysql installer for windows|http://dev.mysql.com/downloads/mysql/]]] including the GUI workbrench
+!2. 创建数据库course
+&lt;code sql&gt;
+create database course;
+&lt;/code&gt;
+&lt;code sql&gt;
+use Course;
+
+DROP TABLE IF EXISTS COURSEREVIEW;
+DROP TABLE IF EXISTS COURSE;
+
+CREATE TABLE Course
+(
+ID INT AUTO_INCREMENT NOT NULL,
+NAME NVARCHAR(16) NOT NULL,
+TEACHER NVARCHAR(16) NOT NULL,
+CONSTRAINT PK_COURSE_ID
+PRIMARY KEY (ID),
+CONSTRAINT UK_COURSE_NAME
+UNIQUE (NAME)
+);
+
+
+CREATE TABLE COURSEREVIEW (
+ID INT AUTO_INCREMENT NOT NULL,
+COURSEID INT NOT NULL,
+RATING INT NOT NULL,
+COMMNET NVARCHAR(256) NULL,
+CONSTRAINT PK_COURSE_REVIEW_ID
+PRIMARY KEY (ID),
+CONSTRAINT FK_COURSE_ID
+FOREIGN KEY (COURSEID)
+REFERENCES COURSE(ID)
+ON DELETE CASCADE
+ON UPDATE NO ACTION
+);
+
+insert into Course (NAME, TEACHER) values (N'mysql', N'roger');
+&lt;/code&gt;
+!3. 使用vs创建一个c# console application
+!4. 添加一个文件Visual c# items/Data/Ado.NET entity data model(EDM),命名为courseMySQLModel.edmx
+!5. 选择Generate from database/New Connection/,在server name上选择127.0.0.1或者localhost，如果是远端服务器则使用IP地址或者机器名，填写相应的用户名与密码
+[img[pic/db/vs_new_connection_mysql.png]]
+!6. 选择“yes, include the sensitive data in the connection string.”,同时将底下一栏修改成courseMySQLEntities,这个将会出现在app.config中connectionStrings节中
+[img[pic/db/vs_new_connection_mysql_2.png]]
+!7. 接着选择需要哪些表，视图或者存储过程，同时修改一下命名空间为courseMySQLModel
+[img[pic/db/vs_new_connection_mysql_3.png]]
+!8. 在Porgram.cs中main函数里添加如下代码
+&lt;code csharp&gt;
+            using (var db = new DB.MySQL.courseMySQLEntities())
+            {
+                foreach (var i in db.courses)
+                {
+                    Console.WriteLine(i.NAME);
+                }
+            }
+&lt;/code&gt;
+!8. 编译并运行，输出结果为mysql
+{{{
+mysql
+Press any key to continue . . .
+}}}</pre>
 </div>
 <div title="Favorite Blog" creator="Roger Luo" modifier="Roger Luo" created="201309220946" changecount="1">
 <pre>[[Kenny Kerr|http://msdn.microsoft.com/en-us/magazine/ee532098.aspx?sdmr=kennykerr&amp;sdmi=authors]] MSDN Magazine Authors</pre>
@@ -5114,12 +5267,29 @@ loading a script from a source url:
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
 </div>
-<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311110649" tags="SQL MSSQL" changecount="7">
+<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311121005" tags="SQL MSSQL" changecount="12">
 <pre>[[Built-In Function]]
-[[MSSQL FAQ]]</pre>
+[[MSSQL 常用使用]]
+[[MSSQL与MySQL的不同]]
+[[Entity Framework connect to exist database on MS SQL Server]]</pre>
 </div>
-<div title="MSSQL FAQ" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201311081039" tags="MSSQL" changecount="9">
-<pre>!Get table's structure 显示数据表结构
+<div title="MSSQL 常用使用" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201311120711" tags="MSSQL" changecount="13">
+<pre>!检查表是否存在
+方法一：
+{{{
+IF OBJECT_ID('dbo.thetable', N'U') IS NOT NULL
+    DROP TABLE Dbo.thetable;
+}}}
+方法二：
+{{{
+USE thedb;
+IF EXISTS (
+    SELECT  TABLE_NAME FROM INFORMATION_SCHEMA.TABLES
+    WHERE   TABLE_NAME = 'thetable')
+    DROP TABLE Dbo.thetable;
+}}}
+
+!Get table's structure 显示数据表结构
 &lt;code sql&gt;
 SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FROM syscolumns, systypes WHERE syscolumns.xusertype = systypes.xusertype AND syscolumns.id = object_id('table')
 &lt;/code&gt;
@@ -5130,13 +5300,25 @@ SELECT syscolumns.name,systypes.name,syscolumns.isnullable,syscolumns.length FRO
 [[FAQ|http://msdn.microsoft.com/en-us/data/hh322942]]
 </pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311111441" changecount="34">
+<div title="MSSQL与MySQL的不同" creator="Roger Luo" modifier="Roger Luo" created="201311120714" modified="201311120747" tags="mysql mssql" changecount="3">
+<pre>!自增加关键字的声明
+*mysql使用AUTO_INCREMENT
+*mssql使用IDENTITY(1,1)，前者是起始值，后者是步长
+!Informaiton_schema
+1.mysql与mssql都拥有这个db，然而前者在mysql中只有一个，在mssql则是每一个db拥有一个。
+2.同时表的结构也有些差别
+mysql中tables是这么定义的
+[img[information_schema.tables|pic/db/mysql_information_schema_tables.png]]
+mssql中tables是这么定义的
+[img[information_schema.tables|pic/db/mssql_information_schema_tables.png]]</pre>
+</div>
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311120411" changecount="35">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
 [[Web]]
 [[Algorithm]]
-[[MS SQL Server]]
+[[Database]]
 [[VMWare]]
 [[VirtualBox]]
 [[GitHub]]
@@ -5550,6 +5732,10 @@ bullet-item list (using the TiddlyWiki core {{{&lt;&lt;list filter ...&gt;&gt;}}
 2008.02.29 1.1.0 refactored to define store.matchTags() and extend store.filterTiddlers()
 2008.02.28 1.0.0 initial release
 &lt;&lt;&lt;</pre>
+</div>
+<div title="Migration between MSSQL and MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120544" tags="mysql" changecount="1">
+<pre>NAVICAT
+Commercial software</pre>
 </div>
 <div title="Miscellanies" creator="Roger Luo" modifier="Roger Luo" created="201309230221" modified="201311050929" changecount="3">
 <pre>!Tips
@@ -6621,6 +6807,21 @@ You can apply {{{&lt;&lt;moveablePanel ...&gt;&gt;}}} to //all// tiddlers by cus
 2006.03.05 1.0.1 use 'window' vs 'document.body' so mousetracking in FF doesn't drop the panel when moving too quickly
 2006.03.04 1.0.0 Initial public release
 &lt;&lt;&lt;</pre>
+</div>
+<div title="MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120412" modified="201311120856" tags="mysql" changecount="5">
+<pre>[[MySQL常用使用]]
+[[MSSQL与MySQL的不同]]
+[[Entity Framework connect to exist database on MySQL]]</pre>
+</div>
+<div title="MySQL常用使用" creator="Roger Luo" modifier="Roger Luo" created="201311120603" modified="201311120656" tags="mysql" changecount="3">
+<pre>!查询所有语法
+打开MYSQL安装路径下\MySQL Documentation x.x.xx\refman-x.x-en.pdf，然后选择第十三章节
+!检查表是否存在
+{{{
+use thedb;
+DROP TABLE IF EXISTS thetable;
+}}}
+注意： 不要加引号或者双引号</pre>
 </div>
 <div title="NestedSlidersPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200512161202" modified="200811160623" tags="DiscoveryPackage TaskPackage TidIDEPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200811160623">
 <pre>/***

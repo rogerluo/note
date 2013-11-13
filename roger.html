@@ -4482,6 +4482,23 @@ config.macros.gotoTiddler.listMaxSize=10;  // change this number
 2006.05.05 0.0.0 started
 &lt;&lt;&lt;</pre>
 </div>
+<div title="HTML5" creator="Roger Luo" modifier="Roger Luo" created="201311121638" modified="201311130048" changecount="3">
+<pre>!如何支持中文
+{{{&lt;meta charset=&quot;utf-8&quot;&gt;}}}
+!如何设置偏好图片(favicon)
+&lt;code html&gt;
+&lt;link href=&quot;Favicon.ico&quot; rel=&quot;bookmark&quot; type=&quot;image/x-icon&quot; /&gt;
+&lt;!-- IE --&gt;
+&lt;link href=&quot;Favicon.ico&quot; rel=&quot;icon&quot; type=&quot;image/x-icon&quot; /&gt;
+&lt;!-- other browsers --&gt;
+&lt;link href=&quot;Favicon.ico&quot; rel=&quot;shortcut icon&quot; type=&quot;image/x-icon&quot; /&gt;
+&lt;/code&gt;
+favicon.ico就是显示出来的图标，你需要自己找图标文件上传到网上，然后修改一下地址
+再把上面三行code加到&lt;head&gt;&lt;/head&gt;标签内即可。。。
+如果使用png，使用image/png。
+
+</pre>
+</div>
 <div title="HTMLFormattingPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200512011522" modified="201005071839" tags="MediaPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201005071839">
 <pre>/***
 |Name|HTMLFormattingPlugin|
@@ -4815,6 +4832,12 @@ connection.
 </div>
 <div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" modified="201309260812" tags="C# ssh OpenSource" changecount="2">
 <pre>Type the text for 'Howto: Send remote command'</pre>
+</div>
+<div title="IIS" creator="Roger Luo" modifier="Roger Luo" created="201311121545" modified="201311121545" changecount="2">
+<pre>!关于IIS局域网无法访问的解决方法
+具体原因是防火墙限制
+对于windows7用户：Control Panel\System and Security\Windows Firewall\Advanced Settings\Inbound rules\BranchCache Content Retrieval (HTTP-In),将其enable
+重启Web site服务</pre>
 </div>
 <div title="ImageSizePlugin" modifier="ELSDesignStudios" created="200801180032" modified="201109031106" tags="IconPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201109031106">
 <pre>/***
@@ -13087,12 +13110,13 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
-<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311111450" tags="web" changecount="2">
+<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311121540" tags="web" changecount="3">
 <pre>[[HTML5]]
 [[CSS]]
 [[ASP.NET]]
 [[javascript]]
-[[bootstrap]]</pre>
+[[bootstrap]]
+[[IIS]]</pre>
 </div>
 <div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311011020" tags="windows" changecount="8">
 <pre>[[Windows Command Usage]]

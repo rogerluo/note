@@ -3008,8 +3008,9 @@ config.macros.DOMViewer = {
 }
 //}}}</pre>
 </div>
-<div title="Database" creator="Roger Luo" modifier="Roger Luo" created="201311120411" modified="201311120411" changecount="2">
-<pre>[[MySQL]]
+<div title="Database" creator="Roger Luo" modifier="Roger Luo" created="201311120411" modified="201311130840" tags="db database" changecount="3">
+<pre>[[SQL Syntax]]
+[[MySQL]]
 [[MS SQL Server]]</pre>
 </div>
 <div title="DatePlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510301759" modified="201104231814" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104231814">
@@ -3796,7 +3797,7 @@ public class Queen {
 &lt;/code&gt;
 </pre>
 </div>
-<div title="Entity Framework" creator="Roger Luo" modifier="Roger Luo" created="201311110242" modified="201311120848" tags="asp.net c# mvc" changecount="43">
+<div title="Entity Framework" creator="Roger Luo" modifier="Roger Luo" created="201311110242" modified="201311130746" tags="asp.net c# mvc" changecount="44">
 <pre>!Introduction
 Entity Framework is Microsoft’s recommended data access technology for new applications
 !Install
@@ -3877,7 +3878,10 @@ For VB
 ----
 !Connect to exist database on [[MS SQL Server]]
 [[Entity Framework connect to exist database on MS SQL Server]]
-
+----
+!Update EDM when table changed on MSSQL
+[[Update EDM when table changed on MSSQL]]
+----
 
 
 
@@ -3893,7 +3897,7 @@ For VB
 ;EDM
 :Entity Data Model</pre>
 </div>
-<div title="Entity Framework connect to exist database on MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201311120928" modified="201311121005" tags="ef mssql" changecount="7">
+<div title="Entity Framework connect to exist database on MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201311120928" modified="201311131118" tags="ef mssql" changecount="10">
 <pre>!1. Install MSSQL Express through WebPI
 [[Microsoft Web Platform Installer 4.6|http://www.microsoft.com/web/downloads/platform.aspx]]
 按照你的情况安装，添加如下项
@@ -3944,6 +3948,7 @@ ON UPDATE NO ACTION
 )
 GO
 insert into Course (NAME, TEACHER) values (N'mssql', N'roger');
+insert into Course (NAME, TEACHER) values (N'csharp', N'dingjia');
 &lt;/code&gt;
 !3. 使用vs创建一个c# console application
 !4. 添加一个文件Visual c# items/Data/Ado.NET entity data model(EDM),命名为courseMSSQLModel.edmx
@@ -3969,7 +3974,10 @@ insert into Course (NAME, TEACHER) values (N'mssql', N'roger');
 {{{
 mssql
 Press any key to continue . . .
-}}}</pre>
+}}}
+
+!Relate Articles
+下一篇：[[Update EDM when table changed on MSSQL]]</pre>
 </div>
 <div title="Entity Framework connect to exist database on MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120855" modified="201311120925" tags="mysql ef" changecount="13">
 <pre>!1. Install MySQL and relate connector
@@ -5290,11 +5298,12 @@ loading a script from a source url:
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
 </div>
-<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311121005" tags="SQL MSSQL" changecount="12">
+<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311130337" tags="SQL MSSQL" changecount="13">
 <pre>[[Built-In Function]]
 [[MSSQL 常用使用]]
 [[MSSQL与MySQL的不同]]
-[[Entity Framework connect to exist database on MS SQL Server]]</pre>
+[[Entity Framework connect to exist database on MS SQL Server]]
+[[SQL Server安全认证]]</pre>
 </div>
 <div title="MSSQL 常用使用" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201311120711" tags="MSSQL" changecount="13">
 <pre>!检查表是否存在
@@ -9240,6 +9249,141 @@ config.macros.relatedTiddlers={
 如果该键不存在可以新建dword，接着重启计算机。
 </pre>
 </div>
+<div title="SQL Server安全认证" creator="Roger Luo" modifier="Roger Luo" created="201311130337" modified="201311130340" tags="SQL MSSQL sql mssql" changecount="4">
+<pre>!SQL Server认证方式
+SQL Server拥有两种认证方式
+*@@Windows authentication@@ is the default, and is often referred to as integrated security because this SQL Server security model is tightly integrated with Windows. Specific Windows user and group accounts are trusted to log in to SQL Server. Windows users who have already been authenticated do not have to present additional credentials.
+*@@Mixed mode supports authentication both by Windows and by SQL Server@@. User name and password pairs are maintained within SQL Server.
+Note：
+We recommend using Windows authentication wherever possible. Windows authentication uses a series of encrypted messages to authenticate users in SQL Server. When SQL Server logins are used, SQL Server login names and passwords are passed across the network, which makes them less secure.
+相应connectionstring写：
+{{{Server=MSSQL1;Database=AdventureWorks;Integrated Security=true;}}}
+
+
+</pre>
+</div>
+<div title="SQL Syntax" creator="Roger Luo" modifier="Roger Luo" created="201311130841" modified="201311131116" tags="db database sql todo" changecount="38">
+<pre>!Create Table
+For [[MS SQL Server]]
+&lt;code sql&gt;
+    CREATE TABLE DBO.Course  
+    (  
+    ID INT IDENTITY(1,1) NOT NULL,  
+    NAME NVARCHAR(16) NOT NULL,  
+    TEACHER NVARCHAR(16) NOT NULL,  
+    CONSTRAINT PK_COURSE_ID  
+    PRIMARY KEY (ID),  
+    CONSTRAINT UK_COURSE_NAME  
+    UNIQUE (NAME)  
+    );
+&lt;/code&gt;
+For MySQL
+&lt;code sql&gt;
+CREATE TABLE Course
+(
+ID INT AUTO_INCREMENT NOT NULL,
+NAME NVARCHAR(16) NOT NULL,
+TEACHER NVARCHAR(16) NOT NULL,
+CONSTRAINT PK_COURSE_ID
+PRIMARY KEY (ID),
+CONSTRAINT UK_COURSE_NAME
+UNIQUE (NAME)
+);
+&lt;/code&gt;
+!Select statement
+!!!Select distinct but return all columns?
+Assume that table course is described like:
+|!Field |!Type		|!Null	|!Key	|!Default |!Extra |
+|ID	|int(11)	|NO	|PRI	|	|auto_increment |
+|NAME	|varchar(16)	|NO	|UNI	|	| |
+|COACH	|varchar(16)	|NO	|	|	| |
+For MySQL
+&lt;code sql&gt;
+select coach, id
+from course
+group by coach
+order by id
+&lt;/code&gt;
+For [[MS SQL Server]]
+@@color:#F00;TODO@@
+!Insert statement
+&lt;code sql&gt;
+insert into Course (NAME, TEACHER) values (N'mssql', N'roger'); 
+insert into Course (NAME, TEACHER) values (N'csharp', N'dingjia');
+insert into Course values (N'cplusplus', N'roger');
+&lt;/code&gt;
+
+!Insert into … values ( SELECT … FROM … )
+!!!Case 1:
+table @@color:#00F;//''course ''//@@contains records:
+|!ID	|!NAME	|!TEACHER|
+|1	|mssql	|roger|
+|2	|csharp	|dingjia|
+table @@color:#00F;//''teacher ''//@@contains records:
+|!ID	|!NAME	|
+|||
+need to insert into teacher from table course
+&lt;code sql&gt;
+insert into teacher (name) select teacher from course;
+&lt;/code&gt;
+table @@color:#00F;//''teacher ''//@@contains records:
+|!ID	|!NAME	|
+|1	|roger|
+|2	|dingjia|
+if column @@color:#00F;//''name ''//@@in table @@color:#00F;//''teacher ''//@@ is @@color:#F00;unique@@, please use below code snippet:
+&lt;code sql&gt;
+insert into teacher (name) select distinct teacher from course;
+&lt;/code&gt;
+!!!Case 2:
+如果源表中含有多条重置值，同时目标表中也有对应的值，并且目标表中声明为unique
+table @@color:#00F;//''course ''//@@contains records:
+|!ID	|!NAME	|!TEACHER|
+|1	|mssql	|roger|
+|2	|csharp	|dingjia|
+|3	|dotnet|dingjia|
+|4	|cplusplus|roger|
+table @@color:#00F;//''teacher ''//@@contains records:
+|!ID	|!NAME	|
+|1	|dingjia|
+|2	|张三|
+|3	|李四|
+need to use this code snippet:
+&lt;code sql&gt;
+	insert into teacher (name)
+		select distinct coach
+			from course
+			where coach not in (
+				select name 
+				from teacher);
+&lt;/code&gt;
+table @@color:#00F;//''teacher ''//@@contains records:
+|!ID	|!NAME	|
+|1	|dingjia|
+|2	|张三|
+|3	|李四|
+|4	|roger|
+!!!Case 3:
+Assume that table @@color:#00F;//''course''//@@is described like:
+|!Field |!Type		|!Null	|!Key	|!Default |!Extra |
+|ID	|int(11)	|NO	|PRI	|	|auto_increment |
+|NAME	|varchar(16)	|NO	|UNI	|	| |
+|COACH	|varchar(16)	|NO	|	|	| |
+Assume that table @@color:#00F;//''teacher ''//@@ is described like below:
+|!Field |!Type		|!Null	|!Key	|!Default |!Extra |
+|ID	|int(11)	|NO	|PRI		||auto_increment|
+|NAME	|varchar(32)	|NO	|UNI		|||
+|ON_CREATE	|date	|YES	|		|||
+|RACE	|varchar(32)	|YES	|		|||
+添加别的属性加入到表中
+&lt;code sql&gt;
+	insert into teacher (name, on_create, race)
+		select distinct coach, GETDATE(), N'汉'
+			from course
+			where coach not in (
+				select name 
+				from teacher);
+&lt;/code&gt;</pre>
+</div>
 <div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201310211015" tags="ssh" changecount="5">
 <pre>!Introduction
 !Usage and Tools
@@ -12923,6 +13067,24 @@ if (store.showUnsaved_setDirty==undefined) {
 }
 //}}}</pre>
 </div>
+<div title="Update EDM when table changed on MSSQL" creator="Roger Luo" modifier="Roger Luo" created="201311130748" modified="201311131132" tags="mssql ef web" changecount="5">
+<pre>1. Follow the course from [[Entity Framework connect to exist database on MS SQL Server]]
+2. Update course database by adding table teacher and the foreign key between the course table and teacher table.
+&lt;code sql&gt;
+use course;
+if object_id(N'teacher', N'u') is not null
+	drop table teacher;
+create table teacher (
+	ID INT IDENTITY(1,1) NOT NULL,
+	NAME NVARCHAR(32) NOT NULL
+	CONSTRAINT PK_ID 
+		PRIMARY KEY (ID)
+);
+&lt;/code&gt;
+
+!Relate Articles
+上一篇：[[Entity Framework connect to exist database on MS SQL Server]]</pre>
+</div>
 <div title="Useful ShortKey/HotKey" creator="Roger Luo" modifier="Roger Luo" created="201311041633" modified="201311110307" tags="[[Visual Studio]]" changecount="57">
 <pre>|width:50%;!Usage|width:240px; !Key |
 |设置断点|{{key{F9}}}|
@@ -13118,9 +13280,10 @@ public:
 [[bootstrap]]
 [[IIS]]</pre>
 </div>
-<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311011020" tags="windows" changecount="8">
+<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311130440" tags="windows" changecount="9">
 <pre>[[Windows Command Usage]]
 [[windows8与windows8.1技巧]]
+[[Windows Tips]]
 [[Windows Debug]]
 !HowTo: Enhance Security Configuration disable on win2003 and win2008
 *For 2003, control panel&gt;Add or remove programs&gt;Add/Remove windows components&gt;uncheck the &quot;Intenet Explorer Enhanced Security Configuration&quot;.
@@ -13222,6 +13385,20 @@ Note: you should not pay attention to the message &quot;*** ERROR: Module load c
 :*需要有网络连接下载Symbol.
 :*当使用.dump /f 命令时，可以看到写dump的进度。
 </pre>
+</div>
+<div title="Windows Tips" creator="Roger Luo" modifier="Roger Luo" created="201311130522" modified="201311131041" tags="windows command" changecount="7">
+<pre>!常用指令
+|!程序名|!作用|
+|width:50%;services.msc| 服务|
+|secpol.msc| 本地安全策略|
+|compmgmt.msc|计算机管理|
+|odbcad32.exe| 数据源 (ODBC)|
+|eventvwr.msc| 事件查看器|
+|perfmon.msc| 性能|
+|comexp.msc| 组件服务|
+|gpedit.msc| 组策褛|
+|dxdiag| Directx 诊断工具|
+|msinfo32|系统信息|</pre>
 </div>
 <div title="jQuery" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201310240204" tags="javascript jquery" changecount="4">
 <pre>[[jquery learning]]

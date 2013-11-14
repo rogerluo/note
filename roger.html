@@ -4841,11 +4841,26 @@ connection.
 <div title="Howto: Send remote command" creator="Roger Luo" modifier="Roger Luo" created="201309250149" modified="201309260812" tags="C# ssh OpenSource" changecount="2">
 <pre>Type the text for 'Howto: Send remote command'</pre>
 </div>
-<div title="IIS" creator="Roger Luo" modifier="Roger Luo" created="201311121545" modified="201311121545" changecount="2">
+<div title="IIS" creator="Roger Luo" modifier="Roger Luo" created="201311121545" modified="201311131516" changecount="3">
 <pre>!关于IIS局域网无法访问的解决方法
 具体原因是防火墙限制
 对于windows7用户：Control Panel\System and Security\Windows Firewall\Advanced Settings\Inbound rules\BranchCache Content Retrieval (HTTP-In),将其enable
-重启Web site服务</pre>
+重启Web site服务
+!iis发布后,js,css文件无效的问题
+可能原因具体有三种
+1. 检查js，css文件能否直接通过iss地址访问，如果不能建议查看文件夹属性是否加了限制
+例如直接在浏览器中访问{{{http://localhost/testwebsite/js/jquery.js}}}
+2. 查看静态能用是否是开了
+中文：
+开始-&gt;控件面板-&gt;程序-&gt;打开或关闭windows功能-&gt;Internet信息服务-&gt;万维网服务-&gt;常见http功能-&gt;静态内容(选中)
+english:
+Start -&gt; Control Panel -&gt; Programs and Features -&gt; Turn Windows Features On or Off (link button on left hand side of panel on my machine) -&gt; Internet Information Services -&gt; World Wide Web Services -&gt; Common Http Features -&gt; Static Content (check this box)
+3. 查看静态，动态压缩是否开了
+中文：
+开始-&gt;控件面板-&gt;程序-&gt;打开或关闭windows功能-&gt;Internet信息服务-&gt;万维网服务-&gt;性能特性-&gt;动态压缩/静态压缩(选中)
+english:
+Start -&gt; Control Panel -&gt; Programs and Features -&gt; Turn Windows Features On or Off (link button on left hand side of panel on my machine) -&gt; Internet Information Services -&gt; World Wide Web Services -&gt; Performance Featuers -&gt; Dynamic content compression and static content compression
+</pre>
 </div>
 <div title="ImageSizePlugin" modifier="ELSDesignStudios" created="200801180032" modified="201109031106" tags="IconPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201109031106">
 <pre>/***
@@ -13400,7 +13415,7 @@ Note: you should not pay attention to the message &quot;*** ERROR: Module load c
 |dxdiag| Directx 诊断工具|
 |msinfo32|系统信息|</pre>
 </div>
-<div title="jQuery" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201310240204" tags="javascript jquery" changecount="4">
+<div title="jQuery" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311131405" tags="javascript jquery" changecount="5">
 <pre>[[jquery learning]]
 !Useful Link
 [[runnable|http://runnable.com/]]</pre>

@@ -2176,6 +2176,14 @@ deb-src http://mirror.bjtu.edu.cn/ubuntu/ UBUNTU_VERSION-updates main multiverse
 }}}
 replace UBUNTU_VERSION to be exactly your ubuntu version.</pre>
 </div>
+<div title="Connect via SSH with python" creator="Roger Luo" modifier="Roger Luo" created="201311171126" modified="201311171359" tags="python ssh" changecount="4">
+<pre>[[Using paramiko via ssh protocol in Python]]
+pysftp (invoke paramiko inside)
+PuSSH(invoke pexpect inside)
+pexpect
+libssh2
+spur</pre>
+</div>
 <div title="CoreTweaks" modifier="ELSDesignStudios" created="200608201502" modified="201112270158" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201112270158">
 <pre>/***
 |Name|CoreTweaks|
@@ -5449,6 +5457,29 @@ loading a script from a source url:
 2005.11.08 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
+<div title="Install Openssh on windows" creator="Roger Luo" modifier="Roger Luo" created="201311170303" tags="ssh" changecount="1">
+<pre>1. download the openssh for windows under [[link|http://sourceforge.net/projects/sshwindows/files/OpenSSH%20for%20Windows%20-%20Release/3.8p1-1%2020040709%20Build/setupssh381-20040709.zip/download]]
+2. install all by default setting
+3. copy dlls: cygintl-2.dll and cygwin1.dll [[link|http://samanthahalfon.net/resources/cygwin_includes.zip]] to c:\Program Files (x86)\OpenSSH\bin
+if not, you will get such error message:
+不能启动opensshd服务
+OpenSSH Error 1067:The process terminated unexpectedly  系统出错,进程意外终止
+4. 按照下面的指令配置openssh，其中username是你本地windows的账户，根据实际情况替换
+{{{
+#&gt;cd /d c:\Program Files (x86)\OpenSSH\bin
+#&gt;mkgroup -l &gt;&gt; ..\etc\group
+#&gt;mkpasswd -l -u username &gt;&gt; ..\etc\passwd
+#&gt;cd ..\etc
+#&gt;..\bin\chown username *
+#&gt;..\bin\chmod 6 *
+}}}
+5. 测试连接ssh，同时设置登录密码
+{{{
+#&gt;cd /d c:\users\username\
+#&gt;ssh username@localhost
+}}}
+</pre>
+</div>
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
 </div>
@@ -5504,10 +5535,11 @@ mysql中tables是这么定义的
 mssql中tables是这么定义的
 [img[information_schema.tables|pic/db/mssql_information_schema_tables.png]]</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311120411" changecount="35">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311160823" changecount="36">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
+[[Python]]
 [[Web]]
 [[Algorithm]]
 [[Database]]
@@ -7519,6 +7551,11 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 !~NonOverloadable Operators
 </pre>
 </div>
+<div title="PYPI" creator="Roger Luo" modifier="Roger Luo" created="201311171138" modified="201311171205" tags="python pypi" changecount="5">
+<pre>在https://pypi.python.org/pypi/setuptools 获取安装脚本的链接 http://peak.telecommunity.com/dist/ez_setup.py，下载并运行
+具体配置看如下连接
+[[使用国内镜像源来加速python pypi包的安装|http://www.leadnt.com/2013/08/%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E6%9D%A5%E5%8A%A0%E9%80%9Fpython-pypi%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85/]]</pre>
+</div>
 <div title="PageTemplate" creator="Roger Luo" modifier="Roger Luo" created="201309211417" modified="201309211438" server.type="file" server.host="http://www.tiddlytools.com" changecount="7">
 <pre>&lt;!--{{{--&gt;
 &lt;div class='header' role='banner' macro='gradient vert [[ColorPalette::PrimaryLight]] [[ColorPalette::PrimaryMid]]'&gt;
@@ -7557,6 +7594,10 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 [[SSH]]
 !Reference
 [[RFC]]</pre>
+</div>
+<div title="Python" creator="Roger Luo" modifier="Roger Luo" created="201311160823" modified="201311171137" tags="python" changecount="3">
+<pre>[[PYPI]]
+[[Connect via SSH with python]]</pre>
 </div>
 <div title="Quick Sort First Version" creator="Roger Luo" modifier="Roger Luo" created="201309291410" modified="201309291503" changecount="8">
 <pre>Use @@color:#F00;//''first ''//@@element as pivot.
@@ -9544,12 +9585,13 @@ Assume that table @@color:#00F;//''teacher ''//@@ is described like below:
 				from teacher);
 &lt;/code&gt;</pre>
 </div>
-<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201310211015" tags="ssh" changecount="5">
+<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201311170254" tags="ssh" changecount="8">
 <pre>!Introduction
 !Usage and Tools
 [[putty]]
 !FAQ
-[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]</pre>
+[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]
+[[Install Openssh on windows]]</pre>
 </div>
 <div title="SearchOptionsPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510181742" modified="201104081738" tags="DiscoveryPackage NavigationPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104081738">
 <pre>/***
@@ -13271,6 +13313,19 @@ create table teacher (
 [[Visual ShortKey|http://developer.51cto.com/art/200904/122073.htm]]
 </pre>
 </div>
+<div title="Using paramiko via ssh protocol in Python" creator="Roger Luo" modifier="Roger Luo" created="201311171129" modified="201311171137" tags="paramiko ssh python" changecount="2">
+<pre>!特点
+paramiko是用python语言写的一个模块，遵循SSH2协议，支持以加密和认证的方式，进行远程服务器的连接。
+由于使用的是python这样的能够跨平台运行的语言，所以所有python支持的平台，如Linux, Solaris, BSD, MacOS X, Windows等，paramiko都可以支持，因此，如果需要使用SSH从一个平台连接到另外一个平台，进行一系列的操作时，paramiko是最佳工具之一。
+!安装
+该库依赖于PyCrypto
+1. 可以通过源码安装
+[[https://github.com/paramiko/paramiko.git|https://github.com/paramiko/paramiko.git]]
+2. 通过PYPI来安装
+!连接SSH Server
+
+</pre>
+</div>
 <div title="VMWare" creator="Roger Luo" modifier="Roger Luo" created="201310201324" modified="201310201329" tags="vmware" changecount="2">
 <pre>[[VMware支持三种类型的网络：NAT，Bridged，Host-only]]</pre>
 </div>
@@ -13366,7 +13421,7 @@ you are installing in your own document.
 &lt;/div&gt; &lt;!-- end moveablePanel container --&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
-<div title="VirtualBox" creator="Roger Luo" modifier="Roger Luo" created="201310201311" modified="201310231545" tags="virtualbox" changecount="9">
+<div title="VirtualBox" creator="Roger Luo" modifier="Roger Luo" created="201310201311" modified="201311170318" tags="virtualbox" changecount="12">
 <pre>!HowTo: Config network on VirtualBox
 [[HowTo: Config network on VirtualBox]]
 !HowTo: Press ctrl-alt-del
@@ -13387,6 +13442,15 @@ While vboxsvr is a fixed name (note that vboxsrv would also work), replace &quot
 mount -t vboxsf [-o OPTIONS] sharename mountpoint
 }}}
 Replace sharename (use lowercase) with the share name specified with VBoxManage or the GUI, and mountpoint with the path where you want the share to be mounted on the guest (e.g. /mnt/share). 
+!Howto: Config ssh connection to windows vm
+#安装ssh，参考[[Install Openssh on windows]]
+#修改windows虚拟机的网络为Bridge adapter，缺省设置，如图所示&lt;br&gt;[img[pic/virtualbox/vb_ssh_config.png]]
+#同时在windows的防火墙添加22过滤条件，否者会报超时连接错误&lt;br&gt;{{{Control Panel\System and Security\Windows Firewall\Advanced Settings\Inbound rules\Add new ruls
+}}}&lt;br&gt;Rule Type选择port -&gt; Portocols and Ports选择TCP以及制定特定端口为22 -&gt; Action选择allow the connection -&gt; Profile全勾选上 -&gt; 起名，随意 -&gt; 保存
+#修改C:\Program Files (x86)\OpenSSH\etc\sshd_config文件，将usedns设置为no,否则使用putty连接将会报错：Server unexpectedly closed network connection。
+#重启服务&lt;br&gt;{{{
+net stop opensshd &amp;&amp; net start opensshd
+}}}
 
 
 </pre>

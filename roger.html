@@ -7551,10 +7551,22 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 !~NonOverloadable Operators
 </pre>
 </div>
-<div title="PYPI" creator="Roger Luo" modifier="Roger Luo" created="201311171138" modified="201311171205" tags="python pypi" changecount="5">
+<div title="PYPI" creator="Roger Luo" modifier="Roger Luo" created="201311171138" modified="201311180653" tags="python pypi" changecount="8">
 <pre>在https://pypi.python.org/pypi/setuptools 获取安装脚本的链接 http://peak.telecommunity.com/dist/ez_setup.py，下载并运行
 具体配置看如下连接
-[[使用国内镜像源来加速python pypi包的安装|http://www.leadnt.com/2013/08/%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E6%9D%A5%E5%8A%A0%E9%80%9Fpython-pypi%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85/]]</pre>
+[[使用国内镜像源来加速python pypi包的安装|http://www.leadnt.com/2013/08/%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E6%9D%A5%E5%8A%A0%E9%80%9Fpython-pypi%E5%8C%85%E7%9A%84%E5%AE%89%E8%A3%85/]]
+{{{
+pip install web2py -i http://pypi.douban.com/simple
+}}}
+!unable to find vcvarsall.bat when using easy_install
+缺省python2.6以上的版本需要编译c文件是使用vs2008的编译器，如果使用VS2010或者VS2012则需要添加下列环境变量
+以下是以VS2012为例
+{{{
+VS90COMNTOOLS=C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC
+MSSdk=C:\Program Files (x86)\Windows Kits\8.0\
+DISTUTILS_USE_SDK=&quot;C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin&quot;
+}}}
+具体详情参考：[[mscompiler|http://docs.python.org/2/distutils/apiref.html#module-distutils.msvccompiler]]</pre>
 </div>
 <div title="PageTemplate" creator="Roger Luo" modifier="Roger Luo" created="201309211417" modified="201309211438" server.type="file" server.host="http://www.tiddlytools.com" changecount="7">
 <pre>&lt;!--{{{--&gt;
@@ -9437,7 +9449,7 @@ config.macros.relatedTiddlers={
 }
 //}}}</pre>
 </div>
-<div title="Remove IIS Server Cache IIS清除缓存" creator="Roger Luo" modifier="Roger Luo" created="201311050723" modified="201311050759" tags="iis asp.net" changecount="5">
+<div title="Remove IIS Server Cache IIS清除缓存" creator="Roger Luo" modifier="Roger Luo" created="201311050723" modified="201311180922" tags="iis asp.net" changecount="6">
 <pre>!更改HTTP Header来禁止浏览器缓存
 #打开 IIS 配置管理工具（Internet 信息服务(IIS)管理器）。 选中一个网站（如果您想为所有站点配置，请选择点中“网站”那个图标），
 #选择“HTTP Response Header”
@@ -13313,10 +13325,12 @@ create table teacher (
 [[Visual ShortKey|http://developer.51cto.com/art/200904/122073.htm]]
 </pre>
 </div>
-<div title="Using paramiko via ssh protocol in Python" creator="Roger Luo" modifier="Roger Luo" created="201311171129" modified="201311171137" tags="paramiko ssh python" changecount="2">
+<div title="Using paramiko via ssh protocol in Python" creator="Roger Luo" modifier="Roger Luo" created="201311171129" modified="201311180720" tags="paramiko ssh python" changecount="4">
 <pre>!特点
 paramiko是用python语言写的一个模块，遵循SSH2协议，支持以加密和认证的方式，进行远程服务器的连接。
 由于使用的是python这样的能够跨平台运行的语言，所以所有python支持的平台，如Linux, Solaris, BSD, MacOS X, Windows等，paramiko都可以支持，因此，如果需要使用SSH从一个平台连接到另外一个平台，进行一系列的操作时，paramiko是最佳工具之一。
+!注意
+paramiko does not yet support Python3.[[详情|http://stackoverflow.com/questions/16248546/python3-3-paramiko-windows-install-errors#]]
 !安装
 该库依赖于PyCrypto
 1. 可以通过源码安装
@@ -13463,6 +13477,16 @@ net stop opensshd &amp;&amp; net start opensshd
 [[Sample Code|http://code.msdn.microsoft.com/]]
 [[Sample Browser|http://visualstudiogallery.msdn.microsoft.com/4934b087-e6cc-44dd-b992-a71f00a2a6df]]</pre>
 </div>
+<div title="WCF" creator="Roger Luo" modifier="Roger Luo" created="201311181122" tags=".net wcf" changecount="1">
+<pre>!学习资料
+[[Windows Communication Foundation|http://msdn.microsoft.com/en-us/library/vstudio/ms735119%28v=vs.90%29.aspx]]
+
+!通信核心服务的功能
+*SOAP(Simple Object Access Protocol)
+*WSDL(Web Services Description Language)
+*REST(Representational State Transfer)
+*JSON(Javascript Object Notation)</pre>
+</div>
 <div title="WWSAPI" creator="Roger Luo" modifier="Roger Luo" created="201309230518" modified="201309230521" tags="C++ WCF" changecount="4">
 <pre>!!Get Started
 
@@ -13505,12 +13529,13 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
-<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311140247" tags="web" changecount="4">
+<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311181008" tags="web" changecount="5">
 <pre>[[HTML5]]
 [[CSS]]
 [[ASP.NET]]
 [[javascript]]
-[[IIS]]</pre>
+[[IIS]]
+[[WCF]]</pre>
 </div>
 <div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311130440" tags="windows" changecount="9">
 <pre>[[Windows Command Usage]]

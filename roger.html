@@ -3031,11 +3031,12 @@ config.macros.DOMViewer = {
 }
 //}}}</pre>
 </div>
-<div title="Database" creator="Roger Luo" modifier="Roger Luo" created="201311120411" modified="201311150718" tags="db database" changecount="4">
+<div title="Database" creator="Roger Luo" modifier="Roger Luo" created="201311120411" modified="201311191056" tags="db database" changecount="5">
 <pre>[[SQL Syntax]]
 [[MySQL]]
 [[MS SQL Server]]
-[[Different syntax between SQL Server, MySQL and Oracle]]</pre>
+[[Different syntax between SQL Server, MySQL and Oracle]]
+[[导入SQL文件、还原数据库]]</pre>
 </div>
 <div title="DatePlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510301759" modified="201104231814" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104231814">
 <pre>/***
@@ -5480,6 +5481,36 @@ OpenSSH Error 1067:The process terminated unexpectedly  系统出错,进程意�
 }}}
 </pre>
 </div>
+<div title="JSON(JavaScript Object Notation)" creator="Roger Luo" modifier="Roger Luo" created="201311191114" modified="201311191129" tags="javascript json" changecount="6">
+<pre>!介绍
+JSON采用完全独立于语言的文本格式，但是也使用了类似于C语言家族的习惯（包括C, C++, C#, Java, JavaScript, Perl, Python等）。 这些特性使JSON成为理想的数据交换语言。
+
+!格式
+对象是一个无序的“‘名称/值’对”集合。一个对象以“{”（左括号）开始，“}”（右括号）结束。每个“名称”后跟一个“:”（冒号）；“‘名称/值’ 对”之间使用“,”（逗号）分隔。 
+[img[http://json.org/object.gif]]
+数组是值（value）的有序集合。一个数组以“[”（左中括号）开始，“]”（右中括号）结束。值之间使用“,”（逗号）分隔。
+[img[http://json.org/array.gif]]
+值（value）可以是双引号括起来的字符串（string）、数值(number)、true、false、 null、对象（object）或者数组（array）。这些结构可以嵌套。
+[img[http://json.org/value.gif]]
+字符串（string）是由双引号包围的任意数量Unicode字符的集合，使用反斜线转义。一个字符（character）即一个单独的字符串（character string）。
+字符串（string）与C或者Java的字符串非常相似。
+[img[http://json.org/string.gif]]
+数值（number）也与C或者Java的数值非常相似。除去未曾使用的八进制与十六进制格式。除去一些编码细节。
+[img[http://json.org/number.gif]]
+空白可以加入到任何符号之间。
+例子
+{{{
+{[&quot;name&quot;:&quot;张三&quot;,&quot;age&quot;:18],[&quot;name&quot;:&quot;李四&quot;,&quot;age&quot;:19]}
+}}}
+!Reference
+[[JSON官网|http://json.org/json-zh.html]]</pre>
+</div>
+<div title="Javascript" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311191117" tags="javascript" changecount="8">
+<pre>[[javascript Learning]]
+[[jQuery]]
+[[bootstrap]]
+[[JSON(JavaScript Object Notation)]]</pre>
+</div>
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
 </div>
@@ -5535,7 +5566,7 @@ mysql中tables是这么定义的
 mssql中tables是这么定义的
 [img[information_schema.tables|pic/db/mssql_information_schema_tables.png]]</pre>
 </div>
-<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311160823" changecount="36">
+<div title="MainMenu" creator="Roger Luo" modifier="Roger Luo" created="201309210755" modified="201311190459" changecount="37">
 <pre>[[GettingStarted]]
 [[C/C++]]
 [[C#]]
@@ -5555,6 +5586,7 @@ mssql中tables是这么定义的
 [[Physics]]
 [[Chemistry]]
 [[Thomson Reuters]]
+[[Photoshop]]
 [[Life]]
 [[Travel]]
 [[Miscellanies]]
@@ -7597,6 +7629,10 @@ DISTUTILS_USE_SDK=&quot;C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\b
 &lt;/div&gt;
 &lt;!--}}}--&gt;
 </pre>
+</div>
+<div title="Photoshop" creator="Roger Luo" modifier="Roger Luo" created="201311190500" modified="201311190524" tags="photoshop" changecount="2">
+<pre>[[PS处理掉所有的人，除了橡皮擦还有别的方法吗？|http://www.zhihu.com/question/21745639]]
+[[王新讲座]]</pre>
 </div>
 <div title="Physics" creator="Roger Luo" modifier="Roger Luo" created="201310091338" modified="201310091356" tags="physics" changecount="4">
 <pre>[[电子层与电子亚层]]
@@ -13533,19 +13569,20 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
-<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311181008" tags="web" changecount="5">
+<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311191115" tags="web" changecount="7">
 <pre>[[HTML5]]
 [[CSS]]
 [[ASP.NET]]
-[[javascript]]
+[[Javascript]]
 [[IIS]]
 [[WCF]]</pre>
 </div>
-<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311130440" tags="windows" changecount="9">
+<div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311190711" tags="windows" changecount="10">
 <pre>[[Windows Command Usage]]
 [[windows8与windows8.1技巧]]
 [[Windows Tips]]
 [[Windows Debug]]
+[[Windows 7下没有netmeeting]]
 !HowTo: Enhance Security Configuration disable on win2003 and win2008
 *For 2003, control panel&gt;Add or remove programs&gt;Add/Remove windows components&gt;uncheck the &quot;Intenet Explorer Enhanced Security Configuration&quot;.
 *For 2008, run&gt;servermanager.msc&gt;Security Information&gt;Configure IE ESC
@@ -13559,6 +13596,21 @@ For asynchronously,
 {{{
 start 2.bat
 }}}</pre>
+</div>
+<div title="Windows 7下没有netmeeting" creator="Roger Luo" modifier="Roger Luo" created="201311190711" tags="windows" changecount="1">
+<pre>NetMeeting 已经逐渐淘汰了，视频会议主推的是 Office Live Meeting。
+ 
+-- 
+Alexis Zhang
+ 
+https://mvp.support.microsoft.com/profile/jie
+http://blogs.itecn.net/blogs/alexis
+ 
+推荐以 NNTP Bridge 桥接新闻组方式访问论坛以获取最佳用户体验。
+ 
+本帖是回复帖，原帖作者是楼上的 &quot;sunkaiwin&quot;
+ 
+请教一下，以前在winxp里面用的很习惯的netmeeting，现在在win7下已经没有了，难道win7下面没有提供同样类似功能的程序吗？netmeeting非常好用的windows组件在win7难道没有继承人了吗？ </pre>
 </div>
 <div title="Windows Command Usage" creator="Roger Luo" modifier="Roger Luo" created="201309251311" modified="201309251312" tags="dos windows" changecount="4">
 <pre>;Query all installed service
@@ -13676,11 +13728,6 @@ navbar-fixed-top 固定顶部
 <pre>[[jquery learning]]
 !Useful Link
 [[runnable|http://runnable.com/]]</pre>
-</div>
-<div title="javascript" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311140247" tags="javascript" changecount="4">
-<pre>[[javascript Learning]]
-[[jQuery]]
-[[bootstrap]]</pre>
 </div>
 <div title="javascript Learning" creator="Roger Luo" modifier="Roger Luo" created="201310120239" modified="201310120930" tags="javascript" changecount="9">
 <pre>JavaScript is untyped.
@@ -14232,6 +14279,10 @@ For more details, refer to [[FireFox]]</pre>
 *右键Run创建String Value键，同时将Key起Pageant，Value设为&quot;C:\open\~GitExtensions\~PuTTY\pageant.exe&quot; &quot;C:\dev\github\private.ppk&quot;
 *重启操作系统就可以看到pageant自动加载了github的密钥</pre>
 </div>
+<div title="导入SQL文件、还原数据库" creator="Roger Luo" modifier="Roger Luo" created="201311191057" tags="mysql mssql" changecount="1">
+<pre>!MySQL
+{{{#&gt;mysql -uroot -p database &lt; data.sql}}}</pre>
+</div>
 <div title="房子" creator="Roger Luo" modifier="Roger Luo" created="201310060252" modified="201310060429" changecount="3">
 <pre>[[房子专业术语]]
 [[北京租房须知]]</pre>
@@ -14252,6 +14303,23 @@ For more details, refer to [[FireFox]]</pre>
 　　(1)泡利不相容原理
 　　(2)能量最低原理
 　　(3)洪特规则</pre>
+</div>
+<div title="王新讲座" creator="Roger Luo" modifier="Roger Luo" created="201311190525" modified="201311190700" changecount="4">
+<pre>!!摄影特点
+*曝光
+!!摄影
+*光圈（光圈小，景深大）
+*快门
+*感光度
+!!光源
+*自然光
+*人造光
+阴天拍人比较好，因为光线没有那么硬
+!!光的性质
+*直射光(立体感强，硬汉)
+*散射光(柔和，女人)
+九点拍照效果好
+长焦可以景深大，从而模糊背景</pre>
 </div>
 <div title="用PDB库调试Python程序" creator="Roger Luo" modifier="Roger Luo" created="201311182237" modified="201311182237" tags="python" changecount="3">
 <pre>Python自带的pdb库，发现用pdb来调试程序还是很方便的，当然了，什么远程调试，多线程之类，pdb是搞不定的。

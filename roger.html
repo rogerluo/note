@@ -521,13 +521,13 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311110237" tags="c# asp.net web iis" changecount="8">
+<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311191500" tags="c# asp.net web iis" changecount="9">
 <pre>[[Remove IIS Server Cache IIS清除缓存]]
 [[ASP.NET MVC Learning]]
 [[Entity Framework]]
 [[ASP.NET FAQ]]</pre>
 </div>
-<div title="ASP.NET FAQ" creator="Roger Luo" modifier="Roger Luo" created="201311080614" modified="201311110243" tags="C# ASP.NET MVC" changecount="7">
+<div title="ASP.NET FAQ" creator="Roger Luo" modifier="Roger Luo" created="201311080614" modified="201311191638" tags="C# ASP.NET MVC" changecount="12">
 <pre>!Entity Framework: How can I tell what version I am using?
 [[EF Version History|http://msdn.microsoft.com/en-us/data/jj574253]]
 
@@ -542,7 +542,15 @@ No need for complicated code in an Default.aspx page, or changing the Windows de
 !Unable to access T-SQL components &amp; An incompatible DacFx version is installed
 SQL Server Data Tools (SSDT) is a distinct toolset from SQL Server Data Tools - Business Intelligence for Visual Studio 2012 (SSDT-BI).
 
-</pre>
+!库引用出错System.Data.Entity.Infrastructure
+使用Nuget安装~EntityFramework解决，工具 -&gt; 库程序包管理其 -&gt; 管理解决方案Nuget的程序包 -&gt; ~EntityFramework
+
+!库引用出错System.Web.Providers
+使用Nuget安装Microsoft ASP.NET Universal Providers解决，工具 -&gt; 库程序包管理其 -&gt; 管理解决方案Nuget的程序包 -&gt; Microsoft ASP.NET Universal Providers
+
+!Conflicting versions of ASP.NET Web Pages detected: specified version is &quot;1.0.0.0&quot;, but the version in bin is &quot;3.0.0.0&quot;. 
+
+!System.Web.WebPages.Razor.Configuration.HostSection cannot be cast to [B]System.Web.WebPages.Razor.Configuration.HostSection. </pre>
 </div>
 <div title="ASP.NET MVC Learning" creator="Roger Luo" modifier="Roger Luo" created="201311050840" modified="201311120802" tags="c# asp.net mvc" changecount="35">
 <pre>!Official Learning &amp;&amp; Resourses

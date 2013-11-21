@@ -521,6 +521,201 @@ noscript {display:none;} /* Fixes a feature in Firefox 1.5.0.2 where print previ
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
+<div title="25个必须记住的SSH命令" creator="Roger Luo" modifier="Roger Luo" created="201311201510" modified="201311201511" tags="ssh todo" changecount="2">
+<pre>OpenSSH是SSH连接工具的免费版本。telnet，rlogin和ftp用户可能还没意识到他们在互联网上传输的密码是未加密的，但SSH是加密的，OpenSSH加密所有通信（包括密码），有效消除了窃听，连接劫持和其它攻击。此外，OpenSSH提供了安全隧道功能和多种身份验证方法，支持SSH协议的所有版本。
+
+SSH是一个非常伟大的工具，如果你要在互联网上远程连接到服务器，那么SSH无疑是最佳的候选。下面是通过网络投票选出的25个最佳SSH命令，你必须牢记于心。
+
+（注：有些内容较长的命令，在本文中会显示为截断的状态。如果你需要阅读完整的命令，可以把整行复制到您的记事本当中阅读。）
+
+;1、复制SSH密钥到目标主机，开启无密码SSH登录
+
+ssh-copy-id user@host
+
+如果还没有密钥，请使用ssh-keygen命令生成。
+
+;2、从某主机的80端口开启到本地主机2001端口的隧道
+
+ssh -N -L2001:localhost:80 somemachine
+
+现在你可以直接在浏览器中输入http://localhost:2001访问这个网站。
+
+;3、将你的麦克风输出到远程计算机的扬声器
+
+dd if=/dev/dsp | ssh -c arcfour -C username@host dd of=/dev/dsp
+
+这样来自你麦克风端口的声音将在SSH目标计算机的扬声器端口输出，但遗憾的是，声音质量很差，你会听到很多嘶嘶声。
+
+;4、比较远程和本地文件
+
+ssh user@host cat /path/to/remotefile | diff /path/to/localfile –
+
+在比较本地文件和远程文件是否有差异时这个命令很管用。
+
+;5、通过SSH挂载目录/文件系统
+
+sshfs name@server:/path/to/folder /path/to/mount/point
+
+从http://fuse.sourceforge.net/sshfs.html下载sshfs，它允许你跨网络安全挂载一个目录。
+
+;6、通过中间主机建立SSH连接
+
+ssh -t reachable_host ssh unreachable_host
+
+Unreachable_host表示从本地网络无法直接访问的主机，但可以从reachable_host所在网络访问，这个命令通过到reachable_host的“隐藏”连接，创建起到unreachable_host的连接。
+
+;7、将你的SSH公钥复制到远程主机，开启无密码登录 – 简单的方法
+
+ssh-copy-id username@hostname
+
+;8、直接连接到只能通过主机B连接的主机A
+
+ssh -t hostA ssh hostB
+
+当然，你要能访问主机A才行。
+
+9、创建到目标主机的持久化连接
+
+ssh -MNf &lt;user&gt;@&lt;host&gt;
+
+在后台创建到目标主机的持久化连接，将这个命令和你~/.ssh/config中的配置结合使用：
+
+Host host
+ControlPath ~/.ssh/master-%r@%h:%p
+ControlMaster no
+
+所有到目标主机的SSH连接都将使用持久化SSH套接字，如果你使用SSH定期同步文件（使用rsync/sftp/cvs/svn），这个命令将非常有用，因为每次打开一个SSH连接时不会创建新的套接字。
+
+10、通过SSH连接屏幕
+
+ssh -t remote_host screen –r
+
+直接连接到远程屏幕会话（节省了无用的父bash进程）。
+
+11、端口检测（敲门）
+
+knock &lt;host&gt; 3000 4000 5000 &amp;&amp; ssh -p &lt;port&gt; user@host &amp;&amp; knock &lt;host&gt; 5000 4000 3000
+
+在一个端口上敲一下打开某个服务的端口（如SSH），再敲一下关闭该端口，需要先安装knockd，下面是一个配置文件示例。
+
+[options]
+logfile = /var/log/knockd.log
+[openSSH]
+sequence = 3000,4000,5000
+seq_timeout = 5
+command = /sbin/iptables -A INPUT -i eth0 -s %IP% -p tcp –dport 22 -j ACCEPT
+tcpflags = syn
+[closeSSH]
+sequence = 5000,4000,3000
+seq_timeout = 5
+command = /sbin/iptables -D INPUT -i eth0 -s %IP% -p tcp –dport 22 -j ACCEPT
+tcpflags = syn
+
+12、删除文本文件中的一行内容，有用的修复
+
+ssh-keygen -R &lt;the_offending_host&gt;
+
+在这种情况下，最好使用专业的工具。
+
+13、通过SSH运行复杂的远程shell命令
+
+ssh host -l user $(&lt;cmd.txt)
+
+更具移植性的版本：
+
+ssh host -l user “`cat cmd.txt`”
+
+14、通过SSH将MySQL数据库复制到新服务器
+
+mysqldump –add-drop-table –extended-insert –force –log-error=error.log -uUSER -pPASS OLD_DB_NAME | ssh -C user@newhost “mysql -uUSER -pPASS NEW_DB_NAME”
+
+通过压缩的SSH隧道Dump一个MySQL数据库，将其作为输入传递给mysql命令，我认为这是迁移数据库到新服务器最快最好的方法。
+
+15、删除文本文件中的一行，修复“SSH主机密钥更改”的警告
+
+sed -i 8d ~/.ssh/known_hosts
+
+16、从一台没有SSH-COPY-ID命令的主机将你的SSH公钥复制到服务器
+
+cat ~/.ssh/id_rsa.pub | ssh user@machine “mkdir ~/.ssh; cat &gt;&gt; ~/.ssh/authorized_keys”
+
+如果你使用Mac OS X或其它没有ssh-copy-id命令的*nix变种，这个命令可以将你的公钥复制到远程主机，因此你照样可以实现无密码SSH登录。
+
+17、实时SSH网络吞吐量测试
+
+yes | pv | ssh $host “cat &gt; /dev/null”
+
+通过SSH连接到主机，显示实时的传输速度，将所有传输数据指向/dev/null，需要先安装pv。
+
+如果是Debian：
+
+apt-get install pv
+
+如果是Fedora：
+
+yum install pv
+
+（可能需要启用额外的软件仓库）。
+
+18、如果建立一个可以重新连接的远程GNU screen
+
+ssh -t user@some.domain.com /usr/bin/screen –xRR
+
+人们总是喜欢在一个文本终端中打开许多shell，如果会话突然中断，或你按下了“Ctrl-a d”，远程主机上的shell不会受到丝毫影响，你可以重新连接，其它有用的screen命令有“Ctrl-a c”（打开新的shell）和“Ctrl-a a”（在shell之间来回切换），请访问http://aperiodic.net/screen/quick_reference阅读更多关于screen命令的快速参考。
+
+19、继续SCP大文件
+
+rsync –partial –progress –rsh=ssh $file_source $user@$host:$destination_file
+
+它可以恢复失败的rsync命令，当你通过VPN传输大文件，如备份的数据库时这个命令非常有用，需要在两边的主机上安装rsync。
+
+rsync –partial –progress –rsh=ssh $file_source $user@$host:$destination_file local -&gt; remote
+
+或
+
+rsync –partial –progress –rsh=ssh $user@$host:$remote_file $destination_file remote -&gt; local
+
+20、通过SSH W/ WIRESHARK分析流量
+
+ssh root@server.com ‘tshark -f “port !22″ -w -' | wireshark -k -i –
+
+使用tshark捕捉远程主机上的网络通信，通过SSH连接发送原始pcap数据，并在wireshark中显示，按下Ctrl+C将停止捕捉，但也会关闭wireshark窗口，可以传递一个“-c #”参数给tshark，让它只捕捉“#”指定的数据包类型，或通过命名管道重定向数据，而不是直接通过SSH传输给wireshark，我建议你过滤数据包，以节约带宽，tshark可以使用tcpdump替代：
+
+ssh root@example.com tcpdump -w – ‘port !22′ | wireshark -k -i –
+
+21、保持SSH会话永久打开
+
+autossh -M50000 -t server.example.com ‘screen -raAd mysession’
+
+打开一个SSH会话后，让其保持永久打开，对于使用笔记本电脑的用户，如果需要在Wi-Fi热点之间切换，可以保证切换后不会丢失连接。
+
+22、更稳定，更快，更强的SSH客户端
+
+ssh -4 -C -c blowfish-cbc
+
+强制使用IPv4，压缩数据流，使用Blowfish加密。
+
+23、使用cstream控制带宽
+
+tar -cj /backup | cstream -t 777k | ssh host ‘tar -xj -C /backup’
+
+使用bzip压缩文件夹，然后以777k bit/s速率向远程主机传输。Cstream还有更多的功能，请访问http://www.cons.org/cracauer/cstream.html#usage了解详情，例如：
+
+echo w00t, i’m 733+ | cstream -b1 -t2
+
+24、一步将SSH公钥传输到另一台机器
+
+ssh-keygen; ssh-copy-id user@host; ssh user@host
+
+这个命令组合允许你无密码SSH登录，注意，如果在本地机器的~/.ssh目录下已经有一个SSH密钥对，ssh-keygen命令生成的新密钥可能会覆盖它们，ssh-copy-id将密钥复制到远程主机，并追加到远程账号的~/.ssh/authorized_keys文件中，使用SSH连接时，如果你没有使用密钥口令，调用ssh user@host后不久就会显示远程shell。
+
+25、将标准输入（stdin）复制到你的X11缓冲区
+
+ssh user@host cat /path/to/some/file | xclip
+
+你是否使用scp将文件复制到工作用电脑上，以便复制其内容到电子邮件中？xclip可以帮到你，它可以将标准输入复制到X11缓冲区，你需要做的就是点击鼠标中键粘贴缓冲区中的内容。
+</pre>
+</div>
 <div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311191500" tags="c# asp.net web iis" changecount="9">
 <pre>[[Remove IIS Server Cache IIS清除缓存]]
 [[ASP.NET MVC Learning]]
@@ -615,6 +810,24 @@ msiexec.exe /x &quot;C:\EVAADBInstaller.msi&quot;
 <div title="Algorithm" creator="Roger Luo" modifier="Roger Luo" created="201309291408" modified="201311150651" tags="algorithm" changecount="5">
 <pre>[[Eight queens puzzle]]
 [[Sort]]</pre>
+</div>
+<div title="Apache" creator="Roger Luo" modifier="Roger Luo" created="201311201421" modified="201311201618" tags="apache linux todo" changecount="4">
+<pre>ubuntu下配置apache
+说httpd.conf的估计是n年前的资料吧？去看apache2官方的文档，有中文翻译的,[[中文链接|http://www.php100.com/manual/apache2/]]
+apache2.conf： 是apache的性能参数配置
+httpd.conf: 默认情况就是空的
+
+网站的配置文件都在 /etc/apache2/sites-available/ 文件夹下面
+
+区别于Windows 下apache，配置文件通常只有一个，就是httpd.conf。
+
+Linux下 Apache的配置文件是 /etc/apache2/apache2.conf，Apache在启动时会自动读取这个文件的配置信息。而其他的一些配置文件，如 httpd.conf等，则是通过Include指令包含进来。
+
+在apache2.conf里有sites-enabled目录，而在 /etc/apache2下还有一个sites-available目录，其实，这里面才是真正的配置文件，而sites- enabled目录存放的只是一些指向这里的文件的符号链接，你可以用ls /etc/apache2/sites-enabled/来证实一下。
+
+所以，如果apache上配置了多个虚拟主机，每个虚拟主机的配置文件都放在 sites-available下，那么对于虚拟主机的停用、启用就非常方便了：当在sites-enabled下建立一个指向某个虚拟主机配置文件的链 接时，就启用了它；如果要关闭某个虚拟主机的话，只需删除相应的链接即可，根本不用去改配置文件。
+
+[[ubuntu apache2配置详解(含虚拟主机配置方法)|http://www.guanwei.org/post/LINUXnotes/01/ubuntuapache2configure.html]]</pre>
 </div>
 <div title="Backup database to NUL:" creator="Roger Luo" modifier="Roger Luo" created="201311150653" modified="201311150701" tags="sql mssql todo" changecount="3">
 <pre>Usage:
@@ -4369,11 +4582,12 @@ Story.prototype.scrollToSection=function(title,section) {
 You'll also need to enter your username for signing your edits: &lt;&lt;option txtUserName&gt;&gt;
 </pre>
 </div>
-<div title="GitHub" creator="Roger Luo" modifier="Roger Luo" created="201309231227" modified="201311060314" tags="github" changecount="6">
+<div title="GitHub" creator="Roger Luo" modifier="Roger Luo" created="201309231227" modified="201311201502" tags="github" changecount="7">
 <pre>[[如何使用TortoiseGit]]
 [[如何自动让pageant开机加载密钥]]
 [[Couldn't load this key (unable to open file)打开不了密钥文件]]
-[[Generating SSH Keys|https://help.github.com/articles/generating-ssh-keys]]</pre>
+[[Generating SSH Keys|https://help.github.com/articles/generating-ssh-keys]]
+[[使用putty通过证书登录Linux系统]]</pre>
 </div>
 <div title="GotoPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200605052341" modified="200905221854" tags="NavigationPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200905221854">
 <pre>/***
@@ -7591,6 +7805,15 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 !~NonOverloadable Operators
 </pre>
 </div>
+<div title="PHP" creator="Roger Luo" modifier="Roger Luo" created="201311202315" modified="201311202336" tags="php" changecount="3">
+<pre>[[php简单的测试代码]]
+[[php语法检验]]
+[[php访问mysql]]</pre>
+</div>
+<div title="PUTTY" creator="Roger Luo" modifier="Roger Luo" created="201310211015" modified="201311201414" changecount="3">
+<pre>[[Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp]]
+[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]</pre>
+</div>
 <div title="PYPI" creator="Roger Luo" modifier="Roger Luo" created="201311171138" modified="201311181504" tags="python pypi" changecount="9">
 <pre>在https://pypi.python.org/pypi/setuptools 获取安装脚本的链接 http://peak.telecommunity.com/dist/ez_setup.py，下载并运行
 具体配置看如下连接
@@ -9645,10 +9868,10 @@ Assume that table @@color:#00F;//''teacher ''//@@ is described like below:
 				from teacher);
 &lt;/code&gt;</pre>
 </div>
-<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201311170254" tags="ssh" changecount="8">
-<pre>!Introduction
+<div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201311201509" tags="ssh" changecount="11">
+<pre>[[25个必须记住的SSH命令]]
 !Usage and Tools
-[[putty]]
+[[PUTTY]]
 !FAQ
 [[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]
 [[Install Openssh on windows]]</pre>
@@ -10534,11 +10757,11 @@ default image style: {{stretch{&lt;&lt;option txtIconsCSS&gt;&gt;}}}
 2008.05.09 1.0.0 initial release (as inline script)
 &lt;&lt;&lt;</pre>
 </div>
-<div title="SharpSSH" creator="Roger Luo" modifier="Roger Luo" created="201309250148" modified="201309250716" tags="C# SSH OpenSource" changecount="2">
+<div title="SharpSSH" creator="Roger Luo" modifier="Roger Luo" created="201309250148" modified="201311201415" tags="c# ssh OpenSource" changecount="3">
 <pre>[[SharpSSH: Channels]]
 [[Howto: Send remote command]]</pre>
 </div>
-<div title="SharpSSH: Channels" creator="Roger Luo" modifier="Roger Luo" created="201309250718" modified="201309250729" tags="C# SSH OpenSource" changecount="11">
+<div title="SharpSSH: Channels" creator="Roger Luo" modifier="Roger Luo" created="201309250718" modified="201311201512" tags="c# ssh OpenSource" changecount="12">
 <pre>;Class Hierarchy
 Channel is opened by @@color:#F00;//''openChannel''//@@, associated with specified session, which is created by jsch instance method @@color:#F00;''//getSession//''@@.
 &lt;code c#&gt;
@@ -12892,9 +13115,11 @@ onclick=&quot;
 <div title="UUI2.0" creator="Roger Luo" modifier="Roger Luo" created="201311040915" tags="ThomsonReuters" changecount="1">
 <pre>Type the text for 'UUI2.0'</pre>
 </div>
-<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201311040602" tags="ubuntu linux" changecount="19">
+<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201311201540" tags="ubuntu linux" changecount="22">
 <pre>!Tool
 [[vi]]
+[[dpkg使用]]
+[[find、grep使用]]
 !FAQ
 [[Config apt get source on Ubuntu]]
 [[Find your Ubuntu or Kernerl Version]]
@@ -13577,10 +13802,12 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
-<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311191115" tags="web" changecount="7">
-<pre>[[HTML5]]
+<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311202314" tags="web" changecount="9">
+<pre>[[Apache]]
+[[HTML5]]
 [[CSS]]
 [[ASP.NET]]
+[[PHP]]
 [[Javascript]]
 [[IIS]]
 [[WCF]]</pre>
@@ -13732,6 +13959,176 @@ navbar-fixed-top 固定顶部
 
 </pre>
 </div>
+<div title="dpkg使用" creator="Roger Luo" modifier="Roger Luo" created="201311201522" modified="201311201523" tags="linux dpkg todo" changecount="3">
+<pre>　　1、dpkg -i
+　　安装一个 Debian 包裹文件，如你手动下载的文件。
+
+　　2、dpkg -c
+　　列出 的内容。
+
+　　3、dpkg -I
+　　从 中提取包裹信息。
+
+　　4、dpkg -r
+　　移除一个已安装的包裹。
+
+　　5、dpkg -P
+　　完全清除一个已安装的包裹。和 remove 不同的是，remove 只是删掉数据和可执行文件，purge 另外还删除所有的配制文件。
+
+　　6、dpkg -L
+　　列出 安装的所有文件清单。同时请看 dpkg -c 来检查一个 .deb 文件的内容。
+
+　　7、dpkg -s
+　　显示已安装包裹的信息。同时请看 apt-cache 显示 Debian 存档中的包裹信息，以及 dpkg -I 来显示从一个 .deb 文件中提取的包裹信息。
+
+　　8、dpkg-reconfigure
+　　重新配制一个已经安装的包裹，如果它使用的是 debconf (debconf 为包裹安装提供了一个统一的配制界面)。</pre>
+</div>
+<div title="find、grep使用" creator="Roger Luo" modifier="Roger Luo" created="201311201538" modified="201311201539" tags="linux find grep todo" changecount="2">
+<pre> find 命令
+
+语法：find 搜索路径 匹配表达式
+
+功能：该命令用于在指定路径中查找符合条件的文件，搜索路径可以是多个目录，不同目录之间以空格分隔
+
+（1）匹配表达式1
+
+     -name filename：要查找的文件名。可以使用通配符“*”，“?”,但要用双引号将文件名引起来
+
+          例子：【root@localhost tmp】# find  –name  “h*”  –print
+
+          翻译：在当前目录下查找以h开头的文件
+
+          例子：【root@localhost tmp】# find  /  –name  host  -print
+
+          翻译：在整个文件系统中查找名为hosts的文件
+
+     -user username：查找属于username用户的文件
+
+          例子：【root@localhost tmp】# find /home –user user1 –print
+
+          翻译：找出/home下属于用户user1的所有文件
+
+     -group groupname：查找属于groupname组的文件
+
+     -print：显示找到文件路径名
+
+（2）匹配表达式2
+
+     -exec 命令 ｛｝：对找到的匹配文件，执行所列出的命令，而不询问用户是否执行这些命令，参数｛｝ 由find找到当前的文件路径名取代，命令行末尾必须有“\;”。
+
+例子：【root@localhost tmp】# find /home –user user1 –exec cat {}\;|more
+
+翻译：找出/home下属于用户user1的所有文件并显示其内容
+
+例子：【root@localhost tmp】# find /home –user user1 –exec rm –r {} \;
+
+翻译：找出/home下属于用户user1的所有文件并删除
+
+       -ok 命令{}：与-exec的用法相同，在执行命令之前询问用户是否要执行命令
+
+（3）匹配表达式3
+
+      -atime n：查找前n天访问过的文件（仅第n天这一天）
+
+      -atime +n：查找前n天之前访问过的文件；-n则表示前n天之后
+
+          例子：【root@localhost tmp】# find /home –atime +365 –print
+
+          翻译：找出用户一年前访问过的文件
+
+例子：【root@localhost tmp】# find $home –user user1 –atime +3 –exec rm –r {} \;
+
+翻译：找出用户user1主目录下属于自己的前3天之前访问过文件并删除
+
+（4）匹配表达式4
+
+           -type filetype：指定查找的文件类型
+
+filetype 可以是：b块文件；c字符设备文件；d目录文件；f一般文件
+
+           例子：【root@localhost tmp】# find –type d –print
+
+      翻译：查找当前目录下的所有的子目录
+
+      例子：【root@localhost tmp】# find –type f –print
+
+      翻译：查找当前目录下的所有的普通文件
+
+（5）匹配表达式5
+
+        -size Number和-size Numberc：按照文件大小进行查找。Numberc表示以字节为单位，否则以块（一般是512字节）为单位。-Number（或-Numberc）表示查找比该值小的文件，+Number（或-Numberc）表示查找比该值大的文件
+
+例子：【root@localhost tmp】# find –size -10 –print
+
+翻译：查找当前目录下所有长度小于10块的文件
+
+例子：【root@localhost tmp】# find –size -10c –print | ls –l
+
+翻译：查找当前目录下所有长度小于10字节的文件并以长格式显示文件信息
+
+例子：【root@localhsot tmp】# find –size +100 –size -200 –exec ls –s {} \;
+
+翻译：在当前目录下查找100~200块长的文件并显示文件的实际块数
+
+grep 命令
+
+语法：grep【参数】 查找模式 文件名 【文件名】
+
+功能：grep命令用于在指定文件中查找与模式匹配的行，并将匹配的行显示在标准输出上。如果没有指定文件，则从标准输入中读取。当在多个文件中进行查找中，将在每一行输出之前加上文件名。在搜索的文件名中允许使用通配符。
+
+参数：
+
+         -c：只显示匹配行的行数
+
+    -i：匹配时不区分大小写，默认情况下匹配时区分大小写
+
+    -h：在多个文件中查找时，输出行前不显示文件名
+
+    -n：在输出前加上匹配串所在行的行号（文件首行行号为1）
+
+    -v：只显示不包含匹配串的行。
+
+    -f filename：从指定文件中获取搜索模式，每行一个搜索模式项
+
+例子：【roo@locallost user1】# grep printf*.c
+
+翻译：在当前目录下的所有C文件中查找printf字符串
+
+例子：【roo@locallost user1】# grep user1 /ect/password
+
+翻译：将系统帐号中文件包含user1的行显示出来。
+
+当搜索模式中包含空格是，要把搜索模式用单引号括起来。
+
+例子：【root@localhso user1】# cat &gt; dialog
+
+      your name is:
+
+      linux
+
+      &lt;Ctrl+d&gt;
+
+      【root@localhost user1】# grep ‘your name’dialog
+
+       your name is：
+
+在有多个搜索模式时，可以将这些搜索模式写入文件中，利用-f参数从文件中读取搜索模式项。
+
+例子：【root@localhost user1】# cat &gt; mode.txt
+
+      name
+
+      lin*
+
+     &lt;Ctrl+d&gt;
+
+     【root@localhost user1】# grep –f mode.txt dialog
+
+      your name is:
+
+      linux</pre>
+</div>
 <div title="jQuery" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311131405" tags="javascript jquery" changecount="5">
 <pre>[[jquery learning]]
 !Useful Link
@@ -13801,6 +14198,34 @@ function convert(x) {
 <div title="language and region setting" creator="Roger Luo" modifier="Roger Luo" created="201309220944" modified="201309220944" tags="C C++ locale" changecount="2">
 <pre>[[print/cout与wprintf/wcout显示中文]]</pre>
 </div>
+<div title="php简单的测试代码" creator="Roger Luo" modifier="Roger Luo" created="201311202315" tags="php" changecount="1">
+<pre>&lt;code php&gt;
+&lt;?phpinfo()?&gt;
+&lt;/code&gt;</pre>
+</div>
+<div title="php访问mysql" creator="Roger Luo" modifier="Roger Luo" created="201311210029" tags="php mysql" changecount="1">
+<pre>!检查数据库连接
+&lt;code php&gt;
+&lt;?
+	$conn = mysql_connect(&quot;localhost&quot;, &quot;root&quot;, &quot;intel@123&quot;);
+	if (!$conn)
+	{
+		die('Could not connect: ' . mysql_error());
+	}
+	// todo
+	
+	echo &quot;access mysql successfully&quot;;
+	mysql_close($conn);
+?&gt;
+&lt;/code&gt;</pre>
+</div>
+<div title="php语法检验" creator="Roger Luo" modifier="Roger Luo" created="201311202334" modified="201311202335" tags="php linux ubuntu" changecount="2">
+<pre>!Linux下检查php语法
+1. 检查有无安装php的命令行接口php5-cli，没有就安装
+{{{sudo apt-get install php5-cli}}}
+2. 使用如下命令检查语法
+{{{#&gt;php -ln test.php}}}</pre>
+</div>
 <div title="print/cout与wprintf/wcout显示中文" creator="Roger Luo" modifier="Roger Luo" created="201309220945" modified="201309251259" tags="C C++ locale" changecount="22">
 <pre>!注意
 *调用cout、wcout的clear成员函数是为了清除错误状态，使后续输出能正常运行。
@@ -13866,10 +14291,6 @@ function convert(x) {
 http://www.baidu.com
 [[C/C++]]
 </pre>
-</div>
-<div title="putty" creator="Roger Luo" modifier="Roger Luo" created="201310211015" modified="201310211016" changecount="2">
-<pre>[[Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp]]
-[[use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）]]</pre>
 </div>
 <div title="use private key for login with PLINK.exe （PLINK.EXE如何使用私钥实现SSH登陆）" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201310211037" tags="ssh putty" changecount="28">
 <pre>;plink supports to use private key to access remote end, use @@color:#F00;//''-i''//@@ option. Here is the detail about this option.
@@ -14002,6 +14423,39 @@ ndd：将当前行及其下共n行文本删除，并将所删内容放到1号删
 </div>
 <div title="wxPython" creator="Roger Luo" modifier="Roger Luo" created="201311182235" tags="python" changecount="1">
 <pre>[[download|http://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/wxPython2.8-win64-unicode-2.8.12.1-py27.exe/download?use_mirror=jaist]]</pre>
+</div>
+<div title="使用putty通过证书登录Linux系统" creator="Roger Luo" modifier="Roger Luo" created="201311201504" tags="putty" changecount="1">
+<pre>下载PuTTYgen.exe
+只依靠默认的putty.exe是不能实现证书登录的，我们必须下载配套证书生成工具才行。在putty的官方网站 可以下载到PuTTYgen.exe
+ 
+生成证书
+打开puttygen.exe，在最下面选择SSH-2 RSA 加密模式，点击generate,将会生成公钥和私钥对，在生成的过程中需要鼠标在进度条所在区域的空白处来回晃动，以生成随机数。
+ 
+点击 save private key 保存私钥，私钥大致相当于密码，需要自己妥善保存，丢失就找不回来了。 在这个界面还会要求输入passphrase，相当于给私钥加了一层密码，多一层安全性，但每次开机第一使用这个私钥的时候需要输入passphrase，自己可以根据需要设置。
+ 
+在刚刚晃动鼠标的部位出现名为public key to pasting into OpenSSH authorized_keys file的文本框，里面的文本就是用于 Linux 的OpenSSH 服务端做验证的public key
+
+[img[http://up.2cto.com/2013/0724/20130724111541204.png]]
+ 
+将public key上传到Linux
+通过正常的方式登录到linux，查看在当前用户目录是否存在 .ssh 文件夹，里面是否有 authorized_keys 文件。如果没有，通过下面的命令创建并设置权限
+ 
+mkdir ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 700 ~/.ssh
+然后运行命令 cat &gt;&gt; ~/.ssh/authorized_keys，这时屏幕会停住，将刚刚生成的public key 粘贴到窗口中，并按下 Ctrl-D 结束输入。
+[img[http://up.2cto.com/2013/0724/20130724111550579.png]]
+ 
+这样就可以将public key 添加到Linux的验证文件中了。可以通过cat ~/.ssh/authorized_keys 查看是否正常添加了。
+ 
+配置putty并登录
+打开putty，在 Connection -&gt; SSH -&gt; Auth 的Private key file for authentication 选项处选择刚刚保存的私钥文件。
+ 
+在 Connection -&gt; Data -&gt; Auto-login username 处填入登录的需要的用户名
+ 
+之后再次登录就可以使用证书登录全自动登录了。
+ 
+其他如果希望去配置第二台linux但忘了保存公钥也不要紧，@@color:#F00;''公钥可以通过私钥自动生成。打开 puttygen.exe，点击load，选择私钥文件，之后就会生成公钥了''@@</pre>
 </div>
 <div title="元素列表" creator="Roger Luo" modifier="Roger Luo" created="201310091417" modified="201310091430" changecount="9">
 <pre>Periodic Table of the Elements 元素周期表

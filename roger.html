@@ -716,13 +716,14 @@ ssh user@host cat /path/to/some/file | xclip
 你是否使用scp将文件复制到工作用电脑上，以便复制其内容到电子邮件中？xclip可以帮到你，它可以将标准输入复制到X11缓冲区，你需要做的就是点击鼠标中键粘贴缓冲区中的内容。
 </pre>
 </div>
-<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311191500" tags="c# asp.net web iis" changecount="9">
+<div title="ASP.NET" creator="Roger Luo" modifier="Roger Luo" created="201310230620" modified="201311211048" tags="c# asp.net web iis" changecount="12">
 <pre>[[Remove IIS Server Cache IIS清除缓存]]
 [[ASP.NET MVC Learning]]
 [[Entity Framework]]
-[[ASP.NET FAQ]]</pre>
+[[ASP.NET FAQ]]
+[[事务处理方法总结]]</pre>
 </div>
-<div title="ASP.NET FAQ" creator="Roger Luo" modifier="Roger Luo" created="201311080614" modified="201311191638" tags="C# ASP.NET MVC" changecount="12">
+<div title="ASP.NET FAQ" creator="Roger Luo" modifier="Roger Luo" created="201311080614" modified="201311210250" tags="c# mvc asp.net" changecount="13">
 <pre>!Entity Framework: How can I tell what version I am using?
 [[EF Version History|http://msdn.microsoft.com/en-us/data/jj574253]]
 
@@ -781,8 +782,9 @@ code First方法默认情况下是以命名空间.DBcontext类名来作为自动
 [[linqpad|http://www.linqpad.net/]]
 [[automapper|http://automapper.org/]]</pre>
 </div>
-<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201311040303" tags="ThomsonReuters" changecount="5">
-<pre>[[Admin DB FAQ]]
+<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201311210323" tags="ThomsonReuters" changecount="7">
+<pre>[[Admin Debug Tips]]
+[[Admin DB FAQ]]
 [[EVAI-3663:Restore VAH Archieve files]]
 [[UUI2.0]]</pre>
 </div>
@@ -805,6 +807,20 @@ msiexec.exe /x &quot;C:\EVAADBInstaller.msi&quot;
 *On remote machine, use sql account, evaiuser/Tin.netSA
 !If you want to insert a new sub menuitem into ADMIN's main menu
 *For existence product(means VAA type), you should execute insert sql into EVAI.MENU table
+</pre>
+</div>
+<div title="Admin Debug Tips" creator="Roger Luo" modifier="Roger Luo" created="201311210328" modified="201311210332" tags="thomsonreuters admin debug" changecount="4">
+<pre>!!Process
+# check out the sami path
+# make sure the configuration setting will be &quot;debug&quot; and platform should be &quot;any cpu&quot;; if to build release package, make sure &quot;release&quot; and &quot;x64&quot;
+# Open &quot;VIEW&quot; -&gt; &quot;Other windows&quot; -&gt; &quot;Properties&quot;, choose the &quot;Always Start when debug&quot; to be false expect &quot;ngvgenericportal&quot; project
+# Open &quot;web.config&quot; under &quot;ngvgenericportal&quot; project by setting its database's ip and make sure the evaaservice status to be false&lt;br&gt;{{{
+&lt;add key=&quot;EVAAService&quot; value=&quot;false&quot;/&gt;
+}}}
+# build &quot;admincore&quot; firstly, as there are many projects depend on it. and them build the whole solution.
+# press F5 to start debugging. First time will use more time.
+
+!!Error Fixing
 </pre>
 </div>
 <div title="Algorithm" creator="Roger Luo" modifier="Roger Luo" created="201309291408" modified="201311150651" tags="algorithm" changecount="5">
@@ -1254,12 +1270,13 @@ __''other settings:''__
 !reference
 [[MSDN List|http://technet.microsoft.com/en-us/library/ms187786.aspx]]</pre>
 </div>
-<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201311041539" tags="C#" changecount="11">
+<div title="C#" creator="Roger Luo" modifier="Roger Luo" created="201309221345" modified="201311210801" tags="C#" changecount="13">
 <pre>[[HowTo Use C++ DLL]]
 [[C# The Third Library]]
 [[C# FAQ]]
 [[C# invoke external binary by Process（c#调用外部程序）]]
-[[C# Build Errors And Exceptions]]</pre>
+[[C# Build Errors And Exceptions]]
+</pre>
 </div>
 <div title="C# Build Errors And Exceptions" creator="Roger Luo" modifier="Roger Luo" created="201310080335" modified="201310080337" tags="C#" changecount="3">
 <pre>!Exception: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
@@ -3252,12 +3269,13 @@ config.macros.DOMViewer = {
 }
 //}}}</pre>
 </div>
-<div title="Database" creator="Roger Luo" modifier="Roger Luo" created="201311120411" modified="201311191056" tags="db database" changecount="5">
+<div title="Database" creator="Roger Luo" modifier="Roger Luo" created="201311120411" modified="201311211049" tags="db database" changecount="6">
 <pre>[[SQL Syntax]]
 [[MySQL]]
 [[MS SQL Server]]
 [[Different syntax between SQL Server, MySQL and Oracle]]
-[[导入SQL文件、还原数据库]]</pre>
+[[导入SQL文件、还原数据库]]
+[[SQL性能分析]]</pre>
 </div>
 <div title="DatePlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200510301759" modified="201104231814" tags="systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201104231814">
 <pre>/***
@@ -4047,7 +4065,7 @@ public class Queen {
 &lt;/code&gt;
 </pre>
 </div>
-<div title="Entity Framework" creator="Roger Luo" modifier="Roger Luo" created="201311110242" modified="201311130746" tags="asp.net c# mvc" changecount="44">
+<div title="Entity Framework" creator="Roger Luo" modifier="Roger Luo" created="201311110242" modified="201311211050" tags="asp.net c# mvc" changecount="46">
 <pre>!Introduction
 Entity Framework is Microsoft’s recommended data access technology for new applications
 !Install
@@ -4145,7 +4163,8 @@ For VB
 
 !Key Terms
 ;EDM
-:Entity Data Model</pre>
+:Entity Data Model
+</pre>
 </div>
 <div title="Entity Framework connect to exist database on MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201311120928" modified="201311131118" tags="ef mssql" changecount="10">
 <pre>!1. Install MSSQL Express through WebPI
@@ -5680,6 +5699,17 @@ loading a script from a source url:
 2005.11.08 1.0.0 initial release
 &lt;&lt;&lt;</pre>
 </div>
+<div title="Install LAMP on Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201311200956" modified="201311210244" tags="ubuntu php linux apache mysql" server.type="file" server.host="file:///C:/Roger/github/note/roger%20-%20Copy.html" server.page.revision="201311200957" changecount="1">
+<pre>!安装方法
+1. 使用Ubuntu LAMP Server软件包
+系统-&gt;系统管理-&gt;新立得软件包管理器-&gt;编辑-&gt;使用任务标记分组软件包-&gt;LAMP Server(勾选)-&gt;确定-&gt;返回到上一个窗口点击应用(或System-&gt;Administration-&gt;Synaptic Package Manager-&gt;Edit-&gt;Mark packages by Task-&gt;LAMP Server-&gt;OK)。然后系统会自动下载安装lamp环境软件包，几分钟就下载搞定。安装过程中会要求设置Mysql root帐号的密码，设置好了记住。另外当Ubuntu系统升级时lamp环境组件也会同时更新到最新版本。
+2. 命令行
+{{{
+sudo apt-get install apache2 mysql-server mysql-client php5 php5-gd php5-mysql  
+}}}
+!校验方法
+打开Firefox浏览器在地址栏输入127.0.0.1，显示It works!表明Apache服务器已经开始工作了，LAMP安装也就这样完成了。</pre>
+</div>
 <div title="Install Openssh on windows" creator="Roger Luo" modifier="Roger Luo" created="201311170303" tags="ssh" changecount="1">
 <pre>1. download the openssh for windows under [[link|http://sourceforge.net/projects/sshwindows/files/OpenSSH%20for%20Windows%20-%20Release/3.8p1-1%2020040709%20Build/setupssh381-20040709.zip/download]]
 2. install all by default setting
@@ -5736,13 +5766,16 @@ JSON采用完全独立于语言的文本格式，但是也使用了类似于C语
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
 </div>
-<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311151046" tags="SQL MSSQL" changecount="18">
+<div title="MS SQL Server" creator="Roger Luo" modifier="Roger Luo" created="201309240658" modified="201311211037" tags="SQL MSSQL" changecount="20">
 <pre>[[Built-In Function]]
 [[MSSQL 常用使用]]
 [[MSSQL与MySQL的不同]]
 [[Entity Framework connect to exist database on MS SQL Server]]
 [[SQL Server安全认证]]
-[[INFORMATION_SCHEMA views vs sys.sysobjects]]</pre>
+[[INFORMATION_SCHEMA views vs sys.sysobjects]]
+[[批量导出存储过程]]
+[[SQL性能分析]]
+</pre>
 </div>
 <div title="MSSQL 常用使用" creator="Roger Luo" modifier="Roger Luo" created="201309240754" modified="201311150709" tags="MSSQL" changecount="18">
 <pre>[[Backup database to NUL:]]
@@ -6215,12 +6248,73 @@ bullet-item list (using the TiddlyWiki core {{{&lt;&lt;list filter ...&gt;&gt;}}
 <pre>NAVICAT
 Commercial software</pre>
 </div>
-<div title="Miscellanies" creator="Roger Luo" modifier="Roger Luo" created="201309230221" modified="201311050929" changecount="3">
+<div title="Miscellanies" creator="Roger Luo" modifier="Roger Luo" created="201309230221" modified="201311211057" changecount="5">
 <pre>!Tips
 [[细分发行版本类型]]
 [[如何去掉优酷广告]]
 !Tools
-[[vi]]</pre>
+[[vi]]
+!TODO
+#DTO的模式，需要自己实现dataconstract，因为WCF的轮询访问entityframework中的model，不管其是否是lazy加载，只要一旦访问，则发给sqlserver主表跟子表的查询语句
+&lt;code sql&gt;
+use Course;
+
+DROP TABLE IF EXISTS COURSEREVIEW;
+DROP TABLE IF EXISTS COURSE;
+DROP TABLE IF EXISTS TEACHER;
+
+CREATE TABLE Course
+(
+ID INT AUTO_INCREMENT NOT NULL,
+NAME NVARCHAR(16) NOT NULL,
+teacher NVARCHAR(16) NOT NULL,
+CONSTRAINT PK_COURSE_ID
+PRIMARY KEY (ID),
+CONSTRAINT UK_COURSE_NAME
+UNIQUE (NAME)
+);
+
+
+CREATE TABLE COURSEREVIEW (
+ID INT AUTO_INCREMENT NOT NULL,
+COURSEID INT NOT NULL,
+RATING INT NOT NULL,
+COMMNET NVARCHAR(256) NULL,
+CONSTRAINT PK_COURSE_REVIEW_ID
+PRIMARY KEY (ID),
+CONSTRAINT FK_COURSE_ID
+FOREIGN KEY (COURSEID)
+REFERENCES COURSE(ID)
+ON DELETE CASCADE
+ON UPDATE NO ACTION
+);
+
+CREATE TABLE TEACHER (  
+	ID INT AUTO_INCREMENT NOT NULL,
+	NAME NVARCHAR(32) NOT NULL,
+	ON_CREATE DATE,
+	RACE NVARCHAR(32),
+	CONSTRAINT PK_TEACHER_ID   
+		PRIMARY KEY (ID),
+	CONSTRAINT UK_TEACHER_NAME
+		UNIQUE (NAME)
+);  
+
+    insert into Course (NAME, teacher) values (N'mssql', N'roger'); 
+	insert into Course (NAME, teacher) values (N'csharp', N'dingjia');
+	insert into Course (NAME, teacher) values (N'dotnet', N'dingjia');
+	insert into Course (NAME, teacher)values (N'cplusplus', N'roger');
+	insert into Course (NAME, teacher)values (N'python', N'razor');
+
+	insert into COURSEREVIEW (COURSEID, RATING, COMMNET) values (1, 10, N'GOOD');
+	insert into COURSEREVIEW (COURSEID, RATING, COMMNET) values (1, 9, N'SOSO');
+	insert into COURSEREVIEW (COURSEID, RATING) values (1, 8);
+	
+
+&lt;/code&gt;
+#admin中iis作为wcf中的client端，backendserver作为wcf的host，他们之间通常使用http bingding，vah到backendserver是wcf（alert service），反过来是ssh2
+#存储过程使用t4为什么是动态调用事务的？
+#如果使用entityframework，假如更新了表的列名，需要做到更新edmx中的ssdl（右键update，接着validating），接着修改csdl文件中（其实就是打开相应的类名重命名字段）</pre>
 </div>
 <div title="MoveablePanelPackage" creator="Roger Luo" modifier="ELSDesignStudios" created="200811192223" modified="200901042052" tags="package MoveablePanelPackage" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200901042052">
 <pre>&lt;html&gt;&lt;style&gt;
@@ -7286,10 +7380,11 @@ You can apply {{{&lt;&lt;moveablePanel ...&gt;&gt;}}} to //all// tiddlers by cus
 2006.03.04 1.0.0 Initial public release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120412" modified="201311120856" tags="mysql" changecount="5">
+<div title="MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120412" modified="201311211049" tags="mysql" changecount="6">
 <pre>[[MySQL常用使用]]
 [[MSSQL与MySQL的不同]]
-[[Entity Framework connect to exist database on MySQL]]</pre>
+[[Entity Framework connect to exist database on MySQL]]
+[[SQL性能分析]]</pre>
 </div>
 <div title="MySQL常用使用" creator="Roger Luo" modifier="Roger Luo" created="201311120603" modified="201311120656" tags="mysql" changecount="3">
 <pre>!查询所有语法
@@ -9867,6 +9962,32 @@ Assume that table @@color:#00F;//''teacher ''//@@ is described like below:
 				select name 
 				from teacher);
 &lt;/code&gt;</pre>
+</div>
+<div title="SQL性能分析" creator="Roger Luo" modifier="Roger Luo" created="201311211042" modified="201311211048" tags="mysql mssql sql performance todo" changecount="6">
+<pre>!MS SQL Server性能分析
+SQL Server Profiler， 通过SSMS -&gt; Tools -&gt; SQL Server Profiler打开
+!MySQL性能分析
+命令行mysql sql profile
+检查mysql sql profile是否启用
+{{{
+mysql&gt; select @@profiling;
+}}}
+默认情况下profiling 的值为0表示MySQL SQL Profiler处于OFF状态，如果开启SQL性能分析器后，profiling 的值将为1.
+{{{
+mysql&gt; set profiling=1;
+mysql&gt; select @@profiling;
+}}}
+但是profile状态是session的，退出当前mysql后重进入mysql对应的状态还是0，所以mysql sql profile是session级别的。
+查看当前执行sql历史记录与执行效率
+{{{
+mysql&gt; show profiles;
+}}}
+查看session id 1的效率特性
+{{{
+mysql&gt; show profile for query 1;
+}}}
+
+</pre>
 </div>
 <div title="SSH" creator="Roger Luo" modifier="Roger Luo" created="201309260809" modified="201311201509" tags="ssh" changecount="11">
 <pre>[[25个必须记住的SSH命令]]
@@ -13115,11 +13236,12 @@ onclick=&quot;
 <div title="UUI2.0" creator="Roger Luo" modifier="Roger Luo" created="201311040915" tags="ThomsonReuters" changecount="1">
 <pre>Type the text for 'UUI2.0'</pre>
 </div>
-<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201311201540" tags="ubuntu linux" changecount="22">
+<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201311210245" tags="ubuntu linux" changecount="23">
 <pre>!Tool
 [[vi]]
 [[dpkg使用]]
 [[find、grep使用]]
+[[Install LAMP on Ubuntu]]
 !FAQ
 [[Config apt get source on Ubuntu]]
 [[Find your Ubuntu or Kernerl Version]]
@@ -14424,6 +14546,52 @@ ndd：将当前行及其下共n行文本删除，并将所删内容放到1号删
 <div title="wxPython" creator="Roger Luo" modifier="Roger Luo" created="201311182235" tags="python" changecount="1">
 <pre>[[download|http://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/wxPython2.8-win64-unicode-2.8.12.1-py27.exe/download?use_mirror=jaist]]</pre>
 </div>
+<div title="事务处理方法总结" creator="Roger Luo" modifier="Roger Luo" created="201311210815" modified="201311210907" tags="c# asp.net todo" changecount="4">
+<pre>事务（Transaction）是并发控制的单位，是用户定义的一个操作序列。这些操作要么都做，要么都不做，是一个不可分割的工作单位。
+通过事务，SQL Server能将逻辑相关的一组操作绑定在一起，以便服务器保持数据的完整性。
+在sql server .net 开发环境下，有两种方法能够完成事务的操作，保持数据库的数据完整性；
+#sql存储过程
+#ADO.NET中一种简单的事务处理
+
+现在通过一个典型的银行转账的例子来说明一下这两个例子的用法
+我们先来看看sql存储过程是如何来完成事务的操作的：
+
+初始化数据库
+&lt;code sql&gt;
+create database aaaa --创建一个表，包含用户的帐号和钱数
+go
+
+use aaaa
+
+create table bb (
+ ID int not null primary key,  --帐号
+ moneys money    --转账金额
+）
+insert into bb values ('1','2000') --插入两条数据
+insert into bb values ('2','3000')
+&lt;/code&gt;
+!存储过程
+&lt;code sql&gt;
+create procedure mon(	--创建存储过程，定义几个变量
+@toID int,    		--接收转账的账户
+@fromID int ,  		--转出自己的账户
+@momeys money 		--转账的金额
+)
+as
+begin tran 		--开始执行事务
+	update bb set moneys=moneys-@momeys where ID=@fromID 	--执行的第一个操作，转账出钱，减去转出的金额
+	update bb set moneys=moneys+@momeys where ID=@toID 	--执行第二个操作，接受转账的金额，增加
+
+	if @@error&lt;&gt;0 --判断如果两条语句有任何一条出现错误
+		begin rollback tran -–开始执行事务的回滚，恢复的转账开始之前状态
+		return 1
+	end
+	--如何两条都执行成功
+	begin commit tran 执行这个事务的操作
+	return 10
+end
+&lt;/code&gt;</pre>
+</div>
 <div title="使用putty通过证书登录Linux系统" creator="Roger Luo" modifier="Roger Luo" created="201311201504" tags="putty" changecount="1">
 <pre>下载PuTTYgen.exe
 只依靠默认的putty.exe是不能实现证书登录的，我们必须下载配套证书生成工具才行。在putty的官方网站 可以下载到PuTTYgen.exe
@@ -14755,6 +14923,13 @@ For more details, refer to [[FireFox]]</pre>
 ;大小产权房的争议不在房屋所有权，而是土地使用权。和国外比中国房产拥有的只是房产，不拥有土地终身使用权。
 !小产权房
 ;“小产权房”是指在农民集体土地上建设的房屋，未缴纳土地出让金等费用，其产权证不是由国家房管部门颁发，而是由乡政府或村委会颁发，所以叫做“乡产权房”，又叫“小产权房”。乡镇政府发证的所谓小产权房产，实际上没有真正的产权。这种房没有国家发的土地使用证和预售许可证，购房合同国土房管局也不会给予备案。所谓产权证也不是真正合法有效的产权证。</pre>
+</div>
+<div title="批量导出存储过程" creator="Roger Luo" modifier="Roger Luo" created="201311210826" modified="201311210827" tags="mysql mssql" changecount="2">
+<pre>![[MS SQL Server]]
+在查询分析器中，选中数据库——》右键“任务”——》在弹出菜单中选择“生成脚本”
+——》“下一步”——》选择你要存储过程所在数据库——》“下一步”——》勾选“存储过程”,并下一步——》勾选你要生成的存储过程名称，并下一步——》选择将脚本保存到文件，并选择保存路径——》完成 
+注意如果现则分别文件，则会生成每一个table，view，存错过程
+!MySQL</pre>
 </div>
 <div title="泡利不相容原理" creator="Roger Luo" modifier="Roger Luo" created="201310091338" modified="201310091347" tags="physics" changecount="5">
 <pre>泡利不相容原理（Pauli’s exclusion principle）又称泡利原理、不相容原理。是微观粒子运动的基本规律之一。它指出：在费米子组成的系统中，不能有两个或两个以上的粒子处于完全相同的状态。在原子中完全确定一个电子的状态需要四个量子数，所以泡利不相容原理在原子中就表现为：不能有两个或两个以上的电子具有完全相同的四个量子数，这成为电子在核外排布形成周期性从而解释元素周期表的准则之一。

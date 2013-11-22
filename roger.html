@@ -782,8 +782,9 @@ code First方法默认情况下是以命名空间.DBcontext类名来作为自动
 [[linqpad|http://www.linqpad.net/]]
 [[automapper|http://automapper.org/]]</pre>
 </div>
-<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201311210323" tags="ThomsonReuters" changecount="7">
-<pre>[[Admin Debug Tips]]
+<div title="Admin" creator="Roger Luo" modifier="Roger Luo" created="201309240244" modified="201311220647" tags="ThomsonReuters" changecount="8">
+<pre>[[Admin Dev Tips]]
+[[Admin Debug Tips]]
 [[Admin DB FAQ]]
 [[EVAI-3663:Restore VAH Archieve files]]
 [[UUI2.0]]</pre>
@@ -823,11 +824,14 @@ msiexec.exe /x &quot;C:\EVAADBInstaller.msi&quot;
 !!Error Fixing
 </pre>
 </div>
+<div title="Admin Dev Tips" creator="Roger Luo" modifier="Roger Luo" created="201311220650" tags="admin thomsonreuters" changecount="1">
+<pre>1. 使用$eva.ajax而不要使用$.ajax，因为已经封装了相应的超时等待机制</pre>
+</div>
 <div title="Algorithm" creator="Roger Luo" modifier="Roger Luo" created="201309291408" modified="201311150651" tags="algorithm" changecount="5">
 <pre>[[Eight queens puzzle]]
 [[Sort]]</pre>
 </div>
-<div title="Apache" creator="Roger Luo" modifier="Roger Luo" created="201311201421" modified="201311201618" tags="apache linux todo" changecount="4">
+<div title="Apache" creator="Roger Luo" modifier="Roger Luo" created="201311201421" modified="201311211333" tags="apache linux todo" changecount="6">
 <pre>ubuntu下配置apache
 说httpd.conf的估计是n年前的资料吧？去看apache2官方的文档，有中文翻译的,[[中文链接|http://www.php100.com/manual/apache2/]]
 apache2.conf： 是apache的性能参数配置
@@ -843,7 +847,16 @@ Linux下 Apache的配置文件是 /etc/apache2/apache2.conf，Apache在启动时
 
 所以，如果apache上配置了多个虚拟主机，每个虚拟主机的配置文件都放在 sites-available下，那么对于虚拟主机的停用、启用就非常方便了：当在sites-enabled下建立一个指向某个虚拟主机配置文件的链 接时，就启用了它；如果要关闭某个虚拟主机的话，只需删除相应的链接即可，根本不用去改配置文件。
 
-[[ubuntu apache2配置详解(含虚拟主机配置方法)|http://www.guanwei.org/post/LINUXnotes/01/ubuntuapache2configure.html]]</pre>
+[[ubuntu apache2配置详解(含虚拟主机配置方法)|http://www.guanwei.org/post/LINUXnotes/01/ubuntuapache2configure.html]]
+
+!如何支持html文件含有php代码
+如果是ubuntu/linux系统，打开文件/etc/apache2/mods-available/mime.conf，找到addtype的位置添加如下代码
+{{{
+AddType application/x-httpd-php .htm
+}}}
+
+!Could not connect: Lost connection to MySQL server at 'reading initial communication packet', system error: 110
+检查php能否访问mysql，检查ip，用户名，密码以及对应的数据库，表</pre>
 </div>
 <div title="Backup database to NUL:" creator="Roger Luo" modifier="Roger Luo" created="201311150653" modified="201311150701" tags="sql mssql todo" changecount="3">
 <pre>Usage:
@@ -7380,13 +7393,14 @@ You can apply {{{&lt;&lt;moveablePanel ...&gt;&gt;}}} to //all// tiddlers by cus
 2006.03.04 1.0.0 Initial public release
 &lt;&lt;&lt;</pre>
 </div>
-<div title="MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120412" modified="201311211049" tags="mysql" changecount="6">
+<div title="MySQL" creator="Roger Luo" modifier="Roger Luo" created="201311120412" modified="201311211516" tags="mysql" changecount="7">
 <pre>[[MySQL常用使用]]
 [[MSSQL与MySQL的不同]]
 [[Entity Framework connect to exist database on MySQL]]
-[[SQL性能分析]]</pre>
+[[SQL性能分析]]
+[[修改Ubuntu默认的MySQL表名大小写区分]]</pre>
 </div>
-<div title="MySQL常用使用" creator="Roger Luo" modifier="Roger Luo" created="201311120603" modified="201311120656" tags="mysql" changecount="3">
+<div title="MySQL常用使用" creator="Roger Luo" modifier="Roger Luo" created="201311120603" modified="201311220007" tags="mysql" changecount="4">
 <pre>!查询所有语法
 打开MYSQL安装路径下\MySQL Documentation x.x.xx\refman-x.x-en.pdf，然后选择第十三章节
 !检查表是否存在
@@ -7394,7 +7408,21 @@ You can apply {{{&lt;&lt;moveablePanel ...&gt;&gt;}}} to //all// tiddlers by cus
 use thedb;
 DROP TABLE IF EXISTS thetable;
 }}}
-注意： 不要加引号或者双引号</pre>
+注意： 不要加引号或者双引号
+!ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+导致这个错误的原因有很多种，首先先查找一下/var/run/mysql文件夹下是否有mysqld.sock文件
+如果有，则重启mysql服务，如果没有，则使用{{{find / -name mysql.sock}}}看看在不在系统中，如果没有找到则重装mysql
+
+!mysql彻底重装
+{{{
+sudo apt-get autoremove -purge mysql-server
+sudo apt-get remove mysql-server
+sudo apt-get remove mysql-common
+dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P
+sudo apt-get install mysql-server
+sudo apt-get install mysql-client
+sudo apt-get install php5-mysql 
+}}}</pre>
 </div>
 <div title="NestedSlidersPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200512161202" modified="200811160623" tags="DiscoveryPackage TaskPackage TidIDEPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="200811160623">
 <pre>/***
@@ -7900,10 +7928,26 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 !~NonOverloadable Operators
 </pre>
 </div>
-<div title="PHP" creator="Roger Luo" modifier="Roger Luo" created="201311202315" modified="201311202336" tags="php" changecount="3">
+<div title="PHP" creator="Roger Luo" modifier="Roger Luo" created="201311202315" modified="201311211440" tags="php" changecount="4">
 <pre>[[php简单的测试代码]]
 [[php语法检验]]
-[[php访问mysql]]</pre>
+[[php访问mysql]]
+!TODO
+对该搜索词进行一些简单处理，然后将该值插入到数据库内。我选择使用 strip_tags() 和 substr() 函数来删除搜索词内的所有 HTML 标记并对之进行简化。进行这类预处理不失为一个好的做法 — 不能百分之百相信用户的输入。
+实际上，当具有了一个清晰的搜索词后，就可以通过 mysql_escape_string() 运行它，这可进一步消除可能会破坏数据库的其他陷阱（比如，单引号）。
+&lt;code php&gt;
+$term = strip_tags(substr($_POST['search_term'],0, 100));
+$term = mysql_escape_string($term); 
+&lt;/code&gt;
+
+&lt;code php&gt;
+if (mysql_num_rows($result) == 0) //判断记录集是否有记录
+{
+    echo &quot;no matches!!&quot;;
+}
+&lt;/code&gt;
+
+</pre>
 </div>
 <div title="PUTTY" creator="Roger Luo" modifier="Roger Luo" created="201310211015" modified="201311201414" changecount="3">
 <pre>[[Howto: Close the ignore fingerprint when first connect through SSH in plink/putty/psftp]]
@@ -14624,6 +14668,16 @@ chmod 700 ~/.ssh
 之后再次登录就可以使用证书登录全自动登录了。
  
 其他如果希望去配置第二台linux但忘了保存公钥也不要紧，@@color:#F00;''公钥可以通过私钥自动生成。打开 puttygen.exe，点击load，选择私钥文件，之后就会生成公钥了''@@</pre>
+</div>
+<div title="修改Ubuntu默认的MySQL表名大小写区分" creator="Roger Luo" modifier="Roger Luo" created="201311211522" modified="201311211605" tags="mysql ubuntu" changecount="4">
+<pre>MySQL数据库中，数据库与其表对应的是在那些目录下目录与相关的文件，因而内在的相关的操作系统的敏感性决定数据库与表命名的大小写敏感性。这就意味着数据库和表名在Unix上是区分大小写的，而在Win32上忽略大小写。
+1. 找到my.cnf，具体文件路径根据实际安装的情况来定，缺省安装时在，如果是cent的话是在/etc/my.cnf
+{{{vi /etc/mysql/my.cnf}}}
+2. 添加如下选项在&quot;@@color:#00F;''[mysqld]''@@&quot;
+{{{lower_case_table_names=1}}}
+3. 重启mysql
+{{{sudo /etc/init.d/mysql restart}}}
+</pre>
 </div>
 <div title="元素列表" creator="Roger Luo" modifier="Roger Luo" created="201310091417" modified="201310091430" changecount="9">
 <pre>Periodic Table of the Elements 元素周期表

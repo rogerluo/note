@@ -4888,7 +4888,7 @@ config.macros.gotoTiddler.listMaxSize=10;  // change this number
 2006.05.05 0.0.0 started
 &lt;&lt;&lt;</pre>
 </div>
-<div title="HTML5" creator="Roger Luo" modifier="Roger Luo" created="201311121638" modified="201311130048" changecount="3">
+<div title="HTML5" creator="Roger Luo" modifier="Roger Luo" created="201311121638" modified="201311240559" tags="html5 html" changecount="6">
 <pre>!如何支持中文
 {{{&lt;meta charset=&quot;utf-8&quot;&gt;}}}
 !如何设置偏好图片(favicon)
@@ -4902,7 +4902,24 @@ config.macros.gotoTiddler.listMaxSize=10;  // change this number
 favicon.ico就是显示出来的图标，你需要自己找图标文件上传到网上，然后修改一下地址
 再把上面三行code加到&lt;head&gt;&lt;/head&gt;标签内即可。。。
 如果使用png，使用image/png。
-
+!如何使div并列显示而不是垂直显示
+!!!方法一：
+一般情况，默认的div是写一个换一行，那么如何定义两个div横向排列而不换行呢？
+div默认的display属性是block。所以每一个div都是新的一行，现在把display换成inline就不会换新行了。
+&lt;code html&gt;
+&lt;div style=&quot;background-color:#ff0000;display:inline;&quot;&gt;aaa&lt;/div&gt;
+&lt;div style=&quot;background-color:#ffff00;display:inline;&quot;&gt;bbb&lt;/div&gt;
+&lt;/code&gt;
+!!!方法二：
+这里使用float:right属性。float做为CSS中的一个属性定义元素向哪个方向浮动。
+float:right 文本或图像会移至父元素中的右侧。
+__''注意float属性必须配合width使用，否则失效。 ''__
+&lt;code html&gt;
+&lt;td&gt;
+  &lt;div style=&quot;width:120px; float:right;&quot;&gt;阅读次数：9999&lt;/div&gt;
+  &lt;div style=&quot;width:200px; float:right;&quot;&gt;发表日期：2009-09-10&lt;/div&gt;
+&lt;/td&gt; 
+&lt;/code&gt;
 </pre>
 </div>
 <div title="HTMLFormattingPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="200512011522" modified="201005071839" tags="MediaPackage systemConfig" server.type="file" server.host="http://www.tiddlytools.com" server.page.revision="201005071839">
@@ -5771,11 +5788,12 @@ JSON采用完全独立于语言的文本格式，但是也使用了类似于C语
 !Reference
 [[JSON官网|http://json.org/json-zh.html]]</pre>
 </div>
-<div title="Javascript" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311191117" tags="javascript" changecount="8">
+<div title="Javascript" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311241503" tags="javascript" changecount="9">
 <pre>[[javascript Learning]]
 [[jQuery]]
 [[bootstrap]]
-[[JSON(JavaScript Object Notation)]]</pre>
+[[JSON(JavaScript Object Notation)]]
+[[JavaScript中清空数组的三种方式|http://www.cnblogs.com/snandy/archive/2011/04/04/2005156.html]]</pre>
 </div>
 <div title="Life" creator="Roger Luo" modifier="Roger Luo" created="201310060251" changecount="1">
 <pre>[[房子]]</pre>
@@ -7929,10 +7947,11 @@ tweaked &quot;eat newlines&quot; logic for line-mode {{{+++}}} and {{{===}}} syn
 !~NonOverloadable Operators
 </pre>
 </div>
-<div title="PHP" creator="Roger Luo" modifier="Roger Luo" created="201311202315" modified="201311211440" tags="php" changecount="4">
+<div title="PHP" creator="Roger Luo" modifier="Roger Luo" created="201311202315" modified="201311230114" tags="php" changecount="5">
 <pre>[[php简单的测试代码]]
 [[php语法检验]]
 [[php访问mysql]]
+[[php字符串处理]]
 !TODO
 对该搜索词进行一些简单处理，然后将该值插入到数据库内。我选择使用 strip_tags() 和 substr() 函数来删除搜索词内的所有 HTML 标记并对之进行简化。进行这类预处理不失为一个好的做法 — 不能百分之百相信用户的输入。
 实际上，当具有了一个清晰的搜索词后，就可以通过 mysql_escape_string() 运行它，这可进一步消除可能会破坏数据库的其他陷阱（比如，单引号）。
@@ -13281,12 +13300,13 @@ onclick=&quot;
 <div title="UUI2.0" creator="Roger Luo" modifier="Roger Luo" created="201311040915" tags="ThomsonReuters" changecount="1">
 <pre>Type the text for 'UUI2.0'</pre>
 </div>
-<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201311210245" tags="ubuntu linux" changecount="23">
+<div title="Ubuntu" creator="Roger Luo" modifier="Roger Luo" created="201310221055" modified="201311221351" tags="ubuntu linux" changecount="25">
 <pre>!Tool
 [[vi]]
 [[dpkg使用]]
 [[find、grep使用]]
 [[Install LAMP on Ubuntu]]
+[[Ubuntu添加启动脚本]]
 !FAQ
 [[Config apt get source on Ubuntu]]
 [[Find your Ubuntu or Kernerl Version]]
@@ -13309,6 +13329,18 @@ http_proxy=http://yourproxyaddress:proxyport
 export http_proxy
 }}}
 保存文件。关闭当前终端，然後打开另一个终端。</pre>
+</div>
+<div title="Ubuntu添加启动脚本" creator="Roger Luo" modifier="Roger Luo" created="201311221344" modified="201311221346" tags="ubuntu shell" changecount="3">
+<pre>Ubuntu开机之后会执行/etc/rc.local文件中的脚本，
+所以我们可以直接在/etc/rc.local中添加启动脚本。
+当然要添加到语句：exit 0 前面才行。
+
+如果要添加为开机启动执行的脚本文件，
+可先将脚本复制或者软连接到{{{/etc/init.d/}}}目录下，
+然后用：{{{update-rc.d xxx defaults NN}}}命令(NN为启动顺序)，
+将脚本添加到初始化执行的队列中去。
+注意如果脚本需要用到网络，则NN需设置一个比较大的数字，
+如98 。</pre>
 </div>
 <div title="UndoPlugin" creator="Roger Luo" modifier="ELSDesignStudios" created="201105172013" modified="201109112316" tags="systemConfig" server.title="UndoPlugin" server.page.revision="201109112316" server.etag="&quot;pasteup_public/UndoPlugin/703;4f5c36462e4c510a736472173b353b8deb14cc8f&quot;" server.workspace="bags/pasteup_public" server.type="file" server.host="http://www.tiddlytools.com" server.recipe="pasteup_private" server.bag="pasteup_public" server.permissions="read, write, create, delete" server.content-type="" _hash="f7d20cf61c8426f5626a0f6b806e93471d512c55">
 <pre>/***
@@ -13875,7 +13907,7 @@ you are installing in your own document.
 &lt;/div&gt; &lt;!-- end moveablePanel container --&gt;
 &lt;!--}}}--&gt;</pre>
 </div>
-<div title="VirtualBox" creator="Roger Luo" modifier="Roger Luo" created="201310201311" modified="201311170318" tags="virtualbox" changecount="12">
+<div title="VirtualBox" creator="Roger Luo" modifier="Roger Luo" created="201310201311" modified="201311222341" tags="virtualbox" changecount="13">
 <pre>!HowTo: Config network on VirtualBox
 [[HowTo: Config network on VirtualBox]]
 !HowTo: Press ctrl-alt-del
@@ -13896,6 +13928,11 @@ While vboxsvr is a fixed name (note that vboxsrv would also work), replace &quot
 mount -t vboxsf [-o OPTIONS] sharename mountpoint
 }}}
 Replace sharename (use lowercase) with the share name specified with VBoxManage or the GUI, and mountpoint with the path where you want the share to be mounted on the guest (e.g. /mnt/share). 
+!Howto: 自动mount共享文件夹
+对于linux系统，可以在设置共享文件夹的时候将其设置成“自动加载”，这样共享文件夹出现在/media下，同时以sf_为前缀，如果指定自定义加载路径，则需要将自动加载去掉
+同时在{{{/etc/fstab}}}文件最后加下如下脚本
+{{{github /home/rogerluo/Shared/github vboxsf defaults 0 0 }}}
+重新启动即可
 !Howto: Config ssh connection to windows vm
 #安装ssh，参考[[Install Openssh on windows]]
 #修改windows虚拟机的网络为Bridge adapter，缺省设置，如图所示&lt;br&gt;[img[pic/virtualbox/vb_ssh_config.png]]
@@ -13969,7 +14006,7 @@ public:
 };
 &lt;/code&gt;</pre>
 </div>
-<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311202314" tags="web" changecount="9">
+<div title="Web" creator="Roger Luo" modifier="Roger Luo" created="201311111441" modified="201311230608" tags="web" changecount="11">
 <pre>[[Apache]]
 [[HTML5]]
 [[CSS]]
@@ -13977,7 +14014,14 @@ public:
 [[PHP]]
 [[Javascript]]
 [[IIS]]
-[[WCF]]</pre>
+[[WCF]]
+[[Web Performance]]</pre>
+</div>
+<div title="Web Performance" creator="Roger Luo" modifier="Roger Luo" created="201311230609" modified="201311230613" tags="web todo performance" changecount="4">
+<pre>!经验
+[[Best Practices for Speeding Up Your Web Site|http://developer.yahoo.com/performance/rules.html]]
+!工具
+[[YSlow|http://developer.yahoo.com/yslow/]]</pre>
 </div>
 <div title="Windows" creator="Roger Luo" modifier="Roger Luo" created="201309251206" modified="201311190711" tags="windows" changecount="10">
 <pre>[[Windows Command Usage]]
@@ -14296,8 +14340,30 @@ grep 命令
 
       linux</pre>
 </div>
-<div title="jQuery" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311131405" tags="javascript jquery" changecount="5">
+<div title="jQuery" creator="Roger Luo" modifier="Roger Luo" created="201310100957" modified="201311241330" tags="javascript jquery" changecount="8">
 <pre>[[jquery learning]]
+[[关于锚点跳转及jQuery下相关操作与插件|http://www.zhangxinxu.com/wordpress/?p=958]]
+[[]]
+&lt;code html&gt;
+&lt;select id=&quot;select&quot;&gt;
+&lt;option value=&quot;1&quot;&gt;第一项&lt;/option&gt;
+&lt;option value=&quot;2&quot;&gt;第二项&lt;/option&gt;
+&lt;/select&gt;
+&lt;input id=&quot;submit&quot; type=&quot;button&quot; value=&quot;提交&quot;/&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+$(&quot;#submit&quot;).click(function(){
+var value = $(&quot;#select&quot;).val();
+$.get(&quot;a.php&quot;,{type:value},function(returnData){
+alert(returnData);
+});
+});
+&lt;/script&gt;
+php部分:
+if( isset($_GET['type']) ){
+$types = array(1=&gt;'选中第一项',2=&gt;'选中第二项');
+exit($types[$_GET['type']]);
+}
+&lt;/code&gt;
 !Useful Link
 [[runnable|http://runnable.com/]]</pre>
 </div>
@@ -14364,6 +14430,23 @@ function convert(x) {
 </div>
 <div title="language and region setting" creator="Roger Luo" modifier="Roger Luo" created="201309220944" modified="201309220944" tags="C C++ locale" changecount="2">
 <pre>[[print/cout与wprintf/wcout显示中文]]</pre>
+</div>
+<div title="php字符串处理" creator="Roger Luo" modifier="Roger Luo" created="201311230115" modified="201311230115" tags="php" changecount="2">
+<pre>!方法
+#strlen($a)==0 
+#isset($a) 
+#empty($a) 
+!区别：
+isset 判断是否存在变量 
+empty　判断是否为空
+strlen  判断长度，　也可以根据些来判断空值
+运行效率从上至下递减，功能应用也不同
+!结论
+判断为空，第一二两种经常组合起来判断：
+{{{if( isset($action) &amp;&amp; !empty($action) )}}}
+
+
+</pre>
 </div>
 <div title="php简单的测试代码" creator="Roger Luo" modifier="Roger Luo" created="201311202315" tags="php" changecount="1">
 <pre>&lt;code php&gt;
